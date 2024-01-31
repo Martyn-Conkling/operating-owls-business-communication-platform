@@ -1,4 +1,4 @@
-import './Root.css'
+
 import { Outlet, Link } from 'react-router-dom';
 
 export default function Root() {
@@ -11,7 +11,6 @@ export default function Root() {
         <Link to={`martyns-test-page`}><h1>Martyn's Test Page</h1></Link>
         <Link to={`miles-test-page`}><h1>Miles' Test Page</h1></Link>
         
-
       </>
     );
   }
