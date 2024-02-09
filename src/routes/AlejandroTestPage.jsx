@@ -1,9 +1,9 @@
-
+import ProfileComponent from "../components/main-components/ProfileComponent"
 
 export default function AlejandroTestPage(){
     return (
         <>
-        <h1>Welcome to Alejandros test page</h1>
+            <ProfileComponent />
         </>
     )
 }
