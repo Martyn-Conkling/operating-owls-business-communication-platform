@@ -1,7 +1,9 @@
-export default function JaskiratTestPage(){
+import UserInputBox from "../components/main-components/UserInputBox"
+
+export default function JaskiratTestPage() {
     return (
         <>
-        <h1>Welcome to Jaskirat's Test Page </h1>
+            <UserInputBox />
         </>
     )
 }
