@@ -48,6 +48,10 @@ const router = createBrowserRouter([
     element: <MilesTestPage></MilesTestPage>
     
   },
+  {
+    path: "christian-test-page",
+    element: <ChristianTestPage></ChristianTestPage>
+  },
 
 
   
