@@ -1,11 +1,18 @@
 // THEME
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { purple } from "@mui/material/colors";
-import { grey } from "@mui/material/colors";
-
-import { Button, Toolbar, colors } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Container from "@mui/material/Container";
+import {
+  Box,
+  Toolbar,
+  AppBar,
+  Container,
+  Typography,
+} from "@mui/material";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
+import TextSnippetOutlinedIcon from "@mui/icons-material/TextSnippetOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { purple, grey } from "@mui/material/colors";
+import { Outlet, Link } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -22,14 +29,17 @@ export default function MilesTestPage() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <h1>Welcome to Miles' test page</h1>
+        {/* <h1>Welcome to Miles' test page</h1> */}
 
         <AppBar
           position="sticky"
-          bgColor="primary.main"
           sx={{
             width: "6rem",
+            bgcolor: "primary.main",
             position: "relative",
+            boxShadow: 0,
+            borderRight: 1,
+            borderColor: "primary.light",
           }}
         >
           <Container disableGutters>
@@ -38,11 +48,46 @@ export default function MilesTestPage() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "100vh",
-                py: 4,
+                justifyContent: "space-between",
+                height: "96.50vh",
+                my: 2,
               }}
             >
-              <img src="vite.svg" />
+              <Box
+                src="businessLogo.png"
+                alt="Placeholder Business Logo"
+                component="img"
+                sx={{
+                  width: "2.5rem",
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2rem",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link to={`alejandro-test-page`}>
+                  <NotificationsActiveOutlinedIcon fontSize="large" />
+                  <Typography variant="subtitle2">New</Typography>
+                </Link>
+                <Link to={`alejandro-test-page`}>
+                  <QuestionAnswerOutlinedIcon fontSize="large" />
+                  <Typography variant="subtitle2">DMs</Typography>
+                </Link>
+                <Link to={`alejandro-test-page`}>
+                  <TextSnippetOutlinedIcon fontSize="large" />
+                  <Typography variant="subtitle2">Files</Typography>
+                </Link>
+              </Box>
+              <Box>
+                <SettingsOutlinedIcon
+                  fontSize="large"
+                  sx={{ color: "primary.dark" }}
+                />
+              </Box>
             </Toolbar>
           </Container>
         </AppBar>
