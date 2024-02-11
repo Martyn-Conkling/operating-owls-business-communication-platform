@@ -12,6 +12,7 @@ import AshtonTestPage from './routes/AshtonTestPage.jsx';
 import JaskiratTestPage from './routes/JaskiratTestPage.jsx';
 import MartynsTestPage from './routes/MartynsTestPage.jsx';
 import MilesTestPage from './routes/MilesTestPage.jsx';
+import ChristianTestPage from './routes/ChristianTestPage.jsx';
 
 
 // import ErrorPage from "./error-page";
