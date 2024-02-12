@@ -1,7 +1,8 @@
 export default [
   {
-    username: "samuraiedge92f",
-    nickname: "Alejandro Vasquez",
-    online: true
+    username: "Alejandro",
+    nickname: "SamuraiEdge92F",
+    online: true,
+    pfp: "https://picsum.photos/200"
   }
 ]

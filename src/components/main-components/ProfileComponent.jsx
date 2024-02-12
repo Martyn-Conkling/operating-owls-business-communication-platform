@@ -1,7 +1,17 @@
+/*
+    Links:
+        - https://mui.com/material-ui/react-badge/
+        - https://mui.com/material-ui/react-avatar/
+*/
+
 import React, { useState, useEffect } from 'react';
-import CircleIcon from '@mui/icons-material/Circle';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import '../../css/ProfileComponent.css'
 import profileData from "../../data/profile"
+
+import Badge from '@mui/material/Badge';
+import CircleIcon from '@mui/icons-material/Circle';
+import Avatar from '@mui/material/Avatar';
 
 export default function ProfileComponent() {
     const [profile, setProfile] = useState({});
@@ -10,28 +20,23 @@ export default function ProfileComponent() {
         setProfile(profileData[0]);
     }, []);
 
-    //this commented code may be useful in the future...
-    /*
-    async function getProfile() {
-        try {
-            const response = await fetch("");
-            const data = await response.json();
-            setProfile(data[0]);
-        }
-        catch (error) {
-            console.error("Error fetching profile:", error);
-        }
-    }
-    */
-
     return (
         <div className="profile--component">
             { profile && (
                 <>
-                    <p>Username: {profile.username}</p>
-                    <p>Nickname: {profile.nickname}</p>
-                    <CircleIcon />
-                    <AccountCircleIcon />
+                    <section className="name--section">
+                        <h1 className="username">{profile.username}</h1>
+                        <h2 className="nickname">{profile.nickname}</h2>
+                    </section>
+                    <section className="icon--section">
+                        <Badge
+                            overlap="circular"
+                            anchorOrigin={{vertical: "bottom", horizontal: "left"}}
+                            badgeContent={profile.online ? <CircleIcon className="online" sx={{width: 12, height: 12}} /> : <CircleIcon className="offline" sx={{width: 12, height: 12}} />}
+                        >
+                            <Avatar src={profile.pfp} />
+                        </Badge>
+                    </section>
                 </>
             )}
         </div>
