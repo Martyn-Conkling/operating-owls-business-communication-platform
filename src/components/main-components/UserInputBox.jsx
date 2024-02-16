@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Box from '@mui/system/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import PaperClip from '../../assets/paperclip-solid.svg'
-import PaperPlane from '../../assets/paper-plane.svg'
-
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 /*
     EXTRA FEATURE:
@@ -22,15 +21,9 @@ import PaperPlane from '../../assets/paper-plane.svg'
 //          return label;
 // }
 
-
-
 export default function UserInputBox() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-
-    const handleAttachments = () => {
-        console.log('User wants to attach files');
-    };
 
     const handleSend = () => {
         if (!message.trim()) {
@@ -42,7 +35,8 @@ export default function UserInputBox() {
         // Resetting error state if not empty message
         setError('');
 
-        console.log('User wants to send a message');
+        console.log(`User wants to send a message: ${message}`);
+        setMessage('');
     };
 
     return (
@@ -60,9 +54,21 @@ export default function UserInputBox() {
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <ButtonGroup size="large" variant="text" aria-label="Basic button group">
-                                    <Button onClick={handleAttachments}><img src={PaperClip}/></Button>
-                                    <Button onClick={handleSend}><img src={PaperPlane}/></Button>
+                                <ButtonGroup size="large" variant="elevated" aria-label="Basic button group">
+                                    <Button
+                                        component="label"
+                                        startIcon={<AttachFileIcon htmlColor="black" />}
+                                    >
+                                        <input
+                                            type="file"
+                                            hidden
+                                        />
+                                    </Button>
+                                    <Button
+                                        onClick={handleSend}
+                                        startIcon={<SendIcon htmlColor="black" />}
+                                    >
+                                    </Button>
                                 </ButtonGroup>
                             </InputAdornment>
                         ),

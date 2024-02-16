@@ -13,6 +13,7 @@ import JaskiratTestPage from './routes/JaskiratTestPage.jsx';
 import MartynsTestPage from './routes/MartynsTestPage.jsx';
 import MilesTestPage from './routes/MilesTestPage.jsx';
 import ChristianTestPage from './routes/ChristianTestPage.jsx';
+import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
 
 
 // import ErrorPage from "./error-page";
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "christian-test-page",
     element: <ChristianTestPage></ChristianTestPage>
+  },
+  { 
+    path: "elizabeth-test-page",
+    element: <ElizabethTestPage></ElizabethTestPage>
   },
 
 
