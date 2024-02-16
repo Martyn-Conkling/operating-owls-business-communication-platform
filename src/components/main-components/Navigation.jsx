@@ -61,21 +61,21 @@ export default function Navigation() {
           </IconButton>
           <Stack direction="column" spacing={2} width={'100%'}>
             <Button
-              // onClick={() => navigate("/ashton-test-page")}
+              onClick={() => navigate("/ashton-test-page")}
               sx={{ color: "primary.dark", display: "block", borderRadius: "0" }}
             >
               <NotificationsActiveOutlinedIcon fontSize="large" />
               <Typography variant="subtitle2">New</Typography>
             </Button>
             <Button
-              // onClick={() => navigate("/alejandro-test-page")}
+              onClick={() => navigate("/alejandro-test-page")}
               sx={{ color: "primary.dark", display: "block", borderRadius: "0"}}
             >
               <QuestionAnswerOutlinedIcon fontSize="large" />
               <Typography variant="subtitle2">DMs</Typography>
             </Button>
             <Button
-              // onClick={() => navigate("/jaskirat-test-page")}
+              onClick={() => navigate("/jaskirat-test-page")}
               sx={{ color: "primary.dark", display: "block", borderRadius: "0"}}
             >
               <TextSnippetOutlinedIcon fontSize="large" />
