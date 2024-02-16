@@ -1,5 +1,4 @@
 import {
-  Box,
   Toolbar,
   AppBar,
   Container,
@@ -7,14 +6,14 @@ import {
   Stack,
   IconButton,
   Button,
+  Badge
 } from "@mui/material";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import TextSnippetOutlinedIcon from "@mui/icons-material/TextSnippetOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import BusinessIcon from "./BusinessIcon";
-import { useNavigate } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
 
 /* 
   Onclick for each menu item for routing to different pages - needs refactor
@@ -26,7 +25,6 @@ import { useNavigate } from "react-router-dom";
 */
 
 export default function Navigation() {
-  const navigate = useNavigate();
 
   return (
     <AppBar
@@ -57,37 +55,49 @@ export default function Navigation() {
             color="inherit"
             aria-label="logo"
           >
-            <BusinessIcon/>
+            <BusinessIcon />
           </IconButton>
-          <Stack direction="column" spacing={2} width={'100%'}>
-            <Button
-              onClick={() => navigate("/ashton-test-page")}
-              sx={{ color: "primary.dark", display: "block", borderRadius: "0" }}
+          <Stack direction="column" spacing={2} width={"100%"}>
+            <Link to={`/alejandro-test-page`}
             >
-              <NotificationsActiveOutlinedIcon fontSize="large" />
+              <Badge badgeContent={5} color="success">
+                <NotificationsActiveOutlinedIcon fontSize="large" />
+              </Badge>
               <Typography variant="subtitle2">New</Typography>
-            </Button>
-            <Button
-              onClick={() => navigate("/alejandro-test-page")}
-              sx={{ color: "primary.dark", display: "block", borderRadius: "0"}}
+            </Link>
+            <Link to={`/ashton-test-page`}
+              sx={{
+                color: "primary.dark",
+                display: "block",
+                borderRadius: "0",
+              }}
             >
               <QuestionAnswerOutlinedIcon fontSize="large" />
               <Typography variant="subtitle2">DMs</Typography>
-            </Button>
-            <Button
-              onClick={() => navigate("/jaskirat-test-page")}
-              sx={{ color: "primary.dark", display: "block", borderRadius: "0"}}
+            </Link>
+            <Link to={`/jaskirat-test-page`}
+              sx={{
+                color: "primary.dark",
+                display: "block",
+                borderRadius: "0",
+              }}
             >
               <TextSnippetOutlinedIcon fontSize="large" />
               <Typography variant="subtitle2">Files</Typography>
-            </Button>
+            </Link>
           </Stack>
-          <Box>
+          <Link to={`/martyns-test-page`}
+            sx={{
+              color: "primary.dark",
+              display: "block",
+              borderRadius: "0",
+            }}
+          >
             <SettingsOutlinedIcon
               fontSize="large"
               sx={{ color: "primary.dark" }}
             />
-          </Box>
+          </Link>
         </Toolbar>
       </Container>
     </AppBar>
