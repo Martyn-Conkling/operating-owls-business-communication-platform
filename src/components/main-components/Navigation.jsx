@@ -5,7 +5,6 @@ import {
   Typography,
   Stack,
   IconButton,
-  Button,
   Badge
 } from "@mui/material";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";

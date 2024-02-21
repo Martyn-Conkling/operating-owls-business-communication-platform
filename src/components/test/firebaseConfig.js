@@ -10,6 +10,7 @@ import { getFirestore } from "firebase/firestore" //for database storage
 
 const firebaseConfig = {
     /*get from firebase*/
+    
 };
 
 const app = initializeApp(firebaseConfig);
