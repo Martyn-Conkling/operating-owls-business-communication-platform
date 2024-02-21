@@ -6,10 +6,15 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; //for authentication
-import { getFirestore } from "firebase/firestore" //for database storage
+import { getFirestore} from "firebase/firestore" //for database storage
 
 const firebaseConfig = {
-    /*get from firebase*/
+    apiKey: "***look at firebase to make this work!***",
+    authDomain: "oo-business-communication.firebaseapp.com",
+    projectId: "oo-business-communication",
+    storageBucket: "oo-business-communication.appspot.com",
+    messagingSenderId: "***look at firebase to make this work!***",
+    appId: "***look at firebase to make this work!***"
 };
 
 const app = initializeApp(firebaseConfig);
