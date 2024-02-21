@@ -5,7 +5,6 @@ import './index.css'
 
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 
-
 import Root from './routes/Root.jsx';
 import AlejandroTestPage from './routes/AlejandroTestPage.jsx';
 import AshtonTestPage from './routes/AshtonTestPage.jsx';
@@ -58,13 +57,7 @@ const router = createBrowserRouter([
     path: "elizabeth-test-page",
     element: <ElizabethTestPage></ElizabethTestPage>
   },
-
-
-  
-
-
 ]);
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

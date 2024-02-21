@@ -1,4 +1,4 @@
-import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/main-components/LoginPage";
 
 export default function ChristianTestPage() {
   return (
