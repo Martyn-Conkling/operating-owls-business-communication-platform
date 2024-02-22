@@ -14,6 +14,7 @@ import MartynsTestPage from './routes/MartynsTestPage.jsx';
 import MilesTestPage from './routes/MilesTestPage.jsx';
 import ChristianTestPage from './routes/ChristianTestPage.jsx';
 import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
+import CarlTestPage from './routes/CarlTestPage.jsx';
 
 
 // import ErrorPage from "./error-page";
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     path: "elizabeth-test-page",
     element: <ElizabethTestPage></ElizabethTestPage>
   },
+  { 
+    path: "carl-test-page",
+    element: <CarlTestPage></CarlTestPage>
+  },
 
 
   
@@ -68,6 +73,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
