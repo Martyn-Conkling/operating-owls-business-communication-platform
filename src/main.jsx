@@ -14,7 +14,7 @@ import MilesTestPage from './routes/MilesTestPage.jsx';
 import ChristianTestPage from './routes/ChristianTestPage.jsx';
 import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
 import CarlTestPage from './routes/CarlTestPage.jsx';
-
+import EmilyTestPage from './routes/EmilyTestPage.jsx';
 
 // import ErrorPage from "./error-page";
 
@@ -53,14 +53,22 @@ const router = createBrowserRouter([
   {
     path: "christian-test-page",
     element: <ChristianTestPage></ChristianTestPage>
+
   },
   { 
     path: "elizabeth-test-page",
     element: <ElizabethTestPage></ElizabethTestPage>
+
   },
   { 
     path: "carl-test-page",
     element: <CarlTestPage></CarlTestPage>
+
+  },
+  {
+    path: "emily-test-page",
+    element: <EmilyTestPage></EmilyTestPage>
+
   },
 ]);
 

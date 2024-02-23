@@ -15,7 +15,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.10",
-    "firebase": "^10.8.0",
+    "firebase": "^10.6.0",
     "firebaseui": "^6.1.0",
     "install": "^0.13.0",
     "npm": "^10.4.0",
