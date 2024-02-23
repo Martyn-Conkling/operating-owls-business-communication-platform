@@ -8,13 +8,21 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; //for authentication
 import { getFirestore} from "firebase/firestore" //for database storage
 
+// ENV are stored in .env.local file
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+const authDom = import.meta.env.VITE_AUTH_DOM;
+const projId = import.meta.env.VITE_PROJ_ID;
+const storage = import.meta.env.VITE_STORAGE_BUCKET;
+const msgSender = import.meta.env.VITE_MSG_SENDER_ID;
+const appId = import.meta.env.VITE_APP_ID;
+
 const firebaseConfig = {
-    apiKey: "***look at firebase to make this work!***",
-    authDomain: "oo-business-communication.firebaseapp.com",
-    projectId: "oo-business-communication",
-    storageBucket: "oo-business-communication.appspot.com",
-    messagingSenderId: "***look at firebase to make this work!***",
-    appId: "***look at firebase to make this work!***"
+    apiKey: apiKey,
+    authDomain: authDom,
+    projectId: projId,
+    storageBucket: storage,
+    messagingSenderId: msgSender,
+    appId: appId
 };
 
 const app = initializeApp(firebaseConfig);
