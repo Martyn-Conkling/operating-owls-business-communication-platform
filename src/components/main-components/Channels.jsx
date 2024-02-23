@@ -10,18 +10,38 @@ import Box from '@mui/material/Box';
 import IndivChannel from '../IndivChannel';
 import AddIcon from '@mui/icons-material/Add';
 import channelData from '../../data/channelData'
+import ModalInput from '../ModalInput';
+
+
 
 export default function Channels(){
     const [open, setOpen] = React.useState(true); //for the collapsible list
     const [channels, setChannels] = React.useState(channelData);
-
+    const [showModal, setShowModal] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1); //for the selected list item
 
     const handleClick = () => {
         setOpen(!open);
     };
 
+    const handleAddItem = () => {
+        //console.log("clicked +");
+        setShowModal(true);
+    }
 
+
+    const addItem = (idInput, nameInput) => {
+        setChannels( (prevChannels) => 
+            [...prevChannels,
+                {
+                    id: idInput,
+                    name: nameInput
+                }
+            ]
+        );
+
+        setShowModal(false);
+    }
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
     };
@@ -30,6 +50,8 @@ export default function Channels(){
         <IndivChannel 
             key={channel.id}
             name={channel.name}
+            onClick={(event)=> handleListItemClick(event, channel.id)}
+            selected={selectedIndex === channel.id}
         />
     ))
 
@@ -41,7 +63,7 @@ export default function Channels(){
                     <List component="nav">
 
                         <ListItemButton onClick={handleClick} sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                            <ListItemButton sx={{ width:'5%',  maxWidth: 10, display:'flex', justifyContent: 'center' }} onClick={(e) => { e.stopPropagation(); }}>
+                            <ListItemButton sx={{ width:'5%',  maxWidth: 10, display:'flex', justifyContent: 'center' }} onClick={(e) => {e.stopPropagation(); handleAddItem();}}>
                                 <ListItemIcon sx={{display:'flex', justifyContent: 'center' }}>
                                         <AddIcon />
                                 </ListItemIcon>
@@ -67,7 +89,7 @@ export default function Channels(){
                     </List>
                 </nav>
             </Box>
-
+            {showModal && <ModalInput enteredId={channels.length + 1} addItem={addItem} />}                
         </>
     )
 }
