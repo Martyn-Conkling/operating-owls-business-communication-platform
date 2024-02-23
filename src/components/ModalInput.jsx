@@ -11,19 +11,18 @@ import PropTypes from 'prop-types';
 
 ModalInput.propTypes = {
     enteredId: PropTypes.number.isRequired,
-    addItem: PropTypes.func.isRequired
+    addItem: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 };
 
 export default function ModalInput(props){
-    
-    
     const [open, setOpen] = React.useState(true);
    
     const handleClose = () => {
         setOpen(false);
+        
+        props.onClose();
     };
-
-  
 
     return (
         <React.Fragment>
@@ -55,6 +54,7 @@ export default function ModalInput(props){
                         type="name"
                         fullWidth
                         variant="standard"
+                        autoComplete="off"
                     />
                 </DialogContent>
                 <DialogActions>
