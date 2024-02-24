@@ -1,0 +1,20 @@
+
+useEffect(() => {
+    // This code runs when the component mounts
+    const initialMessages = fetchInitialMessages();
+    setMessages(initialMessages);
+  }, []); // The empty array means this effect runs once on mount
+
+  const fetchInitialMessages = () => {
+    // Fetch messages from an API or define some initial messages
+    return [
+      
+    ];
+    // If fetching from an API, you'd typically use async/await here:
+    // async function fetchMessages() {
+    //   const response = await fetch('your-api-endpoint/messages');
+    //   const data = await response.json();
+    //   setMessages(data);
+    // }
+    // fetchMessages();
+  };
