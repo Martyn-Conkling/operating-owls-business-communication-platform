@@ -11,6 +11,15 @@
     box-sizing: border-box;
 }
 
+.channel-element{
+    border: 2px solid grey;
+    box-sizing: border-box;
+}
+
+.selected-channel{
+    background-color: lightblue;
+}
+
 #chat-section{
     height: 100%;
     width: calc(100% - 300px);

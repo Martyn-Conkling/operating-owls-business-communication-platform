@@ -1,7 +1,12 @@
 {
-    "channel10001": {
-        "channelName": "Bob Ross Fans",
-        "last50MessagesArray":[
+  "channelArray": [
+
+ 
+  {
+    "channelID": "channel10001",   
+    "channelName": "Bob Ross Fans",
+    "selectedBool":true,
+    "last50MessagesArray":[
             {
                 "messageId": "1001",
                 "userId": "u123",
@@ -87,10 +92,14 @@
                 "content": "Anyone interested in starting a weekly Bob Ross paint-along group? It could be a fun way to connect and share tips."
               }
         ]
-    },
-    "channel10002":{
-        "channelName": "Pokemon TCG",
-        "last50MessagesArray":[
+  },
+
+
+  {
+    "channelID": "channel10002",    
+    "channelName": "Pokemon TCG",
+    "selectedBool": false,
+    "last50MessagesArray":[
         {
             "messageId": "2001",
             "userId": "p201",
@@ -136,6 +145,6 @@
         ]
     }
     
-
+  ]  
 }
 
