@@ -27,8 +27,7 @@ export default function UserInputBox() {
 
     const handleSend = () => {
         if (!message.trim()) {
-            setError('Cannot send empty message!');
-            console.log('User tried to send empty message');
+             
             return;
         }
 

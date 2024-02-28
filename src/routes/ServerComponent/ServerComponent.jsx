@@ -1,4 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
+import Box from '@mui/system/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+
 
 import './ServerStyles.css';
 import data from './startingData.json';
@@ -29,10 +37,16 @@ const [messagesArray, setMessagesArray] = useState([...dataStore["channelArray"]
 
 const [newMessage, setNewMessage] = useState(blankMessage);
 
+const [error, setError] = useState('');
+
 
 const handleSendMessage = (event) => {
    
-    if (!newMessage.content.trim()) return; // Prevents sending empty messages
+    if (!newMessage.content.trim()){
+        setError('Cannot send empty message!');
+            console.log('User tried to send empty message');
+            return; // Prevents sending empty messages
+    } 
 
     // console.log(newMessage);
     // This assumes that the last message in the messagesArray will have the latest ID value
@@ -112,7 +126,47 @@ return (
 
 
     <div>
-    <textarea 
+    <Box component="section">
+            <form noValidate autoComplete="off">
+                <TextField
+                    label="Type a message..."
+                    color="secondary"
+                    multiline
+                    fullWidth
+                    value={newMessage.content}
+                    onChange={(e) => setNewMessage({...newMessage, content: e.target.value})}
+                    error={!!error}
+                    helperText={error}
+                 
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <ButtonGroup size="large" variant="elevated" aria-label="Basic button group">
+                                    <Button
+                                        component="label"
+                                        startIcon={<AttachFileIcon htmlColor="black" />}
+                                    >
+                                        <input
+                                            type="file"
+                                            hidden
+                                        />
+                                    </Button>
+                                    <Button
+                                        onClick={handleSendMessage}
+                                        startIcon={<SendIcon htmlColor="black" />}
+                                    >
+                                    </Button>
+                                </ButtonGroup>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </form>
+        </Box>
+
+
+
+    {/* <textarea 
             name="" 
             id="text-box" 
             cols="30" 
@@ -126,7 +180,7 @@ return (
           </textarea>
           <button 
             onClick={handleSendMessage}
-          >Send</button>
+          >Send</button> */}
 
 
     </div>
