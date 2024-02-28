@@ -27,7 +27,7 @@ export default function SignUpPage() {
 
 
     function validate(){
-        console.log(null)
+        return null
     }
 
     return (
@@ -36,13 +36,13 @@ export default function SignUpPage() {
         <CssBaseline />
         <Box
             sx={{
-            marginTop: 25,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            marginTop: 25,
             }}
         >
-            <Grid container spacing={-1}>
+            <Grid container spacing={-1} sx={{marginLeft: 100}}>
                 <Grid item xs={6}>
                     <Avatar sx={{ m: 1, bgcolor: 'black', ml: 33, mb: 3}}>
                         <BusinessIcon />
