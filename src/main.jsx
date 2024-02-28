@@ -15,6 +15,7 @@ import ChristianTestPage from './routes/ChristianTestPage.jsx';
 import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
 import CarlTestPage from './routes/CarlTestPage.jsx';
 import EmilyTestPage from './routes/EmilyTestPage.jsx';
+import ServerComponent from './routes/ServerComponent/ServerComponent.jsx';
 
 // import ErrorPage from "./error-page";
 
@@ -70,6 +71,12 @@ const router = createBrowserRouter([
     element: <EmilyTestPage></EmilyTestPage>
 
   },
+  {
+    path: "ServerComponent",
+    element: <ServerComponent></ServerComponent>
+
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
