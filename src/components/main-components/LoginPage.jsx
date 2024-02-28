@@ -18,7 +18,7 @@ export default function ChristianTestPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="s">
         <CssBaseline />
         <Box
           sx={{
@@ -28,21 +28,21 @@ export default function ChristianTestPage() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'black' }}>
+          <Avatar sx={{ m: 2, bgcolor: 'light gray' }}>
             <BusinessIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Welcome Back
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -65,7 +65,7 @@ export default function ChristianTestPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
@@ -75,7 +75,7 @@ export default function ChristianTestPage() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Need an account? Register"}
                 </Link>
               </Grid>
             </Grid>
