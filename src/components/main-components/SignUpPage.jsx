@@ -22,12 +22,26 @@ export default function SignUpPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordsMatch, setPasswordsMatch] = useState(false);
+    const [error, setError] = useState('');
 
-    const [error, setError] = useState();
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+    
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+    };
 
-
-    function validate(){
-        return null
+    function validate() {
+        console.log(email, username, password, confirmPassword);
+        if (password === confirmPassword) {
+            setPasswordsMatch(false);
+        } else {
+            setError("Password those not match")
+            setPasswordsMatch(true);
+        }
+        console.log(passwordsMatch)
     }
 
     return (
@@ -91,7 +105,7 @@ export default function SignUpPage() {
                             sx={{width: 420,
                                 ml:10
                             }}                        
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             value={password}
                             margin="normal"
                             required
@@ -99,13 +113,12 @@ export default function SignUpPage() {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
                         />
                         <TextField
                             sx={{width: 420,
                                 ml:10
                             }}                        
-                            onChange={e => setConfirmPassword(e.target.value)}
+                            onChange={handleConfirmPasswordChange}
                             value={confirmPassword}
                             margin="normal"
                             required
@@ -113,9 +126,8 @@ export default function SignUpPage() {
                             label="Confirm Password"
                             type="password"
                             id="confirm password"
-                            autoComplete="current-password"
-                            // error={!validate}
-                            // helperText={error}
+                            error={passwordsMatch}
+                            helperText={error}
                         />
                         <Button                   
                             onClick={validate}
