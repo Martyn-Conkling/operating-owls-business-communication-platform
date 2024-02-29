@@ -10,7 +10,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 import './ServerStyles.css';
 import data from './startingData.json';
-
+import Channels from "../../components/main-components/Channels"
 
 
 
@@ -33,12 +33,22 @@ const [dataStore, setDataStore] = useState(data);
 const [selectedChannel, setSelectedChannel] = useState(0);
 
 
-const [messagesArray, setMessagesArray] = useState([...dataStore["channelArray"][selectedChannel]["last50MessagesArray"]]);
+const [messagesArray, setMessagesArray] = useState([]);
+useEffect(() => {
+    if (dataStore["channelArray"][selectedChannel]) {
+      setMessagesArray([...dataStore["channelArray"][selectedChannel]["last50MessagesArray"]]);
+    }
+  }, [dataStore, selectedChannel]);
+
 
 const [newMessage, setNewMessage] = useState(blankMessage);
 
+
 const [error, setError] = useState('');
 
+const handleChannelSelect = (channelId) => {
+    setSelectedChannel(channelId);
+}
 
 const handleSendMessage = (event) => {
    
@@ -86,6 +96,12 @@ return (
 <div className="server-container">
 
 <div id='channel-list'>
+    <Channels 
+        onSelectChannel={handleChannelSelect}
+        defaultChannel={selectedChannel}
+    />
+
+ {/*   
 <h2>Text Channels</h2>
 <input type="text" />
 <button>Create Channel</button>
@@ -99,11 +115,11 @@ return (
 
     ))}
    
-
+    */  }
 </div>
 
 <div id='chat-section'>
-    <h2>Text Channel:{dataStore["channelArray"][selectedChannel]["channelName"]}</h2>
+    <h2>Text Channel:{dataStore["channelArray"][selectedChannel]?.channelName}</h2>
     
     <div id='message-list'>
         {/* dynamically renders the messages based on data */}

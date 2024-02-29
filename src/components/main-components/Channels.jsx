@@ -8,18 +8,21 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import IndivChannel from '../IndivChannel';
 import AddIcon from '@mui/icons-material/Add';
-import channelData from '../../data/channelData'
+//import channelData from '../../data/channelData'
+import channelData from '../../routes/ServerComponent/startingData.json'
 import ModalInput from '../ModalInput';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 
 
-export default function Channels(){
+export default function Channels(props){
     const [open, setOpen] = React.useState(true); //for the collapsible list
-    const [channels, setChannels] = React.useState(channelData); //to ensure we have responsive channels
+    const [channels, setChannels] = React.useState(channelData.channelArray); //to ensure we have responsive channels
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
-    const [selectedIndex, setSelectedIndex] = React.useState(1); //for the selected list item
+    const [selectedIndex, setSelectedIndex] = React.useState(props.defaultChannel); //for the selected list item
 
+
+    console.log('Selected Index ' + selectedIndex);
     const handleClick = () => {
         setOpen(!open);
     };
@@ -33,8 +36,8 @@ export default function Channels(){
         setChannels( (prevChannels) => 
             [...prevChannels,
                 {
-                    id: idInput,
-                    name: nameInput
+                    channelID: idInput,
+                    channelName: nameInput
                 }
             ]
         );
@@ -44,30 +47,30 @@ export default function Channels(){
     
     const deleteItem = (itemId) => {
         setChannels((prevChannels) =>
-        prevChannels.filter((channel) => channel.id !== itemId));
+        prevChannels.filter((channel) => channel.channelID !== itemId));
     }
 
     const handleModalClose = () => {
         setShowModal(false);
     }
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
+    const handleListItemClick = (event, channelId) => {
+        setSelectedIndex(channelId);
+        props.onSelectChannel(channelId);
     };
     
     const channelElements = channels.map(channel => (
         <IndivChannel 
-            key={channel.id}
-            name={channel.name}
-            onClick={(event)=> handleListItemClick(event, channel.id)}
-            selected={selectedIndex === channel.id}
-            deleteChannel={()=> deleteItem(channel.id)}
+            key={channel.channelID}
+            name={channel.channelName}
+            onClick={(event)=> handleListItemClick(event, channel.channelID)}
+            selected={selectedIndex === channel.channelID}
+            deleteChannel={()=> deleteItem(channel.channelID)}
         />
     ))
     
     return (
         <>
-            <h1>Welcome to Ashton's Test page</h1>
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}> 
                 <nav>
                     <List component="nav">
