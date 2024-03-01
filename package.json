@@ -14,8 +14,13 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.6",
+<<<<<<< HEAD
     "@mui/material": "^5.15.11",
     "@nextui-org/react": "^2.2.9",
+=======
+    "@mui/material": "^5.15.10",
+    "dotenv": "^16.4.5",
+>>>>>>> 82fbb899598aa775721b7b082e17830800f35eae
     "firebase": "^10.8.0",
     "firebaseui": "^6.1.0",
     "install": "^0.13.0",
