@@ -64,7 +64,7 @@ const handleSendMessage = (event) => {
     // console.log(newMessage);
     // This assumes that the last message in the messagesArray will have the latest ID value
 
-    const lastMessageId = messagesArray[messagesArray.length-1].messageId;
+    const lastMessageId =  messagesArray.length > 0 ? messagesArray[messagesArray.length - 1].messageId : 0;
     const newMessageId = String(Number(lastMessageId) + 1);
     const timestamp = new Date().toISOString();
 
