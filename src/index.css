@@ -71,3 +71,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+.remove-underline {
+  text-decoration: none;
+}
+
+.logo {
+  width: 3rem;
+  height: 3rem;
+}

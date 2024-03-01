@@ -5,7 +5,7 @@ import {
   Typography,
   Stack,
   IconButton,
-  Badge
+  Badge,
 } from "@mui/material";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
@@ -24,12 +24,11 @@ import { Link } from 'react-router-dom';
 */
 
 export default function Navigation() {
-
   return (
     <AppBar
       position="static"
       sx={{
-        width: "6rem",
+        width: "10vw",
         bgcolor: "primary.main",
         position: "relative",
         boxShadow: 0,
@@ -56,25 +55,25 @@ export default function Navigation() {
           >
             <BusinessIcon />
           </IconButton>
-          <Stack direction="column" spacing={2} width={"100%"}>
-            <Link to={`/alejandro-test-page`}
-            >
+          <Stack 
+            // direction="column" spacing={2} width={"100%"}
+            sx={{
+              flexDirection: "column",
+              m: "auto",
+              gap: 2,
+            }}
+          >
+            <Link className="remove-underline" to={`/alejandro-test-page`}>
               <Badge badgeContent={5} color="success">
                 <NotificationsActiveOutlinedIcon fontSize="large" />
               </Badge>
               <Typography variant="subtitle2">New</Typography>
             </Link>
-            <Link to={`/ashton-test-page`}
-              sx={{
-                color: "primary.dark",
-                display: "block",
-                borderRadius: "0",
-              }}
-            >
+            <Link className="remove-underline" to={`/ashton-test-page`} >
               <QuestionAnswerOutlinedIcon fontSize="large" />
               <Typography variant="subtitle2">DMs</Typography>
             </Link>
-            <Link to={`/jaskirat-test-page`}
+            <Link className="remove-underline" to={`/jaskirat-test-page`}
               sx={{
                 color: "primary.dark",
                 display: "block",
@@ -85,7 +84,7 @@ export default function Navigation() {
               <Typography variant="subtitle2">Files</Typography>
             </Link>
           </Stack>
-          <Link to={`/martyns-test-page`}
+          <Link to={`/user-settings-page`}
             sx={{
               color: "primary.dark",
               display: "block",

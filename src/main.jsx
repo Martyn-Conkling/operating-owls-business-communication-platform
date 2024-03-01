@@ -16,9 +16,22 @@ import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
 import CarlTestPage from './routes/CarlTestPage.jsx';
 import EmilyTestPage from './routes/EmilyTestPage.jsx';
 import ServerComponent from './routes/ServerComponent/ServerComponent.jsx';
+import UserSettingsPage from './routes/UserSettingsPage.jsx';
 
 // import ErrorPage from "./error-page";
-
+// THEME
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { purple, grey } from "@mui/material/colors";
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: grey[300],
+      main: grey[50],
+      dark: purple[900],
+      contrastText: grey[900],
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -76,11 +89,17 @@ const router = createBrowserRouter([
     element: <ServerComponent></ServerComponent>
 
   },
+  {
+    path: "user-settings-page",
+    element:<UserSettingsPage></UserSettingsPage>
+  },
 
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 )
