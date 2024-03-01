@@ -10,12 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.6",
-    "@mui/material": "^5.15.10",
-    "firebase": "^10.6.0",
+    "@mui/material": "^5.15.11",
+    "@nextui-org/react": "^2.2.9",
+    "firebase": "^10.8.0",
     "firebaseui": "^6.1.0",
     "install": "^0.13.0",
     "npm": "^10.4.0",
