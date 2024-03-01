@@ -1,0 +1,58 @@
+.channelBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.avatarBadge {
+    position: relative;
+    width: 48px; 
+    height: 48px; 
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px; 
+}
+
+.avatarBadge span {
+    margin-left: 10px;
+}
+
+.BadgesCont {
+    position: absolute;
+    top: 10px;
+    right: 28px;
+    font-size: 18px;
+    width: 100vh;
+}
+
+.WelCont {
+    padding: 10px;
+}
+
+.pinnedChanComp {
+    color: rgb(255, 255, 255);
+    background-color: rgb(115, 0, 255);
+    padding: 10px;
+    border-radius: 30px;
+    display: inline-block;
+    width: 100%;
+}
+  
+.activeChanComp {
+    color: rgb(255, 255, 255);
+    background-color: rgb(115, 0, 255);
+    padding: 10px;
+    border-radius: 30px;
+    display: inline-block;
+    width: 100%;
+}
+
+
+  
+
+
+

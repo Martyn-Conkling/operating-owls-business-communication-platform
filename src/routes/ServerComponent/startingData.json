@@ -3,9 +3,8 @@
 
  
   {
-    "channelID": "channel10001",   
+    "channelID": 0,   
     "channelName": "Bob Ross Fans",
-    "selectedBool":true,
     "last50MessagesArray":[
             {
                 "messageId": "1001",
@@ -96,9 +95,8 @@
 
 
   {
-    "channelID": "channel10002",    
+    "channelID": 1,    
     "channelName": "Pokemon TCG",
-    "selectedBool": false,
     "last50MessagesArray":[
         {
             "messageId": "2001",

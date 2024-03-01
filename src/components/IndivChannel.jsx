@@ -3,7 +3,6 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TagIcon from '@mui/icons-material/Tag';
 import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
