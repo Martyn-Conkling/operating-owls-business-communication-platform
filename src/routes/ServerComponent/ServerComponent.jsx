@@ -29,15 +29,18 @@ let blankMessage = {
 const messagesEndRef = useRef(null);
 
 
-const [dataStore, setDataStore] = useState(data);
+const [dataStore, setDataStore] = useState(data.channelArray);
 const [selectedChannel, setSelectedChannel] = useState(0);
 
 
 const [messagesArray, setMessagesArray] = useState([]);
 useEffect(() => {
-    if (dataStore["channelArray"][selectedChannel]) {
-      setMessagesArray([...dataStore["channelArray"][selectedChannel]["last50MessagesArray"]]);
+    const selectedChannelID = selectedChannel;
+    const selectedChannelData = dataStore.find(channel => channel.channelID === selectedChannelID);
+    if (selectedChannelData) {
+        setMessagesArray([...selectedChannelData["last50MessagesArray"]]);
     }
+    console.log(dataStore)
   }, [dataStore, selectedChannel]);
 
 
@@ -99,6 +102,7 @@ return (
     <Channels 
         onSelectChannel={handleChannelSelect}
         defaultChannel={selectedChannel}
+        setDataStore={setDataStore}
     />
 
  {/*   
@@ -119,7 +123,8 @@ return (
 </div>
 
 <div id='chat-section'>
-    <h2>Text Channel:{dataStore["channelArray"][selectedChannel]?.channelName}</h2>
+    <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
+
     
     <div id='message-list'>
         {/* dynamically renders the messages based on data */}

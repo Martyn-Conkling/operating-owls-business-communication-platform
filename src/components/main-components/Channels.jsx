@@ -21,7 +21,10 @@ export default function Channels(props){
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
     const [selectedIndex, setSelectedIndex] = React.useState(props.defaultChannel); //for the selected list item
 
-
+    React.useEffect(()=> {
+        props.setDataStore(channels);
+    }, [channels])
+   
     console.log('Selected Index ' + selectedIndex);
     const handleClick = () => {
         setOpen(!open);
@@ -33,16 +36,19 @@ export default function Channels(props){
     }
 
     const addItem = (idInput, nameInput) => {
+        //console.log(channels)
+        const newChannel = {
+            "channelID": idInput,
+            "channelName": nameInput,
+            "last50MessagesArray":[]
+        };
         setChannels( (prevChannels) => 
-            [...prevChannels,
-                {
-                    channelID: idInput,
-                    channelName: nameInput
-                }
+            [...prevChannels, newChannel
             ]
         );
-
         setShowModal(false);
+        
+       // console.log(channels);
     }
     
     const deleteItem = (itemId) => {
@@ -105,7 +111,7 @@ export default function Channels(props){
                     </List>
                 </nav>
             </Box>
-            {showModal && <ModalInput enteredId={channels.length + 1} addItem={addItem} onClose={handleModalClose}/>}                
+            {showModal && <ModalInput enteredId={channels.length} addItem={addItem} onClose={handleModalClose}/>}                
         </>
     )
 }
