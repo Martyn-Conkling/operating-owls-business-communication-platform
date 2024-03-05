@@ -1,0 +1,10 @@
+.message-box {
+    background-color: white;
+    width: 850px;
+}
+
+.date-and-time {
+    font-family: "Inter"; /* import Figma font */
+    color: "7B7B7B";
+
+}
