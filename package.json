@@ -16,7 +16,6 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.11",
     "@nextui-org/react": "^2.2.9",
-    "@mui/material": "^5.15.10",
     "dotenv": "^16.4.5",
     "firebase": "^10.8.0",
     "firebaseui": "^6.1.0",
