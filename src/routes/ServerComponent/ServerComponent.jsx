@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-
+import Message from "../../components/main-components/Message.jsx";
 
 import './ServerStyles.css';
 import data from './startingData.json';
@@ -66,12 +66,12 @@ const handleSendMessage = (event) => {
 
     const lastMessageId =  messagesArray.length > 0 ? messagesArray[messagesArray.length - 1].messageId : 0;
     const newMessageId = String(Number(lastMessageId) + 1);
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toISOString;
 
     const updatedNewMessage = {
         ...newMessage,
         messageId: newMessageId,
-        timestamp: timestamp,
+        timestamp: timestamp
     };
 
     // console.log(updatedNewMessage)
@@ -131,12 +131,11 @@ return (
         {messagesArray.map((message, index) => (
         
         <div className='message-element' key={index}>
-            <h3>{message.username}</h3>
-            <p>User ID: {message.userId}</p>
-            <p>Timestamp:{message.timestamp}</p>
-            <p>Message ID: {message.messageId}</p>
-            <p>Message Content: {message.content}</p>
-    
+            <Message
+                displayName={message.username}
+                time={message.timestamp}
+                messageContent={message.content}
+            />
         </div>
         ))}
 

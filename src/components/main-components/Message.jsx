@@ -1,4 +1,4 @@
-import "../MessageComponent/Message.css"
+import '../../css/Message.css';
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -14,27 +14,28 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { Typography } from "@mui/material";
 
 export default function Message(props) {
 
     const [anchorEl, setAnchorEl] = React.useState(null)
 
     function handleClick(event) {
-      console.log("Ran")
+      console.log("Open")
       if (open !== event.currentTarget) {
         setAnchorEl(event.currentTarget)
       }
     }
 
     function handleClose() {
-      console.log("Closed")
+      console.log("Close")
       setAnchorEl(null);
     }
 
     return (
         <div>
         <List className="message-box">
-            <Divider className="date-and-time">{props.time + ", " + props.date} </Divider>
+            <Divider style={{color: "#7B7B7B",fontSize: "1rem", fontFamily: "Inter"}}>{props.time} </Divider>
             <ListItem alignItems="flex-start"
                 secondaryAction={
                     <IconButton 
@@ -46,41 +47,43 @@ export default function Message(props) {
                       >
                         <MoreVertIcon />
                           <Menu 
-                            sx={{ width: 250, maxWidth: '100%' }} 
+                            sx={{ width: 250, maxWidth: '100%'}} 
                             id="simple-menu"
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
                             MenuListProps={{ onMouseLeave: handleClose }}
                             >
-                              <MenuItem onClick={handleClose}>
+                              <MenuItem>
                                   <ListItemIcon>
                                     <EditNoteIcon fontSize="medium"/>
                                   </ListItemIcon>
-                                  <ListItemText>Edit Message</ListItemText>
+                                  <ListItemText><Typography style={{fontFamily: "Inter", color: "#1E1E1E"}}>Edit Message</Typography></ListItemText>
                               </MenuItem>
-                              <MenuItem onClick={handleClose}>
+                              <MenuItem >
                                   <ListItemIcon>  
                                     <DeleteIcon fontSize="medium"/> 
                                   </ListItemIcon>
-                                  <ListItemText>Delete Message</ListItemText>
+                                  <ListItemText><Typography style={{fontFamily: "Inter"}}>Delete Message</Typography></ListItemText>
                               </MenuItem>
-                              <MenuItem onClick={handleClose}>
+                              <MenuItem>
                                   <ListItemIcon>
                                     <ReplyIcon fontSize="medium" />
                                   </ListItemIcon>
-                                  <ListItemText>Reply</ListItemText>
+                                  <ListItemText><Typography style={{fontFamily: "Inter"}}>Reply</Typography></ListItemText>
                               </MenuItem>
                         </Menu>
                     </IconButton>
                 }>
                 <ListItemAvatar>
-                    <Avatar alt={props.firstName} src="/static/images/avatar/1.jpg" />
+                    <Avatar variant="rounded" alt={props.displayName} src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
                 <ListItemText
-                    primary={props.firstName + " " + props.lastName}
-                    secondary={
-                        <React.Fragment>{props.messageContent}</React.Fragment>
-                    }
+                    disableTypography={true}
+                    className="first-and-lastname"
+                    primary={<Typography style={{color: "#270157", fontSize: "1.33rem", fontFamily:"Inter-SemiBold"}} className="display--name">{props.displayName}</Typography>}
+                    secondary={<Typography style={{color: "#000000" ,fontSize: "1rem", fontFamily: "Inter"}}>
+                      <React.Fragment>{props.messageContent}</React.Fragment>
+                      </Typography>}
                 />
             </ListItem>
         </List>
