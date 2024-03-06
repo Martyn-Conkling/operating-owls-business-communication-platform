@@ -6,17 +6,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-
-
 import './ServerStyles.css';
 import data from './startingData.json';
 import Channels from "../../components/main-components/Channels"
 
 
-
+//displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
-
-
 
 let blankMessage = {
     "messageId": null,
@@ -27,18 +23,22 @@ let blankMessage = {
 }
 
 const messagesEndRef = useRef(null);
-
-
-const [dataStore, setDataStore] = useState(data.channelArray);
-const [selectedChannel, setSelectedChannel] = useState(0);
+const [dataStore, setDataStore] = useState(data.channelArray); //holds the state of the channels to update when changed
+const [selectedChannel, setSelectedChannel] = useState(0); //defaults selected channel to the first
 
 
 const [messagesArray, setMessagesArray] = useState([]);
+
+//connects the selected channel to its corresponding messages
 useEffect(() => {
     const selectedChannelID = selectedChannel;
     const selectedChannelData = dataStore.find(channel => channel.channelID === selectedChannelID);
     if (selectedChannelData) {
         setMessagesArray([...selectedChannelData["last50MessagesArray"]]);
+    }
+    //displays no messages if no channels exist
+    if(dataStore.length == 0){
+        setMessagesArray([]);
     }
     console.log(dataStore)
   }, [dataStore, selectedChannel]);
@@ -96,33 +96,21 @@ return (
 
 
 <>
+
 <div className="server-container">
 
+{}
 <div id='channel-list'>
+    {/* pass the channel selection, default channel, and update channels as props */}
     <Channels 
         onSelectChannel={handleChannelSelect}
         defaultChannel={selectedChannel}
         setDataStore={setDataStore}
     />
-
- {/*   
-<h2>Text Channels</h2>
-<input type="text" />
-<button>Create Channel</button>
-    {dataStore["channelArray"].map((channelData, index) => (
-        <div className={`channel-element ${channelData.selectedBool ? 'selected-channel' : ''}`}
-            key={index}>
-
-            <h3>{channelData.channelName}</h3>
-          
-        </div>
-
-    ))}
-   
-    */  }
 </div>
 
 <div id='chat-section'>
+    {/* connects channels selected channel name to display */}
     <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
 
     
