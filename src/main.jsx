@@ -1,22 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 
-import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from './routes/Root.jsx';
-import AlejandroTestPage from './routes/AlejandroTestPage.jsx';
-import AshtonTestPage from './routes/AshtonTestPage.jsx';
-import JaskiratTestPage from './routes/JaskiratTestPage.jsx';
-import MartynsTestPage from './routes/martyns-files/MartynsTestPage.jsx';
-import MilesTestPage from './routes/MilesTestPage.jsx';
-import ChristianTestPage from './routes/ChristianTestPage.jsx';
-import ElizabethTestPage from './routes/ElizabethTestPage.jsx';
-import CarlTestPage from './routes/CarlTestPage.jsx';
-import EmilyTestPage from './routes/EmilyTestPage.jsx';
-import ServerComponent from './routes/ServerComponent/ServerComponent.jsx';
-import UserSettingsPage from './routes/UserSettingsPage.jsx';
+import Root from "./routes/Root.jsx";
+import AlejandroTestPage from "./routes/AlejandroTestPage.jsx";
+import AshtonTestPage from "./routes/AshtonTestPage.jsx";
+import JaskiratTestPage from "./routes/JaskiratTestPage.jsx";
+import MartynsTestPage from "./routes/martyns-files/MartynsTestPage.jsx";
+import MilesTestPage from "./routes/MilesTestPage.jsx";
+import ChristianTestPage from "./routes/ChristianTestPage.jsx";
+import ElizabethTestPage from "./routes/ElizabethTestPage.jsx";
+import CarlTestPage from "./routes/CarlTestPage.jsx";
+import EmilyTestPage from "./routes/EmilyTestPage.jsx";
+import ServerComponent from "./routes/ServerComponent/ServerComponent.jsx";
+import SettingsPage from "./routes/SettingsPage.jsx";
 
 // import ErrorPage from "./error-page";
 // THEME
@@ -36,70 +36,59 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root/>,
-    
+    element: <Root />,
   },
   {
     path: "alejandro-test-page",
-    element: <AlejandroTestPage></AlejandroTestPage>
+    element: <AlejandroTestPage></AlejandroTestPage>,
   },
   {
     path: "ashton-test-page",
-    element:<AshtonTestPage></AshtonTestPage>
+    element: <AshtonTestPage></AshtonTestPage>,
   },
 
   {
     path: "jaskirat-test-page",
-    element: <JaskiratTestPage></JaskiratTestPage>
-
-  }
-  ,
+    element: <JaskiratTestPage></JaskiratTestPage>,
+  },
   {
     path: "martyns-test-page",
-    element: <MartynsTestPage></MartynsTestPage>
-    
+    element: <MartynsTestPage></MartynsTestPage>,
   },
   {
     path: "miles-test-page",
-    element: <MilesTestPage></MilesTestPage>
-    
+    element: <MilesTestPage></MilesTestPage>,
   },
   {
     path: "christian-test-page",
-    element: <ChristianTestPage></ChristianTestPage>
-
+    element: <ChristianTestPage></ChristianTestPage>,
   },
-  { 
+  {
     path: "elizabeth-test-page",
-    element: <ElizabethTestPage></ElizabethTestPage>
-
+    element: <ElizabethTestPage></ElizabethTestPage>,
   },
-  { 
+  {
     path: "carl-test-page",
-    element: <CarlTestPage></CarlTestPage>
-
+    element: <CarlTestPage></CarlTestPage>,
   },
   {
     path: "emily-test-page",
-    element: <EmilyTestPage></EmilyTestPage>
-
+    element: <EmilyTestPage></EmilyTestPage>,
   },
   {
     path: "ServerComponent",
-    element: <ServerComponent></ServerComponent>
-
+    element: <ServerComponent></ServerComponent>,
   },
   {
     path: "user-settings-page",
-    element:<UserSettingsPage></UserSettingsPage>
+    element: <SettingsPage></SettingsPage>,
   },
-
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

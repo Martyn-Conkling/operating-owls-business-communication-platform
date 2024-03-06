@@ -15,11 +15,14 @@ IndivChannel.propTypes = {
     deleteChannel: PropTypes.func.isRequired
 };
 
+//component for each individual channel
 export default function IndivChannel(props){
     
     return (
         <>
+        {/* Shows delete button based on hover*/}
         <ListItem 
+            
             sx={{
                 '&:hover .hover-visible': {
                     display: 'block',
@@ -41,6 +44,7 @@ export default function IndivChannel(props){
                 {...props}
                 
             >
+            {/* More visual effects for channel display*/}
                 <ListItemIcon>
                     <TagIcon />
                 </ListItemIcon>

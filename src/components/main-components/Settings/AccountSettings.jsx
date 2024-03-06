@@ -1,5 +1,6 @@
-import { Box, Grid, Avatar, Typography, Switch, Button } from "@mui/material";
-import profile from "../../data/profile";
+import { useState } from "react";
+import { Box, Grid, Avatar, Typography,  Button } from "@mui/material";
+import profile from "../../../data/profile";
 import FormControlLabel from "@mui/material/FormControlLabel";
 // Create user profile Settings
 // Profile Image - replaceable
@@ -8,7 +9,15 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 // password - change password option
 // Appearance
 // - Light/Dark mode
-export default function UserProfile() {
+export default function AccountSettings() {
+  // Edit function
+  const [editing, setEditing] = useState(false);
+  
+  const editProfile = () => {
+    setEditing(true);
+    console.log('Editing')
+  }
+
   return (
     <Box
       sx={{
@@ -23,10 +32,12 @@ export default function UserProfile() {
         sx={{
           width: "80%",
           margin: "auto",
-          p: 3
+          p: 3,
+          alignItems: "center",
+          justifyContent: "space-between"
         }}
       >
-        <Grid item xs={2}>
+        <Grid item >
           <Avatar
             sx={{
               width: "4rem",
@@ -34,20 +45,22 @@ export default function UserProfile() {
             }}
           />
         </Grid>
-        <Grid item xs={7}>
+        <Grid item >
           <Typography variant="h5">Nickname</Typography>
         </Grid>
         <Grid item>
-          <Button variant="outlined">Edit Profile</Button>
+          <Button variant="outlined" onClick={editProfile}>Edit Profile</Button>
         </Grid>
         {/* Grid for Items inside the main grid */}
-        <Grid container spacing={2}
+        <Grid
+          container
+          spacing={2}
           sx={{
             width: "100",
             margin: "2rem auto",
             padding: "1rem 0.5rem",
             backgroundColor: "primary.light",
-            color: "primary.contrastText"
+            color: "primary.contrastText",
           }}
         >
           <Grid item xs={10}>
