@@ -9,21 +9,42 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { auth } from '../test/firebaseConfig'; 
-import { Grid } from '@mui/material';
+import { Grid, Hidden } from '@mui/material';
 import LightBulbImage from './LightBulb';
 import BusinessIcon from './BusinessIcon';
+import { auth } from '../test/firebaseConfig';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+// import { white, purple } from '@mui/material/colors';
+
 
 export default function SignUpPage() {
 
+    //MUI
     const theme = createTheme();
 
+
+    //Sign Up Inputs
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    //Password not matching authentication
     const [passwordsMatch, setPasswordsMatch] = useState(false);
-    const [error, setError] = useState('');
+    const [passwordsMatchErrorMessage, setPasswordsMatchErrorMessage] = useState('');
+
+    //Email valid authentication
+    const [emailValid, setEmailValid] = useState(false);
+    const [emailValidMessage, setEmailValidMessage] = useState(false);
+
+    //Email already in use authentication
+    const [EmailUsed, setEmailUsed] = useState(false);
+    const [EmailUsedMessage, setEmailUsedMessage] = useState('');
+    
+    //Check if password is weak
+    const [passwordStrong, setPasswordStrong] = useState(false);
+    const [passwordStrongMessage, setPasswordStrongMessage] = useState('');
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -33,20 +54,69 @@ export default function SignUpPage() {
         setConfirmPassword(e.target.value);
     };
 
+    function setErrorMessageBlank(){
+        setPasswordsMatch(false)
+        setPasswordsMatchErrorMessage('');
+        setEmailValid(false)
+        setEmailValidMessage('');
+        setEmailUsed(false)
+        setEmailUsedMessage('')
+        setPasswordStrong(false)
+        setPasswordStrongMessage('')
+    }
+
     function validate() {
-        console.log(email, username, password, confirmPassword);
+        setErrorMessageBlank()
+        //set all error messages back to blank
         if (password === confirmPassword) {
             setPasswordsMatch(false);
+
+            //Firebase Sign Up
+
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+            // Signed up 
+                const user = userCredential.user;
+                console.log(`logged in ${user}`)
+            // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                // const errorMessage = error.message;
+                console.log(errorCode)
+                if (errorCode === "auth/invalid-email") {
+                    setEmailValid(true)
+                    setEmailValidMessage("Invalid Email")
+                }
+                if (errorCode === "auth/email-already-in-use") {
+                    setEmailUsed(true)
+                    setEmailUsedMessage("Email already in use")
+                }
+                if (errorCode === 'auth/weak-password') {
+                    setPasswordStrong(true)
+                    setPasswordStrongMessage('Password to weak')
+                }
+            // ..
+
+            });
         } else {
-            setError("Password those not match")
+            setPasswordsMatchErrorMessage("Password do not match")
             setPasswordsMatch(true);
         }
-        console.log(passwordsMatch)
     }
+    
+    const styles = {
+        root: {
+            background: "black"
+        },
+        input: {
+            color: "white"
+        }
+    };
 
     return (
     <ThemeProvider theme={theme}>
-        <Container component="main">
+        <Container component="main" sx={{}}>
         <CssBaseline />
         <Box
             sx={{
@@ -54,29 +124,24 @@ export default function SignUpPage() {
             flexDirection: 'column',
             alignItems: 'center',
             marginTop: 25,
+            
             }}
         >
-            <Grid container spacing={-1} sx={{marginLeft: 100}}>
-                <Grid item xs={6}>
-                    <Avatar sx={{ m: 1, bgcolor: 'black', ml: 33, mb: 3}}>
+            <Grid container spacing={-1} sx={{}}>
+                <Grid item xs={6} sx={{bgcolor: '#323232', borderRadius: '10%', overflow: "hidden", height: "650px", width: "85vw"}}>
+                    <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47.5%", mb: "2%"}}>
                         <BusinessIcon />
                     </Avatar>
-                    <Typography variant="h5" sx={{ml:30}}>
-                    Welcome
+                    <Typography variant="h5" sx={{ml:"43%", mb: 1.5, color:"#ffffff"}}>
+                        Welcome
                     </Typography>
                     <Typography variant="h7" sx={{
-                        textDecoration: 'underline',
-                        paddingTop: '3px',
-                        ml: 28
-                    }}>
+                        textDecoration: 'underline', ml: "39.5%",color:"#ffffff"}}>
                     Lets get you set up
                     </Typography>
                     <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
                         <TextField
-                            sx={{width: 420,
-                                ml:10
-                                
-                            }}
+                            sx={{width: "60%", ml:"22%", mr:"5%",}}
                             onChange={e => setEmail(e.target.value)}
                             value={email}
                             margin="normal"
@@ -86,11 +151,14 @@ export default function SignUpPage() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            error={emailValid || EmailUsed}
+                            helperText={emailValidMessage || EmailUsedMessage}
                         />
                         <TextField
-                            sx={{width: 420,
-                                ml:10
-                            }}                           
+                            sx={{width: "60%",
+                            ml:"22%",
+                            mr:"5%"
+                        }}                         
                             onChange={e => setUsername(e.target.value)}
                             value={username}
                             margin="normal"
@@ -102,9 +170,10 @@ export default function SignUpPage() {
                             autoFocus
                         />
                         <TextField
-                            sx={{width: 420,
-                                ml:10
-                            }}                        
+                            sx={{width: "60%",
+                            ml:"22%",
+                            mr:"5%"
+                        }}                        
                             onChange={handlePasswordChange}
                             value={password}
                             margin="normal"
@@ -113,11 +182,14 @@ export default function SignUpPage() {
                             label="Password"
                             type="password"
                             id="password"
+                            error={passwordStrong}
+                            helperText={passwordStrongMessage}
                         />
                         <TextField
-                            sx={{width: 420,
-                                ml:10
-                            }}                        
+                            sx={{width: "60%",
+                            ml:"22%",
+                            mr:"5%"
+                        }}                        
                             onChange={handleConfirmPasswordChange}
                             value={confirmPassword}
                             margin="normal"
@@ -127,23 +199,20 @@ export default function SignUpPage() {
                             type="password"
                             id="confirm password"
                             error={passwordsMatch}
-                            helperText={error}
+                            helperText={passwordsMatchErrorMessage}
                         />
                         <Button                   
                             onClick={validate}
                             type="button"
                             color='secondary'
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, borderRadius: 3, width: 420, ml:10}}
+                            sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
                         >
                             Sign Up
                         </Button>
                         <br/>
-                        <Typography variant="h7" sx={{ml:23}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
+                        <Typography variant="h7" sx={{ml:"29%", color:"#ffff"}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
                     </Box>
-                </Grid>
-                <Grid item xs={6}>
-                    <LightBulbImage/>
                 </Grid>
             </Grid>
         </Box>
