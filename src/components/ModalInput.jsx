@@ -15,17 +15,21 @@ ModalInput.propTypes = {
     onClose: PropTypes.func.isRequired
 };
 
+//modal component allows for adding new channels 
 export default function ModalInput(props){
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(true); //for making modal appear/disappear
    
+    {/* function to close modal */}
     const handleClose = () => {
         setOpen(false);
         
         props.onClose();
     };
 
+
     return (
         <React.Fragment>
+            {/* creates form to fill in channel name for the channel creation, uses FormData to parse the entered info  */}
             <Dialog
                 open={open}
                 onClose={handleClose}

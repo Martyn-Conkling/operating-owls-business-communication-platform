@@ -8,69 +8,102 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import IndivChannel from '../IndivChannel';
 import AddIcon from '@mui/icons-material/Add';
-import channelData from '../../data/channelData'
+//import channelData from '../../data/channelData'
+import channelData from '../../routes/ServerComponent/startingData.json'
 import ModalInput from '../ModalInput';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 
-
-export default function Channels(){
+//Channel Component displays selection of channels for viewing selection
+export default function Channels(props){
     const [open, setOpen] = React.useState(true); //for the collapsible list
-    const [channels, setChannels] = React.useState(channelData); //to ensure we have responsive channels
+    const [channels, setChannels] = React.useState(channelData.channelArray); //to ensure channels update whenever we edit
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
-    const [selectedIndex, setSelectedIndex] = React.useState(1); //for the selected list item
+    const [selectedIndex, setSelectedIndex] = React.useState(props.defaultChannel); //for the selected list item visual
 
-    const handleClick = () => {
+    //ensures channels update with ServerComponent
+    React.useEffect(()=> {
+        props.setDataStore(channels);
+    }, [channels])
+   
+
+    console.log('Selected Index ' + selectedIndex);
+    //handles the collapsible menu
+    const handleCollapseClick = () => {
         setOpen(!open);
     };
 
+    //opens modal to add new channel
     const handleAddItem = () => {
         console.log("clicked +");
         setShowModal(true);
     }
 
+    //adds new channel to the array
     const addItem = (idInput, nameInput) => {
+        //console.log(channels)
+        const newChannel = {
+            "channelID": idInput,
+            "channelName": nameInput,
+            "last50MessagesArray":[]
+        };
         setChannels( (prevChannels) => 
-            [...prevChannels,
-                {
-                    id: idInput,
-                    name: nameInput
-                }
+            [...prevChannels, newChannel
             ]
         );
-
         setShowModal(false);
+        
+       // console.log(channels);
     }
     
+    //deletes channel by filtering and selecting the channel to delete
     const deleteItem = (itemId) => {
-        setChannels((prevChannels) =>
-        prevChannels.filter((channel) => channel.id !== itemId));
+        setChannels((prevChannels) => {
+
+        if(prevChannels.length != 1) {
+            //finds the index
+            const indexToDelete = prevChannels.findIndex((channel) => channel.channelID === itemId);
+            //ensures that we navigate to the channel above
+            const updatedChannels = prevChannels.filter((channel) => channel.channelID !== itemId);
+            const newIndex = indexToDelete > 0 ? indexToDelete - 1 : 0;
+            setSelectedIndex(newIndex);
+            props.onSelectChannel(updatedChannels[newIndex].channelID);
+            return updatedChannels;
+        }
+        return prevChannels.filter((channel) => channel.channelID !== itemId);
+        }
+        );
     }
 
+    //closes modal of adding channel
     const handleModalClose = () => {
         setShowModal(false);
     }
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
+    //shows the visually selected channel within component
+    const handleListItemClick = (event, channelId) => {
+        setSelectedIndex(channelId);
+        props.onSelectChannel(channelId);
     };
     
+    //processes data to add channel as a react component
     const channelElements = channels.map(channel => (
         <IndivChannel 
-            key={channel.id}
-            name={channel.name}
-            onClick={(event)=> handleListItemClick(event, channel.id)}
-            selected={selectedIndex === channel.id}
-            deleteChannel={()=> deleteItem(channel.id)}
+            key={channel.channelID}
+            name={channel.channelName}
+            onClick={(event)=> handleListItemClick(event, channel.channelID)}
+            selected={selectedIndex === channel.channelID}
+            deleteChannel={()=> deleteItem(channel.channelID)}
         />
     ))
     
     return (
         <>
-            <h1>Welcome to Ashton's Test page</h1>
+            {/* Houses the list of channels */}
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}> 
                 <nav>
                     <List component="nav">
+                        
                         <ListItem
                             secondaryAction={
                                 <IconButton edge="end" aria-label="addChannel"  onClick= {handleAddItem}>
@@ -79,20 +112,20 @@ export default function Channels(){
                             }
                             disablePadding
                         >
-                       
-                        <ListItemButton onClick={handleClick} sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                        {/* Channel Header*/}
+                            <ListItemButton onClick={handleCollapseClick} sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
 
-                            {/*
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            */}
-                            <ListItemText primary="Channels" sx={{pl:1, }}  primaryTypographyProps={{ fontWeight: 'bold' }}/>
-                            {open ? <ExpandLess /> : <ExpandMore />}
-                            
-                            
+                                {/*
+                                <ListItemIcon>
+                                    <InboxIcon />
+                                </ListItemIcon>
+                                */}
+                                <ListItemText primary="Channels" sx={{pl:1, }}  primaryTypographyProps={{ fontWeight: 'bold' }}/>
+                                {open ? <ExpandLess /> : <ExpandMore />}
+
                             </ListItemButton>
                         </ListItem>
+                        {/* channel elements are displayed within the div */}
                         <Collapse in={open} unmountOnExit>
                             <List component="div">
                                 {channelElements}
@@ -102,7 +135,7 @@ export default function Channels(){
                     </List>
                 </nav>
             </Box>
-            {showModal && <ModalInput enteredId={channels.length + 1} addItem={addItem} onClose={handleModalClose}/>}                
+            {showModal && <ModalInput enteredId={channels.length} addItem={addItem} onClose={handleModalClose}/>}                
         </>
     )
 }

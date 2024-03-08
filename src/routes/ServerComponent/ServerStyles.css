@@ -1,0 +1,47 @@
+.server-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+#channel-list{
+    height: 100%;
+    width: 300px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.channel-element{
+    border: 2px solid grey;
+    box-sizing: border-box;
+}
+
+.selected-channel{
+    background-color: lightblue;
+}
+
+#chat-section{
+    height: 100%;
+    width: calc(100% - 300px);
+    border: 2px solid blue;
+    box-sizing: border-box;
+
+}
+
+#message-list{
+    height: 80%;
+    border: 2px solid green;
+    box-sizing: border-box;
+    overflow-y: scroll;
+
+}
+
+.message-element{
+    border: 2px solid grey;
+    box-sizing: border-box;
+}
+
+
+#text-box{
+    width: 80%;
+}

@@ -14,7 +14,9 @@ export default function Root() {
         <Link to={'elizabeth-test-page'}><h1>Elizabeth's Test Page</h1></Link>
         <Link to={'carl-test-page'}><h1>Carl's Test Page</h1></Link>
         <Link to={`emily-test-page`}><h1>Emily's Test Page</h1></Link>
-        
+        <Link to={`ServerComponent`}><h1>Server Component</h1></Link>
+        <Link to={`user-settings-page`}><h1>User Profile Settings</h1></Link>
+
       </>
     );
   }
