@@ -9,8 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Grid, Hidden } from '@mui/material';
-import LightBulbImage from './LightBulb';
+import { Grid } from '@mui/material';
 import BusinessIcon from './BusinessIcon';
 import { auth } from '../test/firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -104,15 +103,6 @@ export default function SignUpPage() {
             setPasswordsMatch(true);
         }
     }
-    
-    const styles = {
-        root: {
-            background: "black"
-        },
-        input: {
-            color: "white"
-        }
-    };
 
     return (
     <ThemeProvider theme={theme}>
