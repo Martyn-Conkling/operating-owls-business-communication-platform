@@ -6,6 +6,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 /*
     EXTRA FEATURE:
@@ -24,12 +28,14 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 export default function UserInputBox() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [file, setFile] = useState();
 
     const handleSend = () => {
         if (!message.trim()) {
-             
             return;
         }
+
+        console.log('Selected file:', file);
 
         // Resetting error state if not empty message
         setError('');
@@ -37,6 +43,10 @@ export default function UserInputBox() {
         console.log(`User wants to send a message: ${message}`);
         setMessage('');
     };
+
+    function getFile(event) {
+        setFile(URL.createObjectURL(event.target.files[0]));
+    }
 
     return (
         <Box component="section">
@@ -61,6 +71,7 @@ export default function UserInputBox() {
                                         <input
                                             type="file"
                                             hidden
+                                            onChange={getFile}
                                         />
                                     </Button>
                                     <Button
@@ -74,6 +85,15 @@ export default function UserInputBox() {
                     }}
                 />
             </form>
+            {file && (
+                <div>
+                    <Document
+                        file={file}
+                    >
+                        <Page pageNumber={1} />
+                    </Document>
+                </div>
+            )}
         </Box>
     );
 }
