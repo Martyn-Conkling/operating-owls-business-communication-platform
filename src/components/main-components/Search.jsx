@@ -15,14 +15,16 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
 
-export default function Channels(){
+export default function Search(props){
     const[searchValue, setSearchValue] = React.useState('');
-    console.log(searchValue);
-    const selectedChannelData = channelData.channelArray.find(channel => channel.channelID === 0);
-    const filteredData = selectedChannelData["last50MessagesArray"].filter(item =>
-        item.content.toLowerCase().includes(searchValue.toLowerCase())
-    );
 
+    console.log(searchValue);
+    const selectedChannelData = channelData.channelArray.find(channel => channel.channelID === props.selectedChannel);
+    const filteredData = selectedChannelData ? selectedChannelData["last50MessagesArray"].filter(item =>
+        item.content.toLowerCase().includes(searchValue.toLowerCase())
+    ) : [];
+    
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleSearchOpen = (event) => {
