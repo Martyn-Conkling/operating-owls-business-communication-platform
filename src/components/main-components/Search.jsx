@@ -30,7 +30,6 @@ export default function Channels(){
     };
 
     const handleSearchClose = ()=> {
-        
         setAnchorEl(null);
     };
 
@@ -38,13 +37,22 @@ export default function Channels(){
 
 
     const searchResults = filteredData.map(message => (
-        <ListItem >
+        <ListItem key = {message.messageId}>
             <ListItemButton>
                 
                 <ListItemText primary={message.username} secondary={message.content} />
             </ListItemButton>
         </ListItem>
     ));
+    const emptyResults =  (
+            <ListItem key = {0}>
+                <ListItemButton>
+                    <ListItemText primary="No results found" />
+                </ListItemButton>
+            </ListItem>
+        
+    )
+   
 
     console.log(filteredData)
 
@@ -108,7 +116,8 @@ export default function Channels(){
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleSearchClose}
-                disableRestoreFocus
+                disableAutoFocus={true}
+                disableEnforceFocus={true}
                 
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -121,7 +130,7 @@ export default function Channels(){
                   sx={{marginTop:'20px'}}
             >
                 <List >
-                    {searchResults}
+                    {filteredData.length ? searchResults : emptyResults}
                 </List>
             </Popover>
             
