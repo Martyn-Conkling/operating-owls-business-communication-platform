@@ -1,22 +1,48 @@
 import React from "react";
-import Message from "../components/main-components/Message";
+import MessageComponent from "../components/main-components/Message";
 
 export default function EmilyTestPage() {
+
     return(
         <div>
-        <Message 
+        <MessageComponent
+            displayName="FirstName LastName"
+            messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
+         cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
+          turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
+            sameUserContent="Oh that really sucks :("
+            time="12:00AM" />
+        
+        <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
              cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
               turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
-            time="Time"
-            avatar=""
+            sameUserContent="Oh that really sucks :("
+            time="12:00AM"
         />
-        <Message
+        <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
              cursus commodo non dui cursus elit in"
-            time="Time"
+            sameUserContent="Oh that really sucks :("
+            time="12:00AM"
+        />
+        <MessageComponent
+            displayName="FirstName LastName"
+            messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
+             cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
+             cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
+             cursus commodo non dui cursus elit in"
+            sameUserContent="Oh that really sucks :("
+            time="12:00AM"
+        />
+        <MessageComponent
+            displayName="FirstName LastName"
+            messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
+             cursus commodo non dui cursus elit in"
+            sameUserContent="Oh that really sucks :("
+            time="12:00AM"
         />
         </div>
     )
