@@ -11,7 +11,7 @@ import Message from "../../components/main-components/Message.jsx";
 import './ServerStyles.css';
 import data from './startingData.json';
 import Channels from "../../components/main-components/Channels"
-
+import Search from "../../components/main-components/Search"
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
@@ -98,8 +98,10 @@ return (
 
 
 <>
-
-<div className="server-container">
+<Search 
+    selectedChannel={selectedChannel}
+/>
+<div className="server-container" >
 
 {}
 <div id='channel-list'>
@@ -133,7 +135,6 @@ return (
         <div ref={messagesEndRef} />
     </div>
         
-
 
     <div>
 

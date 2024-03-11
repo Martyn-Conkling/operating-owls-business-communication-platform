@@ -6,20 +6,59 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
-import IndivChannel from '../IndivChannel';
+//import IndivChannel from '../IndivChannel';
 import AddIcon from '@mui/icons-material/Add';
 //import channelData from '../../data/channelData'
 import channelData from '../../routes/ServerComponent/startingData.json'
 import ModalInput from '../ModalInput';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
+import TagIcon from '@mui/icons-material/Tag';
+import PropTypes from 'prop-types';
+import DeleteIcon from '@mui/icons-material/Delete';
 //Channel Component displays selection of channels for viewing selection
+
+
 export default function Channels(props){
     const [open, setOpen] = React.useState(true); //for the collapsible list
     const [channels, setChannels] = React.useState(channelData.channelArray); //to ensure channels update whenever we edit
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
     const [selectedIndex, setSelectedIndex] = React.useState(props.defaultChannel); //for the selected list item visual
+
+    //moved from componentized indivChannel to returning it within this component
+    const IndivChannel = (props) => {
+        return (
+            <ListItem 
+                sx={{
+                    '&:hover .hover-visible': {
+                        display: 'block',
+                    },
+                    '& .hover-visible': {
+                        display: 'none',
+                    },
+                }}
+
+                secondaryAction={
+                    <IconButton edge="end" aria-label="deleteChannel" className="hover-visible" onClick={props.deleteChannel} >
+                        <DeleteIcon />
+                    </IconButton>
+                }
+                disablePadding
+            > 
+                <ListItemButton 
+                    sx={{ pl: 4 }} 
+                    {...props}
+                    
+                >
+                    <ListItemIcon>
+                        <TagIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={`${props.name}`} />
+                </ListItemButton>
+            </ListItem>       
+            );
+    };
 
     //ensures channels update with ServerComponent
     React.useEffect(()=> {
@@ -27,7 +66,7 @@ export default function Channels(props){
     }, [channels])
    
 
-    console.log('Selected Index ' + selectedIndex);
+    //console.log('Selected Index ' + selectedIndex);
     //handles the collapsible menu
     const handleCollapseClick = () => {
         setOpen(!open);
