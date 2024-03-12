@@ -16,7 +16,10 @@ import ElizabethTestPage from "./routes/ElizabethTestPage.jsx";
 import CarlTestPage from "./routes/CarlTestPage.jsx";
 import EmilyTestPage from "./routes/EmilyTestPage.jsx";
 import ServerComponent from "./routes/ServerComponent/ServerComponent.jsx";
+// Settings
 import SettingsPage from "./routes/SettingsPage.jsx";
+import AccountSettings from "./routes/Settings/AccountSettings.jsx";
+import ProfileSettings from "./routes/Settings/ProfileSettings.jsx";
 
 // import ErrorPage from "./error-page";
 // THEME
@@ -83,6 +86,14 @@ const router = createBrowserRouter([
     path: "user-settings-page",
     element: <SettingsPage></SettingsPage>,
   },
+  {
+    path: "profile-settings",
+    element: <ProfileSettings></ProfileSettings>,
+  },
+  {
+    path: "account-settings",
+    element: <AccountSettings></AccountSettings>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

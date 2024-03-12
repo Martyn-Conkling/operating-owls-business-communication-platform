@@ -6,20 +6,20 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import settings from "../components/main-components/Settings/usersettings"
-import AccountSettings from "../components/main-components/Settings/AccountSettings";
-import ProfileSettings from "../components/main-components/Settings/ProfileSettings";
+import AccountSettings from "./Settings/AccountSettings";
+import ProfileSettings from "./Settings/ProfileSettings";
+import { NavLink } from "react-router-dom";
 
 export default function SettingsPage() {
-  const [openSettings, setOpenSettings] = useState("Account");
-  
+  const [openSettings, setOpenSettings] = useState("Profile");
   // Set event Target for List Items
   const currentSetting = (event) => {
-    if(!event.target.classList.contains('MuiListItemButton-root')) {
+    const currTarget = event.target;
+    if (!currTarget.classList.contains("MuiListItemButton-root")) {
       // nOTHING
     }
-    setOpenSettings(event.target.innerHTML);
-  }
+    //setOpenSettings(currTarget.innerHTML);
+  };
 
   return (
     <Box
@@ -32,14 +32,21 @@ export default function SettingsPage() {
       <List
         component="nav"
         sx={{
-          width: "200px"
+          width: "200px",
         }}
       >
         <ListSubheader>User Settings</ListSubheader>
-        <ListItemButton onClick={currentSetting}>
+        <ListItemButton
+          component={NavLink}
+          to={`/profile-settings`}
+          onClick={currentSetting}
+        >
           <ListItemText primary="Profile" />
         </ListItemButton>
-        <ListItemButton onClick={currentSetting}>
+        <ListItemButton 
+          component={NavLink}
+          to={`/account-settings`}
+          onClick={currentSetting}>
           <ListItemText primary="Account" />
         </ListItemButton>
         <ListSubheader>App Settings</ListSubheader>
