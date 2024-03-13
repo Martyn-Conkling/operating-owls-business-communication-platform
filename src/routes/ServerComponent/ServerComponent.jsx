@@ -10,7 +10,7 @@ import './ServerStyles.css';
 import data from './startingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
-
+import Search from "../../components/main-components/Search"
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
@@ -112,7 +112,6 @@ const handleSendMessage = (event) => {
     // Example: sendMessageToAPI(updatedNewMessage);
 };
 
- 
 const messageList = messagesArray.map((message, index) => {
 
     const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
@@ -167,15 +166,15 @@ useEffect(() => {
   }, [messagesArray]);
 
 
-return (
+return(
+    <>
 
+    <Search 
+    selectedChannel={selectedChannel}
+    />
+    <div className="server-container" > </div>
 
-<>
-
-<div className="server-container">
-
-{}
-<div id='channel-list'>
+    <div id='channel-list'>
     {/* pass the channel selection, default channel, and update channels as props */}
     <Channels 
         onSelectChannel={handleChannelSelect}
@@ -192,8 +191,8 @@ return (
         {messageList}
         <div ref={messagesEndRef} />
     </div>
-        
-<div>
+
+    <div>
 
     <Box component="section">
             <form noValidate autoComplete="off">
@@ -256,10 +255,9 @@ return (
         
           
 
-
-
 </div>
-        
 
-</div>
-</>)}
+
+</>
+
+)}
