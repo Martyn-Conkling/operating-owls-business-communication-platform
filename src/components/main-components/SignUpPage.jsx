@@ -13,6 +13,7 @@ import { Grid } from '@mui/material';
 import BusinessIcon from './BusinessIcon';
 import { auth } from '../test/firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import SetUsername from './SetUsername';
 
 // import { white, purple } from '@mui/material/colors';
 
@@ -21,7 +22,6 @@ export default function SignUpPage() {
 
     //MUI
     const theme = createTheme();
-
 
     //Sign Up Inputs
     const [email, setEmail] = useState('');
@@ -44,6 +44,9 @@ export default function SignUpPage() {
     //Check if password is weak
     const [passwordStrong, setPasswordStrong] = useState(false);
     const [passwordStrongMessage, setPasswordStrongMessage] = useState('');
+
+    //useState if sign up is complete ternary
+    const [signUpSuccess, setSignUpSuccess] = useState(false);
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -76,6 +79,7 @@ export default function SignUpPage() {
             .then((userCredential) => {
             // Signed up 
                 const user = userCredential.user;
+                setSignUpSuccess(true)
                 console.log(`logged in ${user}`)
             // ...
             })
@@ -106,7 +110,7 @@ export default function SignUpPage() {
 
     return (
     <ThemeProvider theme={theme}>
-        <Container component="main" sx={{}}>
+        <Container component="main" sx={{ml:"32vw"}}>
         <CssBaseline />
         <Box
             sx={{
@@ -114,96 +118,83 @@ export default function SignUpPage() {
             flexDirection: 'column',
             alignItems: 'center',
             marginTop: 25,
-            
             }}
         >
             <Grid container spacing={-1} sx={{}}>
-                <Grid item xs={6} sx={{bgcolor: '#323232', borderRadius: '10%', overflow: "hidden", height: "650px", width: "85vw"}}>
-                    <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47.5%", mb: "2%"}}>
-                        <BusinessIcon />
-                    </Avatar>
-                    <Typography variant="h5" sx={{ml:"43%", mb: 1.5, color:"#ffffff"}}>
-                        Welcome
-                    </Typography>
-                    <Typography variant="h7" sx={{
-                        textDecoration: 'underline', ml: "39.5%",color:"#ffffff"}}>
-                    Lets get you set up
-                    </Typography>
-                    <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
-                        <TextField
-                            sx={{width: "60%", ml:"22%", mr:"5%",}}
-                            onChange={e => setEmail(e.target.value)}
-                            value={email}
-                            margin="normal"
-                            required
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            error={emailValid || EmailUsed}
-                            helperText={emailValidMessage || EmailUsedMessage}
-                        />
-                        <TextField
-                            sx={{width: "60%",
-                            ml:"22%",
-                            mr:"5%"
-                        }}                         
-                            onChange={e => setUsername(e.target.value)}
-                            value={username}
-                            margin="normal"
-                            required
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                        />
-                        <TextField
-                            sx={{width: "60%",
-                            ml:"22%",
-                            mr:"5%"
-                        }}                        
-                            onChange={handlePasswordChange}
-                            value={password}
-                            margin="normal"
-                            required
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            error={passwordStrong}
-                            helperText={passwordStrongMessage}
-                        />
-                        <TextField
-                            sx={{width: "60%",
-                            ml:"22%",
-                            mr:"5%"
-                        }}                        
-                            onChange={handleConfirmPasswordChange}
-                            value={confirmPassword}
-                            margin="normal"
-                            required
-                            name="confirm password"
-                            label="Confirm Password"
-                            type="password"
-                            id="confirm password"
-                            error={passwordsMatch}
-                            helperText={passwordsMatchErrorMessage}
-                        />
-                        <Button                   
-                            onClick={validate}
-                            type="button"
-                            color='secondary'
-                            variant="contained"
-                            sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
-                        >
-                            Sign Up
-                        </Button>
-                        <br/>
-                        <Typography variant="h7" sx={{ml:"29%", color:"#ffff"}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
-                    </Box>
-                </Grid>
+                {signUpSuccess === false ?
+                    <Grid item xs={6.5} sx={{borderRadius: '10%', overflow: "hidden", height: "650px", width: "85vw",
+                                            background: "rgba( 255, 255, 255, 0.6 )", boxShadow:"0 8px 32px 0 rgba( 31, 38, 135, 0.37 )", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(5px)", border: "1px solid rgba( 255, 255, 255, 0.18 )"}}>
+                        <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47.5%", mb: "2%", mt: 9}}>
+                            <BusinessIcon />
+                        </Avatar>
+                        <Typography variant="h5" sx={{ml:"43%", mb: 1.5, color:"black"}}>
+                            Welcome
+                        </Typography>
+                        <Typography variant="h7" sx={{
+                            textDecoration: 'underline', ml: "39.5%",color:"black"}}>
+                        Lets get you set up
+                        </Typography>
+                        <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
+                            <TextField
+                                sx={{width: "60%", ml:"22%", mr:"5%",}}
+                                onChange={e => setEmail(e.target.value)}
+                                value={email}
+                                margin="normal"
+                                required
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                error={emailValid || EmailUsed}
+                                helperText={emailValidMessage || EmailUsedMessage}
+                            />
+                            <TextField
+                                sx={{width: "60%",
+                                ml:"22%",
+                                mr:"5%"
+                            }}                        
+                                onChange={handlePasswordChange}
+                                value={password}
+                                margin="normal"
+                                required
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                error={passwordStrong}
+                                helperText={passwordStrongMessage}
+                            />
+                            <TextField
+                                sx={{width: "60%",
+                                ml:"22%",
+                                mr:"5%"
+                            }}                        
+                                onChange={handleConfirmPasswordChange}
+                                value={confirmPassword}
+                                margin="normal"
+                                required
+                                name="confirm password"
+                                label="Confirm Password"
+                                type="password"
+                                id="confirm password"
+                                error={passwordsMatch}
+                                helperText={passwordsMatchErrorMessage}
+                            />
+                            <Button                   
+                                onClick={validate}
+                                type="button"
+                                color='secondary'
+                                variant="contained"
+                                sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
+                            >
+                                Sign Up
+                            </Button>
+                            <br/>
+                            <Typography variant="h7" sx={{ml:"29%", color:"black"}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
+                        </Box>
+                    </Grid>
+                : <SetUsername />}
             </Grid>
         </Box>
         </Container>
