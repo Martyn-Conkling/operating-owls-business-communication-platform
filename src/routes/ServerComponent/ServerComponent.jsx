@@ -169,10 +169,10 @@ useEffect(() => {
 return(
     <>
 
-    <Search 
+    {/* <Search 
     selectedChannel={selectedChannel}
-    />
-    <div className="server-container" > </div>
+    /> */}
+    <div className="server-container" > 
 
     <div id='channel-list'>
     {/* pass the channel selection, default channel, and update channels as props */}
@@ -233,31 +233,13 @@ return(
     </Box>
 
 
-    {/* Keep this as backup */}
-    {/* <textarea 
-            name="" 
-            id="text-box" 
-            cols="30" 
-            rows="3"
-            value={newMessage.content}
-            onChange={(e) => setNewMessage({...newMessage, content: e.target.value})}
-            placeholder="Type a message..."
-          
-          >
-          
-          </textarea>
-          <button 
-            onClick={handleSendMessage}
-          >Send</button> */}
-
-
     </div>
         
           
 
 </div>
 
-
+</div>
 </>
 
 )}
