@@ -2,10 +2,10 @@
 // import LoginTest from "../components/test/LoginTest"
 
  export default function AlejandroTestPage(){
-//     return (
-//         <>
-//             {/* <ProfileComponent /> */}
-//             {/* <LoginTest /> */}
-//         </>
-//     )
+    return (
+        <>
+            <ProfileComponent /> 
+            <LoginTest />
+        </>
+    )
 }
