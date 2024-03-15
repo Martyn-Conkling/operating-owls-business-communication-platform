@@ -1,4 +1,4 @@
-import Search from "../components/main-components/Search"
+import ServerList from "../components/main-components/ServerList"
 
 
 
@@ -7,9 +7,8 @@ import Search from "../components/main-components/Search"
 
 export default function AshtonTestPage(){
     return (
-        <>
-            
-            <Search />
+        <>    
+            <ServerList />
         </>
     )
     
