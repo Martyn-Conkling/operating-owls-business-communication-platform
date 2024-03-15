@@ -1,0 +1,55 @@
+{
+"channels": {
+    "byId": {
+        "channelId0": {
+            "id": "channelId0",
+            "name": "Bob Ross Fans",
+            "messageIds": ["1001", "1012"]
+            },
+        "channelId1": {
+            "id": "channelId1",
+            "name": "Pokemon TCG",
+            "messageIds": ["2001", "2006"]
+            }
+        },
+
+    "allIds": ["channelId0", "channelId1"]
+    },
+
+"messages":{
+    "byId":{
+        "u1231001":{
+            "channelId": "channelId0",
+            "messageId": "u1231001",
+            "userId": "u123",
+            "username": "ArtLover99",
+            "timestamp": "2024-02-22T10:00:00Z",
+            "content": "Hey everyone, just wanted to share my latest attempt at a Bob Ross painting. It's not perfect, but I'm getting better!"
+            },
+
+        "u1241002":{
+            "channelId": "channelId0",
+            "messageId": "u1241002",
+            "userId": "u124",
+            "username": "PeacefulPainter",
+            "timestamp": "2024-02-22T10:05:00Z",
+            "content": "That's awesome, ArtLover99! Bob Ross has always been an inspiration to me. His calm and positive approach to painting is something I try to incorporate into my own work."
+            },
+
+        "u1251003":{
+            "channelId": "channelId0",
+            "messageId": "u1251003",
+            "userId": "u125",
+            "timestamp": "2024-02-22T10:10:00Z",
+            "username": "NatureFanatic",
+            "content": "I love how Bob Ross could create such amazing landscapes in just one episode. His 'happy little trees' are iconic!"
+            }
+
+
+        }
+      }
+
+}
+
+
+

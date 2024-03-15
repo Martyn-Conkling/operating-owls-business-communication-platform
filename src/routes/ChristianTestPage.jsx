@@ -1,9 +1,9 @@
-import LoginPage from "../components/main-components/LoginPage";
+// import LoginPage from "../components/main-components/LoginPage";
 
-export default function ChristianTestPage() {
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
-}
+ export default function ChristianTestPage() {
+//   return (
+//     <>
+//       <LoginPage />
+//     </>
+//   );
+ }

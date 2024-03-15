@@ -11,16 +11,43 @@ import Message from "../../components/main-components/Message.jsx";
 import './ServerStyles.css';
 import data from './startingData.json';
 import Channels from "../../components/main-components/Channels"
+import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
+   
+
+    
+let userSettings = {
+    "userId": "u127",
+    "username": "PaletteKnife",
+    "dateFormat": "USA",
+    "darkModeBool": false,
+    "messageFormat": "normal",
+    "soundNotifications": false,
+
+}
+
+const timeZoneOptions = {
+    "timeZone": "America/New_York",
+    "year": "numeric",
+    "month": "numeric",
+    "day":"numeric",
+    "hour": '2-digit', 
+    "minute": '2-digit', 
+    "second": '2-digit', 
+    "hour12": true
+}
+let userPermissions = {};
+
+let serverSettings = {};
 
 let blankMessage = {
     "messageId": null,
-    "userId": "u127",
+    "userId": userSettings.userId,
     "timestamp": null,
-    "username": "PaletteKnife",
+    "username": userSettings.username,
     "content":""
 }
 
@@ -68,12 +95,13 @@ const handleSendMessage = (event) => {
 
     const lastMessageId =  messagesArray.length > 0 ? messagesArray[messagesArray.length - 1].messageId : 0;
     const newMessageId = String(Number(lastMessageId) + 1);
-    const timestamp = new Date().toISOString;
+    const currentDate = new Date().toISOString();
 
+    
     const updatedNewMessage = {
         ...newMessage,
         messageId: newMessageId,
-        timestamp: timestamp
+        timestamp: currentDate,
     };
 
     // console.log(updatedNewMessage)
@@ -86,6 +114,52 @@ const handleSendMessage = (event) => {
     // Example: sendMessageToAPI(updatedNewMessage);
 };
 
+const messageList = messagesArray.map((message, index) => {
+
+    const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
+    const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
+
+    let showDayBreak = true;
+    let showUserInfo = true;
+    
+    const firstMessage = index === 0;
+    let previousMessageDate = null;
+    if (index > 0){
+        const previousMessage = messagesArray[index - 1];
+        previousMessageDate = moment.tz(previousMessage.timestamp, timeZoneOptions.timeZone)
+
+        showDayBreak = !currentMessageDate.isSame(previousMessageDate, 'day');
+        const fiveMinBeforeCurrentMessage = moment.tz(message.timestamp, timeZoneOptions.timeZone).subtract(5, 'minutes');
+        showUserInfo = message.userId !== previousMessage.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
+        
+    }
+    return (
+      <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
+        {showDayBreak &&(
+            <div> {currentMessageFormattedDate}</div>
+        )}
+        
+        {showUserInfo && (
+           <div style={{ display: 'flex', alignItems: 'start' }}>
+            <img
+              src={message.avatarUrl}
+              alt={`${message.username}'s avatar`}
+              style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }}
+            />
+            <h3 style={{ margin: '0px', marginRight: '5px'}}>{message.username}</h3>
+            <p style={{margin: '0px'}}>{currentMessageFormattedDate}</p>
+            <p style={{margin: '0px'}}>Message ID: {message.messageId}</p>
+                <div>{message.content}</div>
+            </div>
+             
+          
+        )}
+        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message.content}</div>}
+        
+        
+      </div>
+    );
+})
 
 // this is just to cause the message list to scroll to the bottom when the page refreshes or the messages update
 // probably need to change this quite a bit later
@@ -94,17 +168,15 @@ useEffect(() => {
   }, [messagesArray]);
 
 
-return (
+return(
+    <>
 
-
-<>
-<Search 
+    {/* <Search 
     selectedChannel={selectedChannel}
-/>
-<div className="server-container" >
+    /> */}
+    <div className="server-container" > 
 
-{}
-<div id='channel-list'>
+    <div id='channel-list'>
     {/* pass the channel selection, default channel, and update channels as props */}
     <Channels 
         onSelectChannel={handleChannelSelect}
@@ -117,24 +189,10 @@ return (
     {/* connects channels selected channel name to display */}
     <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
 
-    
     <div id='message-list'>
-        {/* dynamically renders the messages based on data */}
-        {messagesArray.map((message, index) => (
-        
-        <div className='message-element' key={index}>
-            <Message
-                displayName={message.username}
-                time={message.timestamp}
-                messageContent={message.content}
-            />
-        </div>
-        ))}
-
-        {/* This ref is used to cause the message list to scroll down to the bottom by defautl */}
+        {messageList}
         <div ref={messagesEndRef} />
     </div>
-        
 
     <div>
 
@@ -174,35 +232,16 @@ return (
                     }}
                 />
             </form>
-        </Box>
-
-
-
-    {/* <textarea 
-            name="" 
-            id="text-box" 
-            cols="30" 
-            rows="3"
-            value={newMessage.content}
-            onChange={(e) => setNewMessage({...newMessage, content: e.target.value})}
-            placeholder="Type a message..."
-          
-          >
-          
-          </textarea>
-          <button 
-            onClick={handleSendMessage}
-          >Send</button> */}
+    </Box>
 
 
     </div>
         
           
 
-
+</div>
 
 </div>
-        
+</>
 
-</div>
-</>)}
+)}
