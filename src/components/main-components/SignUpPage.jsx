@@ -14,8 +14,9 @@ import BusinessIcon from './BusinessIcon';
 import { auth } from '../test/firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import SetUsername from './SetUsername';
-
-// import { white, purple } from '@mui/material/colors';
+import { db } from "../test/firebaseConfig"
+import { collection, query, where, addDoc, setDoc, doc } from "firebase/firestore";
+import { useEffect } from 'react';
 
 
 export default function SignUpPage() {
@@ -25,28 +26,32 @@ export default function SignUpPage() {
 
     //Sign Up Inputs
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
     //Password not matching authentication
     const [passwordsMatch, setPasswordsMatch] = useState(false);
     const [passwordsMatchErrorMessage, setPasswordsMatchErrorMessage] = useState('');
-
     //Email valid authentication
     const [emailValid, setEmailValid] = useState(false);
     const [emailValidMessage, setEmailValidMessage] = useState(false);
-
     //Email already in use authentication
     const [EmailUsed, setEmailUsed] = useState(false);
     const [EmailUsedMessage, setEmailUsedMessage] = useState('');
-    
     //Check if password is weak
     const [passwordStrong, setPasswordStrong] = useState(false);
     const [passwordStrongMessage, setPasswordStrongMessage] = useState('');
-
+    //get username from other ternary
+    const [setUsername, settingUsername] = useState(null);
     //useState if sign up is complete ternary
     const [signUpSuccess, setSignUpSuccess] = useState(false);
+    //get user uid from firebase into a state
+    const [UID, setUID] = useState();
+
+
+    const getData = (data) => {
+        // console.log(`The username is ${data}`)
+        settingUsername(data)
+    }
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -66,6 +71,9 @@ export default function SignUpPage() {
         setPasswordStrong(false)
         setPasswordStrongMessage('')
     }
+    useEffect(()=>{
+        console.log(UID)
+    },[UID])
 
     function validate() {
         setErrorMessageBlank()
@@ -74,13 +82,29 @@ export default function SignUpPage() {
             setPasswordsMatch(false);
 
             //Firebase Sign Up
-
             createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-            // Signed up 
-                const user = userCredential.user;
+            // Signed up
                 setSignUpSuccess(true)
-                console.log(`logged in ${user}`)
+                var userUID = (userCredential.user.uid)
+                setUID(userUID)
+
+                const StoreToFirestore = async () => {
+                    try{
+                        await setDoc(doc(db, "users", email), {
+                        email: email,
+                        name: "not available at the moment",
+                        password: password,
+                        userID: userUID,
+                        username: setUsername
+                        })
+                } catch (err) {
+                    console.error(err);
+                }
+                }
+
+                try {StoreToFirestore() } catch (err) {console.error(err)}
+
             // ...
             })
             .catch((error) => {
@@ -117,7 +141,7 @@ export default function SignUpPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: 25,
+            paddingTop: "15vh"
             }}
         >
             <Grid container spacing={-1} sx={{}}>
@@ -188,13 +212,13 @@ export default function SignUpPage() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
                             >
-                                Sign Up
+                                Next
                             </Button>
                             <br/>
                             <Typography variant="h7" sx={{ml:"29%", color:"black"}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
                         </Box>
                     </Grid>
-                : <SetUsername />}
+                : <SetUsername onSubmit={getData} email={email}/> }
             </Grid>
         </Box>
         </Container>

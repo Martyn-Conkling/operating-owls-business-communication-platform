@@ -12,15 +12,35 @@ import { useState } from 'react';
 import { Grid } from '@mui/material';
 import BusinessIcon from './BusinessIcon';
 import { auth } from '../test/firebaseConfig';
+import { db } from "../test/firebaseConfig"
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 
-// import { white, purple } from '@mui/material/colors';
 
-
-export default function SetUsername() {
+export default function SetUsername(props) {
 
     const theme = createTheme();
-
     const [username, setUsername] = useState('');
+
+    const email = props.email
+
+    // setUserUID(props.userID)
+
+    const usernameChange = (e) => {
+        setUsername(e.target.value)
+    };
+
+    const usernameRef = doc(db, 'users', email)
+
+    const usernameSubmit = async (e) => {
+        await updateDoc(usernameRef, {
+            username: username
+        });
+
+        console.log(`User email ${email} username is set to ${username}`)
+    
+    }
+
+
 
     return (
     <ThemeProvider theme={theme}>
@@ -34,8 +54,8 @@ export default function SetUsername() {
             overflow: 'hidden'
             }}
         >
-            <Grid container spacing={-1} sx={{}}>
-                <Grid item xs={6} sx={{overflow: "hidden", height: "300px", width: "85vw", padding:5,
+            <Grid container spacing={-1} sx={{marginTop: "5%"}}>
+                <Grid item xs={6} sx={{overflow: "hidden", height: "400px", width: "85vw", padding:5,
                                         borderRadius: 10, background: "rgba( 255, 255, 255, 0.55 )", backdropFilter: "blur(5px)", WebkitBackdropFilter: "blur(5px)", border: "2px solid rgba( 0, 0, 0, 0.18 )"}}>
                     <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47%", mb: "2%", mt: "5%"}}>
                         <BusinessIcon />
@@ -52,7 +72,7 @@ export default function SetUsername() {
                         ml:"22%",
                         mr:"5%"
                     }}                         
-                        onChange={e => setUsername(e.target.value)}
+                        onChange={usernameChange}
                         value={username}
                         margin="normal"
                         required
@@ -62,6 +82,13 @@ export default function SetUsername() {
                         autoComplete="username"
                         autoFocus
                     />
+                    <Button                   
+                        onClick={usernameSubmit}
+                        type="button"
+                        color='secondary'
+                        variant="contained"
+                        sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
+                    >Sign Up</Button>
                 </Grid>
             </Grid>
         </Box>
