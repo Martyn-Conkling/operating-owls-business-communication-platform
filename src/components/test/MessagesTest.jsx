@@ -1,6 +1,6 @@
 /*
-    getting data from firestore:
-    - https://firebase.google.com/docs/firestore/query-data/get-data
+getting data from firestore:
+- https:firebase.google.com/docs/firestore/query-data/get-data
 */
 
 import React, { useState, useEffect } from 'react';
