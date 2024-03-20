@@ -3,7 +3,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
 .profile--component {
@@ -18,19 +18,24 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: center;
 
-    padding-right: 15px;
+    padding-right: 3.5px;
 }
 
 .username {
-    font-size:18px;
+    font-size:16px;
+    font-weight: normal;
 }
 
 .nickname {
-    font-size:16px;
+    font-size:12px;
     font-weight: normal;
-    color: #131316;
+    color: #141415;
+}
+
+.menu--icon {
+    padding-right: 15px;
 }
 
 /* .icon--section {
@@ -38,13 +43,17 @@
 
 /*the background color here adds a dark circle around the status circle icon*/
 .online {
-    color: green;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 50%;
+    color: #44c91c;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius:50%;
+    border: 1px solid white; /* Adjust the border width and color as needed */
+    padding: .5px;
 }
 
 .offline {
-    color: red;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 50%;
+    color: #e12222;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius:50%;
+    border: 1px solid white; /* Adjust the border width and color as needed */
+    padding: .5px;
 }
