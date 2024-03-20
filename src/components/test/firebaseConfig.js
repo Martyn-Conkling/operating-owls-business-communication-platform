@@ -6,7 +6,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; //for authentication
-import { getFirestore} from "firebase/firestore" //for database storage
+import { getFirestore } from "firebase/firestore" //for database storage
 
 // ENV are stored in .env.local file
 // All this information can be found in firebase

@@ -63,7 +63,7 @@ export default function Menu() {
                                             {/* card channel picture */}
                                             <Avatar alt={channel.name} src={channel.picture} className="card--avatar" />
                                             {/* card channel name */}
-                                            <Typography variant="body3" color="text.primary" className="card--name">
+                                            <Typography variant="body3" sx={{ fontSize: 12 }} color="text.primary" className="card--name">
                                                 {channel.name}
                                             </Typography>
                                         </CardContent>
