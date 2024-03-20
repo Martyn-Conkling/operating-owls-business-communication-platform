@@ -59,11 +59,12 @@ export default function ModalInput(props){
                         fullWidth
                         variant="standard"
                         autoComplete="off"
+                        color="info"
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Submit</Button>
+                    <Button onClick={handleClose} color="error">Cancel</Button>
+                    <Button type="submit" color="success">Submit</Button>
                 </DialogActions>
             </Dialog>
     </React.Fragment>

@@ -100,7 +100,7 @@ export default function Search(props){
                                 width:'50%'
                             }}
                             onFocus={handleSearchOpen}
-                            
+                            color="info"
 
                         />
                          <Box sx={{ flexGrow: 1 }} />
