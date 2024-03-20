@@ -132,10 +132,13 @@ const messageList = messagesArray.map((message, index) => {
         
     }
     return (
-      <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
+    <>
         {showDayBreak &&(
-            <div> {currentMessageFormattedDate}</div>
+            <div className='date-border'> {currentMessageFormattedDate}</div>
         )}
+
+        <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
+        
         
         {showUserInfo && (
            <div style={{ display: 'flex', alignItems: 'start' }}>
@@ -156,6 +159,7 @@ const messageList = messagesArray.map((message, index) => {
         
         
       </div>
+    </>
     );
 })
 
