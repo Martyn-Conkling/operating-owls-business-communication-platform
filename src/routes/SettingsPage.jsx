@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   ListSubheader,
@@ -12,15 +12,12 @@ import { NavLink } from "react-router-dom";
 
 export default function SettingsPage() {
   const [openSettings, setOpenSettings] = useState("Profile");
-  // Set event Target for List Items
-  const currentSetting = (event) => {
-    const currTarget = event.target;
-    if (!currTarget.classList.contains("MuiListItemButton-root")) {
-      // nOTHING
-    }
-    //setOpenSettings(currTarget.innerHTML);
-  };
 
+  const changeSettingsPage = (event) => {
+    const settingsChoice = event.target.innerHTML;
+    setOpenSettings(settingsChoice);
+  }
+  
   return (
     <Box
       sx={{
@@ -39,21 +36,22 @@ export default function SettingsPage() {
         <ListItemButton
           component={NavLink}
           to={`/profile-settings`}
-          onClick={currentSetting}
+          onChange={changeSettingsPage}
         >
           <ListItemText primary="Profile" />
         </ListItemButton>
         <ListItemButton 
           component={NavLink}
           to={`/account-settings`}
-          onClick={currentSetting}>
+          onChange={changeSettingsPage}
+        >
           <ListItemText primary="Account" />
         </ListItemButton>
         <ListSubheader>App Settings</ListSubheader>
-        <ListItemButton onClick={currentSetting}>
+        <ListItemButton>
           <ListItemText primary="Appearance" />
         </ListItemButton>
-        <ListItemButton onClick={currentSetting}>
+        <ListItemButton>
           <ListItemText primary="Accessibility" />
         </ListItemButton>
       </List>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Typography, Card, Button } from "@mui/material";
-
+import { grey } from "@mui/material/colors";
 export default function AccountSettings() {
   // Edit function
   const [editing, setEditing] = useState(false);
@@ -11,10 +11,20 @@ export default function AccountSettings() {
   };
 
   return (
-    <Box>
-      <Typography>Account</Typography>
-      <Card>
-        <Typography>Password and Authentication</Typography>
+    <Box
+      sx={{
+        width: "80vw",
+        height: "80vh",
+        display: "flex",
+        justifyContent: "center",
+        padding: "2rem 0",
+        color: grey[900],
+      }}
+    >
+      <Card sx={{ width: "70%", height: "fit-content", p: 3, bgcolor: grey[500] }}>
+        <Typography variant="h4">My Account</Typography>
+        <hr></hr>
+        <Typography variant="h6">Password and Authentication</Typography>
         <Box>
           <Button variant="contained">Change Password</Button>
           <Box>

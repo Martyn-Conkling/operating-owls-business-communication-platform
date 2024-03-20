@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -5,15 +6,29 @@ import {
   CardActions,
   CardContent,
   Avatar,
-  Button,
   IconButton,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
+import { DoNotDisturbOn, DarkMode, Circle } from "@mui/icons-material";
 
 export default function ProfileSettings() {
-  // Edit NickName
-  // Edit
+  const [status, setStatus] = useState("");
+  const [editProfile, setProfile] = useState({
+    displayName: "",
+    pfp: "",
+    email: "",
+    phone: "",
+    bio: "",
+  });
+
+  const statusChange = (event) => {
+    setStatus(event.target.value);
+  };
   return (
     <Box
       sx={{
@@ -22,14 +37,16 @@ export default function ProfileSettings() {
         display: "flex",
         justifyContent: "center",
         padding: "2rem 0",
+        color: grey[900],
       }}
     >
-      <Card sx={{ width: "70%", height: "fit-content", p: 3 }}>
+      <Card
+        sx={{ width: "50%", height: "fit-content", p: 3, bgcolor: grey[500] }}
+      >
         <Typography variant="h4">Profile</Typography>
         <Box
           sx={{
-            bgcolor: grey[900],
-            color: "rgba(255,255,255,0.9)",
+            bgcolor: grey[200],
             borderRadius: "0.5rem",
           }}
         >
@@ -37,16 +54,40 @@ export default function ProfileSettings() {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              margin: "1.5rem 0",
+              margin: "1.5rem 0 0 0",
             }}
           >
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Avatar />
+              <Avatar sx={{ border: "2px solid black" }} />
               <Typography variant="h6">DisplayName</Typography>
             </Box>
-            <Button variant="contained">Set Status</Button>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <Select
+                value={status}
+                onChange={statusChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>Set Status</em>
+                </MenuItem>
+                <MenuItem value={"online"}>
+                  <Circle />
+                  Online
+                </MenuItem>
+                <MenuItem value={"away"}>
+                  <DarkMode />
+                  Away
+                </MenuItem>
+                <MenuItem value={"do not disturb"}>
+                  <DoNotDisturbOn />
+                  Do not disturb
+                </MenuItem>
+              </Select>
+            </FormControl>
           </CardContent>
           <CardContent>
+            <hr />
             <Box
               sx={{
                 display: "flex",
@@ -58,17 +99,19 @@ export default function ProfileSettings() {
                 Contact Information
               </Typography>
               <CardActions>
-                <IconButton sx={{ color: "white" }}>
-                  <EditIcon sx={{ width: "1rem" }} />
+                <IconButton>
+                  <EditIcon sx={{ width: "1rem", color: grey[900] }} />
                 </IconButton>
               </CardActions>
             </Box>
-            <Typography variant="body2" color="text.secondary">
-              Email
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Phone
-            </Typography>
+            <Box sx={{ display: "flex", gap: "1.5rem" }}>
+              <Typography variant="body2">Email</Typography>
+              <Typography variant="body2">email@email.com</Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: "1.5rem" }}>
+              <Typography variant="body2">Phone</Typography>
+              <Typography variant="body2">+1 234-567-8910</Typography>
+            </Box>
           </CardContent>
           <CardContent>
             <Box
@@ -80,8 +123,8 @@ export default function ProfileSettings() {
             >
               <Typography variant="h6">Bio</Typography>
               <CardActions>
-                <IconButton sx={{ color: "white" }}>
-                  <EditIcon sx={{ width: "1rem" }} />
+                <IconButton>
+                  <EditIcon sx={{ width: "1rem", color: grey[900] }} />
                 </IconButton>
               </CardActions>
             </Box>

@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 import BusinessIcon from './BusinessIcon';
-import { auth } from '../test/firebaseConfig';
+// import { auth } from '../test/firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // import { white, purple } from '@mui/material/colors';
