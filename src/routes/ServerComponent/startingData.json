@@ -100,42 +100,42 @@
     "last50MessagesArray":[
         {
             "messageId": "2001",
-            "userId": "p201",
+            "userId": "u201",
             "timestamp": "2024-02-22T12:00:00Z",
             "username": "PokeFan88",
             "content": "Just got a holographic Charizard from a booster pack! Couldn't believe my luck!"
           },
           {
             "messageId": "2002",
-            "userId": "p202",
+            "userId": "u202",
             "timestamp": "2024-02-22T12:05:00Z",
             "username": "CollectorJay",
             "content": "That's amazing, PokeFan88! The holographic Charizard is a classic. Do you have any tips for preserving the card's condition?"
           },
           {
             "messageId": "2003",
-            "userId": "p203",
+            "userId": "u203",
             "timestamp": "2024-02-22T12:10:00Z",
             "username": "ShinyHunter",
             "content": "Anyone here into trading? I'm looking for the Shiny Gyarados card. I have duplicates of Venusaur and Blastoise."
           },
           {
             "messageId": "2004",
-            "userId": "p204",
+            "userId": "u204",
             "timestamp": "2024-02-22T12:15:00Z",
             "username": "EeveeLover",
             "content": "CollectorJay, for preserving cards, I recommend using card sleeves and a binder. Also, keep them away from direct sunlight to prevent fading."
           },
           {
             "messageId": "2005",
-            "userId": "p205",
+            "userId": "u205",
             "timestamp": "2024-02-22T12:20:00Z",
             "username": "RareFinds",
             "content": "Just came back from a card convention and the variety of Pokémon cards was incredible. It's fascinating to see how the community cherishes these collectibles."
           },
           {
             "messageId": "2006",
-            "userId": "p206",
+            "userId": "u206",
             "timestamp": "2024-02-22T12:25:00Z",
             "username": "DeckBuilder",
             "content": "Does anyone have advice on building a competitive deck for tournaments? I'm new to the scene and could use some tips."

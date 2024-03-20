@@ -1,0 +1,59 @@
+/*this section is to undo all the inherited css*/
+.menu--title, .channel--group--title, .channel--card {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.menu--title {
+    margin: 12px 0 0 0 !important;
+}
+
+.channel--group--title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 3px 0px 3px 12px !important;
+    margin: 10px 0px 10px 0px !important;
+
+    gap: 8px;
+
+    background-color: #270157;
+    color: white;
+    border-radius: 4px;
+}
+
+.channel--card {
+    text-align: center;
+    width: 80px;
+}
+
+.card--content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card--avatar {
+    margin-bottom: 8px;
+}
+
+.card--name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+
+    height: 32px;
+    /* overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    width: 100%; */
+}
