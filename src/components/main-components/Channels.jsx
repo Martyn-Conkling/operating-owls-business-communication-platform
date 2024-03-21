@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import AddIcon from '@mui/icons-material/Add';
 //import channelData from '../../data/channelData'
 import channelData from '../../routes/ServerComponent/startingData.json'
+import flatChannelData from '../../routes/ServerComponent/flatStartingData.json'
 import ModalInput from '../ModalInput';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
@@ -22,9 +23,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Channels(props){
     const [open, setOpen] = React.useState(true); //for the collapsible list
-    const [channels, setChannels] = React.useState(channelData.channelArray); //to ensure channels update whenever we edit
+    const [channels, setChannels] = React.useState(flatChannelData); //to ensure channels update whenever we edit
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
-    const [selectedIndex, setSelectedIndex] = React.useState(props.defaultChannel); //for the selected list item visual
+    const [selectedChannel, setSelectedChannel] = React.useState(props.defaultChannel); //for the selected list item visual
 
     //moved from componentized indivChannel to returning it within this component
     const IndivChannel = (props) => {
@@ -74,7 +75,6 @@ export default function Channels(props){
 
     //opens modal to add new channel
     const handleAddItem = () => {
-        console.log("clicked +");
         setShowModal(true);
     }
 
@@ -82,14 +82,22 @@ export default function Channels(props){
     const addItem = (idInput, nameInput) => {
         //console.log(channels)
         const newChannel = {
-            "channelID": idInput,
-            "channelName": nameInput,
-            "last50MessagesArray":[]
+            "id": idInput,
+            "name": nameInput,
+            "messageIds":[]
         };
-        setChannels( (prevChannels) => 
-            [...prevChannels, newChannel
-            ]
-        );
+
+        setChannels( (prevChannels) => ({
+            "channels": {
+                "byId" :{
+                    ...prevChannels.channels.byId,
+                    [newChannel.id]: newChannel
+                },
+                "allIds" : [...prevChannels.channels.allIds, newChannel.id]
+            },
+            "messages" : {...prevChannels.messages}
+           
+        }));
         setShowModal(false);
         
        // console.log(channels);
@@ -98,22 +106,25 @@ export default function Channels(props){
     //deletes channel by filtering and selecting the channel to delete
     const deleteItem = (itemId) => {
         setChannels((prevChannels) => {
+            const newById = {...prevChannels.channels.byId}
+            delete newById[itemId]
+            const newAllIds = prevChannels.channels.allIds.filter(id => id !==itemId)
+            const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
+            setSelectedChannel(prevChannels.channels.allIds[newIndex]);
+            props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
 
-        if(prevChannels.length != 1) {
-            //finds the index
-            const indexToDelete = prevChannels.findIndex((channel) => channel.channelID === itemId);
-            //ensures that we navigate to the channel above
-            const updatedChannels = prevChannels.filter((channel) => channel.channelID !== itemId);
-            const newIndex = indexToDelete > 0 ? indexToDelete - 1 : 0;
-            setSelectedIndex(newIndex);
-            props.onSelectChannel(updatedChannels[newIndex].channelID);
-            return updatedChannels;
-        }
-        return prevChannels.filter((channel) => channel.channelID !== itemId);
+            return {
+                channels:{
+                    byId: newById,
+                    allIds: newAllIds
+                },
+                messages: {...prevChannels.messages}
+            }
+
         }
         );
     }
-
+    
     //closes modal of adding channel
     const handleModalClose = () => {
         setShowModal(false);
@@ -121,20 +132,25 @@ export default function Channels(props){
 
     //shows the visually selected channel within component
     const handleListItemClick = (event, channelId) => {
-        setSelectedIndex(channelId);
+        console.log(channelId)
+        setSelectedChannel(channelId);
         props.onSelectChannel(channelId);
     };
     
     //processes data to add channel as a react component
-    const channelElements = channels.map(channel => (
-        <IndivChannel 
-            key={channel.channelID}
-            name={channel.channelName}
-            onClick={(event)=> handleListItemClick(event, channel.channelID)}
-            selected={selectedIndex === channel.channelID}
-            deleteChannel={()=> deleteItem(channel.channelID)}
+    const channelElements = channels.channels.allIds.map(id => {
+        const channel = channels.channels.byId[id];
+
+        return (
+            <IndivChannel 
+            key={channel?.id}
+            name={channel?.name}
+            onClick={(event)=> handleListItemClick(event, channel?.id)}
+            selected={selectedChannel === channel?.id}
+            deleteChannel={()=> deleteItem(channel?.id)}
         />
-    ))
+        )
+    })
     
     return (
         <>
@@ -174,7 +190,7 @@ export default function Channels(props){
                     </List>
                 </nav>
             </Box>
-            {showModal && <ModalInput enteredId={channels.length} addItem={addItem} onClose={handleModalClose}/>}                
+            {showModal && <ModalInput enteredId={'channelId'+ channels.channels.allIds.length} addItem={addItem} onClose={handleModalClose}/>}                
         </>
     )
 }
