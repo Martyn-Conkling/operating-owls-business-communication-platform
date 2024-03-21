@@ -1,11 +1,11 @@
-// import ProfileComponent from "../components/main-components/ProfileComponent"
-// import LoginTest from "../components/test/LoginTest"
+import ProfileComponent from "../components/main-components/ProfileComponent"
+import Menu from "../components/main-components/Menu"
 
  export default function AlejandroTestPage(){
-//     return (
-//         <>
-//             {/* <ProfileComponent /> */}
-//             {/* <LoginTest /> */}
-//         </>
-//     )
+    return (
+        <>
+            <ProfileComponent />
+            <Menu />
+        </>
+    )
 }

@@ -46,3 +46,10 @@
 #text-box{
     width: 80%;
 }
+
+.header--container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid rgb(140, 0, 255);
+}
