@@ -12,7 +12,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { Typography } from "@mui/material";
 import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 export default function MessageComponent(props) {
@@ -32,19 +31,18 @@ export default function MessageComponent(props) {
       }
 
   return (
-    <Paper
+      <Grid 
+      container spacing={2}
       className="message-box"
+      minWidth={500}
       sx={{
-        p: 2,
         margin: 'auto',
         flexGrow: 1,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-      }}
-    >
-      <Grid container spacing={2}>
-        <Grid item>
-            <Avatar sx={{ width: 38, height: 38 }} variant="rounded" alt={props.displayName} src="/static/images/avatar/1.jpg"/>
+        paddingRight: 4,
+        paddingBottom: 1
+        }} >
+        <Grid item xs={0.65}>
+            {props.displayAvatarandMenu && <Avatar sx={{ width: 38, height: 38 }} variant="rounded" alt={props.displayName} src="/static/images/avatar/1.jpg"/>}
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
@@ -57,14 +55,14 @@ export default function MessageComponent(props) {
                 sx={{madWidth: 800}}>
                   <Typography
                     noWrap  
-                    style={{color: "#270157", fontSize: "1.3rem", fontFamily:"Inter-SemiBold"}} 
+                    style={{color: "#270157", fontSize: "1.1rem", fontFamily:"Inter-SemiBold"}} 
                     className="display--name">
                     {props.displayName}
                   </Typography>
                   <Typography
                     noWrap
                     className="display--time"
-                    style={{color: "#808080", fontSize: "1.0rem", fontFamily:"Inter"}} >
+                    style={{color: "#808080", fontSize: "0.75rem", fontFamily:"Inter"}} >
                       {props.time}
                   </Typography>
             </Stack>
@@ -72,15 +70,11 @@ export default function MessageComponent(props) {
                 <Typography>
                 {props.messageContent} 
                 </Typography>
-                <br />
-                <br />
-                <Typography>
-                {props.sameUserContent}
-                </Typography>
             </Stack>
             </Grid>
           </Grid>
           <Grid item>
+          {props.displayAvatarandMenu && 
           <IconButton 
                       edge="end" 
                       aria-owns={anchorEl ? "simple-menu" : undefined}
@@ -114,10 +108,9 @@ export default function MessageComponent(props) {
                                   <ListItemText><Typography style={{fontFamily: "Inter"}}>Reply</Typography></ListItemText>
                               </MenuItem>
                         </Menu>
-                    </IconButton>
+                    </IconButton> }
           </Grid>
         </Grid>
       </Grid>
-    </Paper>
   );
 }

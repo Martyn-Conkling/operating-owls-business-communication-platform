@@ -6,8 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import Message from "../../components/main-components/Message.jsx";
-
+import MessageComponent from "../../components/main-components/Message.jsx";
+import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
 import data from './startingData.json';
 import Channels from "../../components/main-components/Channels"
@@ -119,7 +119,8 @@ const handleSendMessage = (event) => {
 const messageList = messagesArray.map((message, index) => {
 
     const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
-    const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
+    const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
+    const currentTime = moment(currentMessageDate).tz("America/Los_Angeles").format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
@@ -138,13 +139,20 @@ const messageList = messagesArray.map((message, index) => {
     return (
     <>
         {showDayBreak &&(
-            <div className='date-border'> {currentMessageFormattedDate}</div>
+            <Divider className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
         <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
         
         
         {showUserInfo && (
+            <MessageComponent 
+                displayName={message.username}
+                messageContent={message.content}
+                time={currentTime}
+                displayAvatarandMenu={true}
+                />
+            /*
            <div style={{ display: 'flex', alignItems: 'start' }}>
             <img
               src={message.avatarUrl}
@@ -156,10 +164,18 @@ const messageList = messagesArray.map((message, index) => {
             <p style={{margin: '0px'}}>Message ID: {message.messageId}</p>
                 <div>{message.content}</div>
             </div>
+            */
              
           
         )}
-        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message.content}</div>}
+        {!showUserInfo && (
+            <MessageComponent 
+                messageContent={message.content}
+                displayAvatarandMenu={false}
+            />
+        )
+        /* <div style={{ marginLeft: '45px'}}>{message.content}</div> */
+        }
         
         
       </div>

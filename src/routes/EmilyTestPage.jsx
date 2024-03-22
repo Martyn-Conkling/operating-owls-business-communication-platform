@@ -10,39 +10,24 @@ export default function EmilyTestPage() {
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
          cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
           turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
-            sameUserContent="Oh that really sucks :("
-            time="12:00AM" />
+            time="12:00AM"
+            displayAvatarandMenu={true} 
+        />
         
         <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
              cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
               turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
-            sameUserContent="Oh that really sucks :("
             time="12:00AM"
+            displayAvatarandMenu={true}
         />
         <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
              cursus commodo non dui cursus elit in"
-            sameUserContent="Oh that really sucks :("
             time="12:00AM"
-        />
-        <MessageComponent
-            displayName="FirstName LastName"
-            messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
-             cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
-             cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
-             cursus commodo non dui cursus elit in"
-            sameUserContent="Oh that really sucks :("
-            time="12:00AM"
-        />
-        <MessageComponent
-            displayName="FirstName LastName"
-            messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
-             cursus commodo non dui cursus elit in"
-            sameUserContent="Oh that really sucks :("
-            time="12:00AM"
+            displayAvatarandMenu={true}
         />
         </div>
     )
