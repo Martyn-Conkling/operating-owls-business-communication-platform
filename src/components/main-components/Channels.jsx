@@ -106,12 +106,17 @@ export default function Channels(props){
     //deletes channel by filtering and selecting the channel to delete
     const deleteItem = (itemId) => {
         setChannels((prevChannels) => {
+            //creates new edited channel list
             const newById = {...prevChannels.channels.byId}
             delete newById[itemId]
             const newAllIds = prevChannels.channels.allIds.filter(id => id !==itemId)
-            const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
-            setSelectedChannel(prevChannels.channels.allIds[newIndex]);
-            props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
+            //procedure to go to the channel directly above the deleted channel
+            if(itemId === selectedChannel){
+                const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
+                setSelectedChannel(prevChannels.channels.allIds[newIndex]);
+                props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
+            }
+            
 
             return {
                 channels:{
