@@ -195,7 +195,7 @@ return(
 <div id='chat-section'>
 
     {/* connects channels selected channel name to display */}
-    <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
+    <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
 
     <div id='message-list'>
         {messageList}
