@@ -12,8 +12,6 @@ import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
 
-import ProfileComponent from "../../components/main-components/ProfileComponent"
-
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
    
@@ -171,9 +169,9 @@ useEffect(() => {
 return(
     <>
 
-    {/* <Search 
-    selectedChannel={selectedChannel}
-    /> */}
+    <Search 
+        selectedChannel={selectedChannel}
+    />
     <div className="server-container" > 
 
     <div id='channel-list'>
@@ -187,11 +185,8 @@ return(
 
 <div id='chat-section'>
 
-<div className="header--container">
-        {/* connects channels selected channel name to display */}
-        <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
-        <ProfileComponent />
-    </div>
+    {/* connects channels selected channel name to display */}
+    <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
 
     <div id='message-list'>
         {messageList}
