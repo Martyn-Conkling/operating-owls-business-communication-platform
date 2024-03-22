@@ -103,6 +103,8 @@ export default function Search(props){
                                 width:'50%'
                             }}
                             onFocus={handleSearchOpen}
+                            color="info"
+
                         />
                         {/* Profile Component */}
                         <ProfileComponent />

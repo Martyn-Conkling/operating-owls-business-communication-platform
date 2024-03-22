@@ -9,7 +9,7 @@
         "channelId1": {
             "id": "channelId1",
             "name": "Pokemon TCG",
-            "messageIds": ["2001", "2006"]
+            "messageIds": ["u2012001", "u2032003"]
             }
         },
 
