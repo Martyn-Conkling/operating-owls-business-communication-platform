@@ -37,11 +37,11 @@ function setErrorMessageBlank(){
     setInvalidLoginMessage('');
 }
 
-let navigate = useNavigate();
-const routeChange = (pathLink) =>{
-    let path = pathLink;
-    navigate(path,{state:{email:email}});
-}
+// let navigate = useNavigate();
+// const routeChange = (pathLink) =>{
+//     let path = pathLink;
+//     navigate(path,{state:{email:email}});
+// }
 
 
 
@@ -52,7 +52,7 @@ function LogInButtonClicked() {
       // Signed in 
         const user = userCredential.user;
         console.log(user)
-        routeChange(`/ServerComponent`)
+        // routeChange(`/ServerComponent`)
       // ...
     })
     .catch((error) => {
