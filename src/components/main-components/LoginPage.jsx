@@ -30,7 +30,7 @@ const [passwordHasValue, setPasswordHasValue] = useState(false);
 const [passwordValueMessage, setPasswordValueMessage] = useState();
 const [invalidLogIn, setInvalidLogin] = useState(false);
 const [invalidLogInMessage, setInvalidLoginMessage] = useState('');
-const [username, setUsername] = useState();
+// const [username, setUsername] = useState();
 
 function setErrorMessageBlank(){
     setEmailNoValue(false);
@@ -42,51 +42,46 @@ function setErrorMessageBlank(){
 }
 
 let navigate = useNavigate();
-async function routeChange(pathLink){
+async function routeChange(pathLink, username){
     let path = pathLink;
     navigate(path,{state:{email:email,username:username,isLoggedIn:true}});}
 
 async function getUsername(){
-    let userInfo = undefined
     const userRef = doc(db, "users", email);
     const userSnap = await getDoc(userRef)
-    userInfo = userSnap.data()
-    setUsername(userInfo.username)
+    let userInfo = userSnap.data()
+    console.log(userInfo)
+    // setUsername(userInfo.username)
+    return userInfo.username;
 }
 
-useEffect(()=>{
-    console.log(username)
-},[username])
 
-
-function LogInButtonClicked() {
-    setErrorMessageBlank()
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
+async function LogInButtonClicked() {
+    setErrorMessageBlank();
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        console.log(user)
-        getUsername()
-        routeChange(`/ServerComponent`)
-
-    })
-    .catch((error) => {
+        console.log(user);
+        const username = await getUsername();
+        routeChange(`/ServerComponent`, username);
+    } catch (error) {
         const errorCode = error.code;
-        console.log(errorCode)
+        console.log(errorCode);
         if (errorCode === "auth/missing-email") {
-            setEmailNoValue(true)
-            setEmailNoValueMessage('Email input needed')
+            setEmailNoValue(true);
+            setEmailNoValueMessage('Email input needed');
         }
         if (errorCode === "auth/missing-password") {
-            setPasswordHasValue(false)
-            setPasswordValueMessage("Password input needed")
+            setPasswordHasValue(false);
+            setPasswordValueMessage("Password input needed");
         }
         if (errorCode === "auth/invalid-credential") {
             setInvalidLogin(true);
-            setInvalidLoginMessage("Invalid Email or Password")
+            setInvalidLoginMessage("Invalid Email or Password");
         }
-    });
+    }
 }
+
 
 return (
 <ThemeProvider theme={theme}>
