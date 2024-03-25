@@ -11,10 +11,13 @@ import BusinessIcon from './BusinessIcon';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../test/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { getFirestore, collection, getDoc, doc, snapshotEqual } from 'firebase/firestore';
+import { db } from '../test/firebaseConfig';
+import { user } from '@nextui-org/react';
 
 export default function ChristianTestPage() {
 const theme = createTheme();
@@ -27,6 +30,7 @@ const [passwordHasValue, setPasswordHasValue] = useState(false);
 const [passwordValueMessage, setPasswordValueMessage] = useState();
 const [invalidLogIn, setInvalidLogin] = useState(false);
 const [invalidLogInMessage, setInvalidLoginMessage] = useState('');
+const [username, setUsername] = useState();
 
 function setErrorMessageBlank(){
     setEmailNoValue(false);
@@ -37,12 +41,22 @@ function setErrorMessageBlank(){
     setInvalidLoginMessage('');
 }
 
-// let navigate = useNavigate();
-// const routeChange = (pathLink) =>{
-//     let path = pathLink;
-//     navigate(path,{state:{email:email}});
-// }
+let navigate = useNavigate();
+async function routeChange(pathLink){
+    let path = pathLink;
+    navigate(path,{state:{email:email,username:username,isLoggedIn:true}});}
 
+async function getUsername(){
+    let userInfo = undefined
+    const userRef = doc(db, "users", email);
+    const userSnap = await getDoc(userRef)
+    userInfo = userSnap.data()
+    setUsername(userInfo.username)
+}
+
+useEffect(()=>{
+    console.log(username)
+},[username])
 
 
 function LogInButtonClicked() {
@@ -52,8 +66,9 @@ function LogInButtonClicked() {
       // Signed in 
         const user = userCredential.user;
         console.log(user)
-        // routeChange(`/ServerComponent`)
-      // ...
+        getUsername()
+        routeChange(`/ServerComponent`)
+
     })
     .catch((error) => {
         const errorCode = error.code;
