@@ -14,12 +14,11 @@ import flatData from './flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
-
-import ProfileComponent from "../../components/main-components/ProfileComponent"
+import { useLocation } from 'react-router-dom';
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
-   
+
 
     
 let userSettings = {
@@ -53,6 +52,19 @@ let blankMessage = {
     "username": userSettings.username,
     "content":""
 }
+
+let email = "exampleEmail@email.com";
+let username = "someUsername";
+const location = useLocation();
+try {
+if (location.state.isLoggedIn === true) {
+    username = location.state.username
+    email = location.state.email
+    console.log(`the user is logged in their email is ${email} and username is ${username}`)
+} else {
+    console.log("user is not logged in using dummy data")
+}} catch {console.log("user is not logged in")}
+
 
 const messagesEndRef = useRef(null);
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
@@ -198,9 +210,9 @@ useEffect(() => {
 return(
     <>
 
-    {/* <Search 
-    selectedChannel={selectedChannel}
-    /> */}
+    <Search 
+        selectedChannel={selectedChannel}
+    />
     <div className="server-container" > 
 
     <div id='channel-list'>
@@ -214,11 +226,8 @@ return(
 
 <div id='chat-section'>
 
-<div className="header--container">
-        {/* connects channels selected channel name to display */}
-        <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
-        <ProfileComponent />
-    </div>
+    {/* connects channels selected channel name to display */}
+    <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
 
     <div id='message-list'>
         {messageList}

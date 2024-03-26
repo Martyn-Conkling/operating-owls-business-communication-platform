@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import channelData from '../../routes/ServerComponent/startingData.json'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -14,6 +13,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
+
+import ProfileComponent from './ProfileComponent';
+import '../../css/Search.css'
 
 export default function Search(props){
     const[searchValue, setSearchValue] = React.useState('');
@@ -54,7 +56,6 @@ export default function Search(props){
             </ListItem>
         
     )
-   
 
     console.log(filteredData)
 
@@ -76,17 +77,21 @@ export default function Search(props){
         <>
             <Box sx={{flexGrow: 1}}>
                 <AppBar position="fixed" sx={{width: '100%'}}>
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            sx={{mr:2}}
-                            >
-                                <CatchingPokemonIcon />
-                        </IconButton>
-                        <Typography variant= "h6" component="div"sx={{ flexGrow: 1 }}>
-                          Operating Owls
-                        </Typography>
+                    <Toolbar className="Top--Bar">
+                        <div className="Title">
+                            {/* Icon Button */}
+                            <IconButton className="Top--Bar"
+                                size="large"
+                                edge="start"
+                                >
+                                    <CatchingPokemonIcon />
+                            </IconButton>
+                            {/* Application Title */}
+                            <Typography variant= "h6" component="div">
+                                Operating Owls
+                            </Typography>
+                        </div>
+                        {/* Search Text Field */}
                         <TextField
                             id="standard-search"
                             label="Search field"
@@ -95,21 +100,14 @@ export default function Search(props){
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             sx={{
-                                marginLeft:0,
-                                marginRight:'20%',
                                 width:'50%'
                             }}
                             onFocus={handleSearchOpen}
                             color="info"
 
                         />
-                         <Box sx={{ flexGrow: 1 }} />
-                         <div>
-                            <IconButton>
-                                <AccountCircleIcon />
-                            </IconButton>
-                         </div>
-                         
+                        {/* Profile Component */}
+                        <ProfileComponent />
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -135,8 +133,6 @@ export default function Search(props){
                     {filteredData.length ? searchResults : emptyResults}
                 </List>
             </Popover>
-            
-            
         </>
     )
 }

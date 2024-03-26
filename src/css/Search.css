@@ -1,0 +1,12 @@
+.Top--Bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
