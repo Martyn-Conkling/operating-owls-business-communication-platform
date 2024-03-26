@@ -6,27 +6,39 @@ import IconButton from '@mui/material/IconButton';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import channelData from '../../routes/ServerComponent/startingData.json'
+//import channelData from '../../routes/ServerComponent/startingData.json'
+import flatChannelData from '../../routes/ServerComponent/flatStartingData.json'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
-
+import ClearIcon from '@mui/icons-material/Clear';
 import ProfileComponent from './ProfileComponent';
 import '../../css/Search.css'
 
 export default function Search(props){
     const[searchValue, setSearchValue] = React.useState('');
-
     console.log(searchValue);
-    const selectedChannelData = channelData.channelArray.find(channel => channel.channelID === props.selectedChannel);
-    const filteredData = selectedChannelData ? selectedChannelData["last50MessagesArray"].filter(item =>
+    const selectedChannelData = flatChannelData.channels.byId[props.selectedChannel];
+    const selectedMessages = selectedChannelData?.messageIds.map(id => flatChannelData.messages?.byId[id]);
+    
+    const filteredDataContent = selectedChannelData?.messageIds ? selectedMessages.filter(item =>
         item.content.toLowerCase().includes(searchValue.toLowerCase())
     ) : [];
+    const filteredDataName = selectedChannelData?.messageIds ? selectedMessages.filter(item =>
+        item.username.toLowerCase().includes(searchValue.toLowerCase())
+    ) : [];
+
+    const comboFilteredData = [...filteredDataContent, ...filteredDataName]
     
-    
+    const uniqueMessages = new Map();
+    comboFilteredData.forEach(item => {
+        uniqueMessages.set(item.messageId, item)
+    })
+
+    const filteredData = Array.from(uniqueMessages.values())
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleSearchOpen = (event) => {
@@ -37,7 +49,7 @@ export default function Search(props){
         setAnchorEl(null);
     };
 
-    const open = Boolean(anchorEl);
+    const open = Boolean(anchorEl) && searchValue !== '';
 
 
     const searchResults = filteredData.map(message => (
@@ -100,11 +112,26 @@ export default function Search(props){
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             sx={{
-                                width:'50%'
+                                width:'50%',
+                                'input[type="search"]::-webkit-search-cancel-button': {
+                                    display: 'none',
+                                },
                             }}
                             onFocus={handleSearchOpen}
                             color="info"
+                            InputProps={{
+                                endAdornment: searchValue ? (
 
+                                    <IconButton
+                                        onClick={() => setSearchValue('')}
+                                        edge="end"
+                                        size="medium"
+                                        tabIndex={-1}
+                                        >
+                                            <ClearIcon />
+                                    </IconButton>): null
+                            }}
+                            clearButton={false}
                         />
                         {/* Profile Component */}
                         <ProfileComponent />
@@ -127,7 +154,7 @@ export default function Search(props){
                     vertical: 'top',
                     horizontal: 'left',
                   }}
-                  sx={{marginTop:'20px'}}
+                  sx={{marginTop:'20px', zIndex: 1000}}
             >
                 <List >
                     {filteredData.length ? searchResults : emptyResults}
