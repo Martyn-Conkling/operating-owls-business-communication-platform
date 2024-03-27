@@ -195,8 +195,8 @@ return(
     <>
 
     <Search 
-    selectedChannel={selectedChannel}/> 
-
+    selectedChannel={selectedChannel}
+    username={username}/> 
     <div className="server-container" > 
 
     <div id='channel-list'>
