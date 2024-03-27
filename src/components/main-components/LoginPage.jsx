@@ -30,7 +30,6 @@ const [passwordHasValue, setPasswordHasValue] = useState(false);
 const [passwordValueMessage, setPasswordValueMessage] = useState();
 const [invalidLogIn, setInvalidLogin] = useState(false);
 const [invalidLogInMessage, setInvalidLoginMessage] = useState('');
-// const [username, setUsername] = useState();
 
 function setErrorMessageBlank(){
     setEmailNoValue(false);
