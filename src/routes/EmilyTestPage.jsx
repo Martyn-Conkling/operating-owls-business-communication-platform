@@ -11,7 +11,7 @@ export default function EmilyTestPage() {
          cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
           turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
             time="12:00AM"
-            displayAvatarandMenu={true} 
+            displayUserInfo={true} 
         />
         
         <MessageComponent
@@ -20,14 +20,14 @@ export default function EmilyTestPage() {
              cursus commodo non dui cursus elit in. In amet, eget tincidunt dui sollicitudin. eget odio vitae
               turpis eget Nam tincidunt cursus commodo non dui cursus elit in"
             time="12:00AM"
-            displayAvatarandMenu={true}
+            displayUserInfo={true}
         />
         <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
              cursus commodo non dui cursus elit in"
             time="12:00AM"
-            displayAvatarandMenu={true}
+            displayUserInfo={true}
         />
         </div>
     )
