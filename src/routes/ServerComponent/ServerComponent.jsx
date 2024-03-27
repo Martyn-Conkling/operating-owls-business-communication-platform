@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import './ServerStyles.css';
-import data from './startingData.json';
+//import data from './startingData.json';
 import flatData from './flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
@@ -67,7 +67,7 @@ if (location.state.isLoggedIn === true) {
 const messagesEndRef = useRef(null);
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
-
+const [scrollMessageId, setScrollMessageId] = useState(null) //sets an id to scroll to if the search bar is used
 
 const [messagesArray, setMessagesArray] = useState([]);
 
@@ -88,6 +88,18 @@ useEffect(() => {
     }
     console.log(dataStore)
   }, [dataStore, selectedChannel]);
+
+const scrollToMessage = (id) => {
+    setScrollMessageId(id);
+}
+
+useEffect(() => {
+    if(scrollMessageId) {
+        const specificMessage = document.getElementById(scrollMessageId);
+        specificMessage.scrollIntoView({behavior: "smooth"});
+        setScrollMessageId(null);
+    }
+}, [scrollMessageId]);
 
 
 const [newMessage, setNewMessage] = useState(blankMessage);
@@ -156,7 +168,7 @@ const messageList = messagesArray.map((message, index) => {
             <div className='date-border'> {currentMessageFormattedDate}</div>
         )}
 
-        <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
+        <div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}>
         
         
         {showUserInfo && (
@@ -194,6 +206,7 @@ return(
 
     <Search 
         selectedChannel={selectedChannel}
+        scrollToMessage={scrollToMessage}
     />
     <div className="server-container" > 
 
