@@ -132,8 +132,8 @@ const handleSendMessage = (event) => {
 };
 
 const messageList = messagesArray.map((message, index) => {
-
-    const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
+    // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
+    const currentMessageDate = moment.tz(message.timestamp, timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
 
     let showDayBreak = true;
@@ -150,6 +150,7 @@ const messageList = messagesArray.map((message, index) => {
         showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }
+
     return (
     <>
         {showDayBreak &&(
@@ -174,7 +175,8 @@ const messageList = messagesArray.map((message, index) => {
              
           
         )}
-        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message?.content}</div>}
+
+        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message.content}</div>}
         
         
       </div>
@@ -193,8 +195,8 @@ return(
     <>
 
     <Search 
-        selectedChannel={selectedChannel}
-    />
+    selectedChannel={selectedChannel}/> 
+
     <div className="server-container" > 
 
     <div id='channel-list'>
