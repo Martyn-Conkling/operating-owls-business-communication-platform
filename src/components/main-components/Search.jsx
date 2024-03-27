@@ -107,7 +107,9 @@ export default function Search(props){
 
                         />
                         {/* Profile Component */}
-                        <ProfileComponent />
+                        {/* the profile component is setup to work with props */}
+                        <ProfileComponent username="Username" nickname="Nickname" online={true} pfp="https://picsum.photos/200" />
+
                     </Toolbar>
                 </AppBar>
             </Box>
