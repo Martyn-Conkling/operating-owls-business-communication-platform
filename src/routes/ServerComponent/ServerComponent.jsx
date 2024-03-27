@@ -137,7 +137,7 @@ const messageList = messagesArray.map((message, index) => {
 
     const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
-    const currentTime = moment(currentMessageDate).tz("America/Los_Angeles").format('h:mm A');
+    const currentTime = moment(currentMessageDate).tz(timeZoneOptions.timeZone).format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
@@ -153,6 +153,7 @@ const messageList = messagesArray.map((message, index) => {
         showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }
+
     return (
     <>
         {showDayBreak &&(
@@ -211,8 +212,8 @@ return(
     <>
 
     <Search 
-        selectedChannel={selectedChannel}
-    />
+    selectedChannel={selectedChannel}
+    username={username}/> 
     <div className="server-container" > 
 
     <div id='channel-list'>
