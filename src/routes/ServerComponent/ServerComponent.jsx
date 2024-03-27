@@ -8,15 +8,15 @@ import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import './ServerStyles.css';
 import data from './startingData.json';
+import flatData from './flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
-
-import ProfileComponent from "../../components/main-components/ProfileComponent"
+import { useLocation } from 'react-router-dom';
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
-   
+
 
     
 let userSettings = {
@@ -51,9 +51,22 @@ let blankMessage = {
     "content":""
 }
 
+let email = "exampleEmail@email.com";
+let username = "someUsername";
+const location = useLocation();
+try {
+if (location.state.isLoggedIn === true) {
+    username = location.state.username
+    email = location.state.email
+    console.log(`the user is logged in their email is ${email} and username is ${username}`)
+} else {
+    console.log("user is not logged in using dummy data")
+}} catch {console.log("user is not logged in")}
+
+
 const messagesEndRef = useRef(null);
-const [dataStore, setDataStore] = useState(data.channelArray); //holds the state of the channels to update when changed
-const [selectedChannel, setSelectedChannel] = useState(0); //defaults selected channel to the first
+const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
+const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
 
 
 const [messagesArray, setMessagesArray] = useState([]);
@@ -61,13 +74,17 @@ const [messagesArray, setMessagesArray] = useState([]);
 //connects the selected channel to its corresponding messages
 useEffect(() => {
     const selectedChannelID = selectedChannel;
-    const selectedChannelData = dataStore.find(channel => channel.channelID === selectedChannelID);
+    const selectedChannelData = dataStore.channels?.byId[selectedChannelID];
     if (selectedChannelData) {
-        setMessagesArray([...selectedChannelData["last50MessagesArray"]]);
+        const messageIds = selectedChannelData.messageIds;
+        console.log("Message IDs:", messageIds);
+        const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
+        console.log("Selected Messages:", selectedMessages.filter(message => message));
+        setMessagesArray(selectedMessages.filter(message => message));
     }
     //displays no messages if no channels exist
-    if(dataStore.length == 0){
-        setMessagesArray([]);
+    else{
+        setMessagesArray([]);   
     }
     console.log(dataStore)
   }, [dataStore, selectedChannel]);
@@ -126,11 +143,11 @@ const messageList = messagesArray.map((message, index) => {
     let previousMessageDate = null;
     if (index > 0){
         const previousMessage = messagesArray[index - 1];
-        previousMessageDate = moment.tz(previousMessage.timestamp, timeZoneOptions.timeZone)
+        previousMessageDate = moment.tz(previousMessage?.timestamp, timeZoneOptions.timeZone)
 
         showDayBreak = !currentMessageDate.isSame(previousMessageDate, 'day');
-        const fiveMinBeforeCurrentMessage = moment.tz(message.timestamp, timeZoneOptions.timeZone).subtract(5, 'minutes');
-        showUserInfo = message.userId !== previousMessage.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
+        const fiveMinBeforeCurrentMessage = moment.tz(message?.timestamp, timeZoneOptions.timeZone).subtract(5, 'minutes');
+        showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }
 
@@ -146,14 +163,14 @@ const messageList = messagesArray.map((message, index) => {
         {showUserInfo && (
            <div style={{ display: 'flex', alignItems: 'start' }}>
             <img
-              src={message.avatarUrl}
-              alt={`${message.username}'s avatar`}
+              src={message?.avatarUrl}
+              alt={`${message?.username}'s avatar`}
               style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }}
             />
-            <h3 style={{ margin: '0px', marginRight: '5px'}}>{message.username}</h3>
+            <h3 style={{ margin: '0px', marginRight: '5px'}}>{message?.username}</h3>
             <p style={{margin: '0px'}}>{currentMessageFormattedDate}</p>
-            <p style={{margin: '0px'}}>Message ID: {message.messageId}</p>
-                <div>{message.content}</div>
+            <p style={{margin: '0px'}}>Message ID: {message?.messageId}</p>
+                <div>{message?.content}</div>
             </div>
              
           
@@ -193,11 +210,8 @@ return(
 
 <div id='chat-section'>
 
-<div className="header--container">
-        {/* connects channels selected channel name to display */}
-        <h2>Text Channel: {dataStore.find(channel => channel.channelID === selectedChannel)?.channelName}</h2>
-        <ProfileComponent />
-    </div>
+    {/* connects channels selected channel name to display */}
+    <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
 
     <div id='message-list'>
         {messageList}
