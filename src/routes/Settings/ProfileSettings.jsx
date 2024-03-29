@@ -20,6 +20,7 @@ import {
 import { grey } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import { DoNotDisturbOn, DarkMode, Circle } from "@mui/icons-material";
+import AccountSettings from "./AccountSettings";
 
 export default function ProfileSettings(props) {
   // check if user is logged in
@@ -92,7 +93,7 @@ export default function ProfileSettings(props) {
                 <Button
                   variant="outlined"
                   sx={{ border: "1px solid gray", color: "black" }}
-                  onClick={editUserProfile}
+                  href="/account-settings" 
                 >
                   Edit Profile
                   <EditIcon sx={{ width: "1rem", color: grey[900] }} />
