@@ -1,7 +1,7 @@
 export default [
   {
-    username: "Alejandro",
-    nickname: "SamuraiEdge92F",
+    username: "Example Name",
+    nickname: "Cool Nickname 3000",
     online: true,
     pfp: "https://picsum.photos/200"
   }

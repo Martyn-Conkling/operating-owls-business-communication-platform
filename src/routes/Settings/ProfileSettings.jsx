@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "../../components/test/firebaseConfig"
+import { collection, query, where, addDoc, setDoc, doc } from "firebase/firestore";
 import {
   Box,
   Typography,
@@ -9,26 +11,50 @@ import {
   IconButton,
   FormControl,
   InputLabel,
+  Input,
+  Button,
   Select,
   MenuItem,
 } from "@mui/material";
+
 import { grey } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import { DoNotDisturbOn, DarkMode, Circle } from "@mui/icons-material";
 
-export default function ProfileSettings() {
-  const [status, setStatus] = useState("");
+export default function ProfileSettings(props) {
+  // check if user is logged in
+  // const getUserData = async() => {
+  //   try {
+  //     await doc(db, "users", props.email)
+  //   }
+  //   catch (err){
+  //     console.error(err);
+  //   }
+
+  //   try {getUserData() } catch (err) {console.error(err)}
+  // }
+
   const [editProfile, setProfile] = useState({
-    displayName: "",
+    displayName: "Display Name",
     pfp: "",
-    email: "",
-    phone: "",
-    bio: "",
+    email: "email@email.com",
+    phone: "867425224",
+    bio: "HELLO THIS IS A BIO.",
   });
+  
+
+  const editUserProfile = (event) => {
+    alert("editing profile");
+    setProfile(event.target.value);
+  };
+
+  const [status, setStatus] = useState("");
 
   const statusChange = (event) => {
     setStatus(event.target.value);
   };
+
+
   return (
     <Box
       sx={{
@@ -58,8 +84,20 @@ export default function ProfileSettings() {
             }}
           >
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Avatar sx={{ border: "2px solid black" }} />
-              <Typography variant="h6">DisplayName</Typography>
+              <img src={setProfile.pfp} />
+              <Typography variant="h6">{editProfile.displayName}</Typography>
+            </Box>
+            <Box>
+              <CardActions>
+                <Button
+                  variant="outlined"
+                  sx={{ border: "1px solid gray", color: "black" }}
+                  onClick={editUserProfile}
+                >
+                  Edit Profile
+                  <EditIcon sx={{ width: "1rem", color: grey[900] }} />
+                </Button>
+              </CardActions>
             </Box>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <Select
@@ -106,11 +144,11 @@ export default function ProfileSettings() {
             </Box>
             <Box sx={{ display: "flex", gap: "1.5rem" }}>
               <Typography variant="body2">Email</Typography>
-              <Typography variant="body2">email@email.com</Typography>
+              <Typography variant="body2">{editProfile.email}</Typography>
             </Box>
             <Box sx={{ display: "flex", gap: "1.5rem" }}>
               <Typography variant="body2">Phone</Typography>
-              <Typography variant="body2">+1 234-567-8910</Typography>
+              <Typography variant="body2">{editProfile.phone}</Typography>
             </Box>
           </CardContent>
           <CardContent>
@@ -128,7 +166,7 @@ export default function ProfileSettings() {
                 </IconButton>
               </CardActions>
             </Box>
-            <Typography>HELLO THIS IS A BIO.</Typography>
+            <Typography>{editProfile.bio}</Typography>
           </CardContent>
         </Box>
       </Card>
