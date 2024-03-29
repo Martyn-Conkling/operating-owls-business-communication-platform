@@ -11,12 +11,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 import BusinessIcon from './BusinessIcon';
-//import { auth } from '../test/firebaseConfig';
+import { auth } from '../test/firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import SetUsername from './SetUsername';
-import { db } from "../test/firebaseConfig"
-import { collection, query, where, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, query, where, addDoc, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { db } from "../test/firebaseConfig"
 
 
 export default function SignUpPage() {
@@ -32,26 +32,22 @@ export default function SignUpPage() {
     const [passwordsMatch, setPasswordsMatch] = useState(false);
     const [passwordsMatchErrorMessage, setPasswordsMatchErrorMessage] = useState('');
     //Email valid authentication
-    const [emailValid, setEmailValid] = useState(false);
-    const [emailValidMessage, setEmailValidMessage] = useState(false);
+    const [emailValid, setEmailInvalid] = useState(false);
+    const [emailValidMessage, setEmailInvalidMessage] = useState(false);
     //Email already in use authentication
     const [EmailUsed, setEmailUsed] = useState(false);
     const [EmailUsedMessage, setEmailUsedMessage] = useState('');
     //Check if password is weak
     const [passwordStrong, setPasswordStrong] = useState(false);
     const [passwordStrongMessage, setPasswordStrongMessage] = useState('');
-    //get username from other ternary
-    const [setUsername, settingUsername] = useState(null);
+    //useState for username
+    const [username, setUsername] = useState('');
     //useState if sign up is complete ternary
     const [signUpSuccess, setSignUpSuccess] = useState(false);
     //get user uid from firebase into a state
     const [UID, setUID] = useState();
 
 
-    const getData = (data) => {
-        // console.log(`The username is ${data}`)
-        settingUsername(data)
-    }
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -64,8 +60,8 @@ export default function SignUpPage() {
     function setErrorMessageBlank(){
         setPasswordsMatch(false)
         setPasswordsMatchErrorMessage('');
-        setEmailValid(false)
-        setEmailValidMessage('');
+        setEmailInvalid(false)
+        setEmailInvalidMessage('');
         setEmailUsed(false)
         setEmailUsedMessage('')
         setPasswordStrong(false)
@@ -74,6 +70,94 @@ export default function SignUpPage() {
     useEffect(()=>{
         console.log(UID)
     },[UID])
+
+    function SetUsername() {
+
+        const theme = createTheme();
+    
+        let navigate = useNavigate();
+        async function routeChange(pathLink){
+            let path = pathLink;
+            navigate(path,{state:{email:email,username:username,isLoggedIn:true}});}
+    
+        const usernameChange = (e) => {
+            setUsername(e.target.value)
+        };
+    
+
+        const StoreToFirestore = async () => {
+            try{
+                await setDoc(doc(db, "users", email), {
+                email: email,
+                name: "not available at the moment",
+                password: password,
+                userID: UID,
+                username: username
+                })
+        } catch (err) {
+            console.error(err);
+        }}
+
+    const usernameSubmit = async () => {
+        try {StoreToFirestore() } catch (err) {console.error(err)}
+        console.log(`User email ${email} username is set to ${username}`)
+        routeChange(`/ServerComponent`,)
+    }
+
+        return (
+        <ThemeProvider theme={theme}>
+            <Container component="main" sx={{}}>
+            <CssBaseline />
+            <Box
+                sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                overflow: 'hidden'
+                }}
+            >
+                <Grid container spacing={-1} sx={{marginTop: "5%"}}>
+                    <Grid item xs={6} sx={{overflow: "hidden", height: "400px", width: "85vw", padding:5,
+                                            borderRadius: 10, background: "rgba( 255, 255, 255, 0.55 )", backdropFilter: "blur(5px)", WebkitBackdropFilter: "blur(5px)", border: "2px solid rgba( 0, 0, 0, 0.18 )"}}>
+                        <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47%", mb: "2%", mt: "5%"}}>
+                            <BusinessIcon />
+                        </Avatar>
+                        <Typography variant="h4" sx={{ml:"43%", mb: 1.5, color:"#black"}}>
+                            Next
+                        </Typography>
+                        <Typography variant="h7" sx={{
+                            textDecoration: 'underline', ml: "34%",color:"black"}}>
+                        Lets set you username
+                        </Typography>
+                        <TextField
+                            sx={{width: "60%",
+                            ml:"22%",
+                            mr:"5%"
+                        }}                         
+                            onChange={usernameChange}
+                            value={username}
+                            margin="normal"
+                            required
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
+                        />
+                        <Button                   
+                            onClick={usernameSubmit}
+                            type="button"
+                            color='secondary'
+                            variant="contained"
+                            sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml:"22%"}}
+                        >Sign Up</Button>
+                    </Grid>
+                </Grid>
+            </Box>
+            </Container>
+        </ThemeProvider>
+        );
+        }
 
     function validate() {
         setErrorMessageBlank()
@@ -88,23 +172,6 @@ export default function SignUpPage() {
                 setSignUpSuccess(true)
                 var userUID = (userCredential.user.uid)
                 setUID(userUID)
-
-                const StoreToFirestore = async () => {
-                    try{
-                        await setDoc(doc(db, "users", email), {
-                        email: email,
-                        name: "not available at the moment",
-                        password: password,
-                        userID: userUID,
-                        username: setUsername
-                        })
-                } catch (err) {
-                    console.error(err);
-                }
-                }
-
-                try {StoreToFirestore() } catch (err) {console.error(err)}
-
             // ...
             })
             .catch((error) => {
@@ -112,8 +179,8 @@ export default function SignUpPage() {
                 // const errorMessage = error.message;
                 console.log(errorCode)
                 if (errorCode === "auth/invalid-email") {
-                    setEmailValid(true)
-                    setEmailValidMessage("Invalid Email")
+                    setEmailInvalid(true)
+                    setEmailInvalidMessage("Invalid Email")
                 }
                 if (errorCode === "auth/email-already-in-use") {
                     setEmailUsed(true)
@@ -146,7 +213,7 @@ export default function SignUpPage() {
         >
             <Grid container spacing={-1} sx={{}}>
                 {signUpSuccess === false ?
-                    <Grid item xs={6.5} sx={{borderRadius: '10%', overflow: "hidden", height: "650px", width: "85vw",
+                    <Grid item xs={6.5} sx={{borderRadius: '10%', overflow: "hidden", height: "62vh", width: "85vw",
                                             background: "rgba( 255, 255, 255, 0.6 )", boxShadow:"0 8px 32px 0 rgba( 31, 38, 135, 0.37 )", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(5px)", border: "1px solid rgba( 255, 255, 255, 0.18 )"}}>
                         <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47.5%", mb: "2%", mt: 9}}>
                             <BusinessIcon />
@@ -218,7 +285,7 @@ export default function SignUpPage() {
                             <Typography variant="h7" sx={{ml:"29%", color:"black"}}>Already have an account? <Link color={'secondary'} href={`christian-test-page`}>Login</Link></Typography>
                         </Box>
                     </Grid>
-                : <SetUsername onSubmit={getData} email={email}/> }
+                : <SetUsername/> }
             </Grid>
         </Box>
         </Container>
