@@ -128,7 +128,7 @@ export default function Search(props){
 
                                     <IconButton
                                         onClick={() => setSearchValue('')}
-                                        edge="end"
+                                        edge="end" 
                                         size="medium"
                                         tabIndex={-1}
                                         >
@@ -138,7 +138,9 @@ export default function Search(props){
                             clearButton={false}
                         />
                         {/* Profile Component */}
-                        <ProfileComponent />
+                        {/* the profile component is setup to work with props */}
+                        <ProfileComponent username={props.username} nickname={props.username} online={true} pfp="https://picsum.photos/200" />
+
                     </Toolbar>
                 </AppBar>
             </Box>

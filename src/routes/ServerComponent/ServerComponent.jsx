@@ -6,6 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import MessageComponent from "../../components/main-components/Message.jsx";
+import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
 //import data from './startingData.json';
 import flatData from './flatStartingData.json';
@@ -15,9 +17,9 @@ import Search from "../../components/main-components/Search"
 import { useLocation } from 'react-router-dom';
 
 //displays mock prototype of showing a server's text channel and channels
-export default function ServerComponent(){
 
-
+export default function ServerComponent() {
+   
     
 let userSettings = {
     "userId": "u127",
@@ -143,16 +145,30 @@ const handleSendMessage = (event) => {
     // Example: sendMessageToAPI(updatedNewMessage);
 };
 
+// functionality for deleting a message from the array
+
+
+const deleteMessageComponent = (index) => {
+    setMessagesArray((messagesArray => {
+        const updatedMessagesArray = [...messagesArray];
+        updatedMessagesArray.splice(index, 1);
+        return updatedMessagesArray;
+    }))
+}
+
+
 const messageList = messagesArray.map((message, index) => {
 
     const currentMessageDate = moment.tz(message?.timestamp, timeZoneOptions.timeZone);
-    const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
+    const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
+    const currentTime = moment(currentMessageDate).tz(timeZoneOptions.timeZone).format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
     
     const firstMessage = index === 0;
     let previousMessageDate = null;
+
     if (index > 0){
         const previousMessage = messagesArray[index - 1];
         previousMessageDate = moment.tz(previousMessage?.timestamp, timeZoneOptions.timeZone)
@@ -162,16 +178,25 @@ const messageList = messagesArray.map((message, index) => {
         showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }
+
     return (
     <>
         {showDayBreak &&(
-            <div className='date-border'> {currentMessageFormattedDate}</div>
+            <Divider className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        <div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}>
-        
-        
-        {showUserInfo && (
+        <div className="message-element" key={index} style={{ marginBottom: '10px' }}
+        >
+            <MessageComponent 
+                displayName={message.username}
+                messageContent={message.content}
+                time={currentTime}
+                displayUserInfo={showUserInfo}
+                messageId={message.messageId}
+                removeMessage={deleteMessageComponent}
+                messageIndex={index}
+                />
+            {/*
            <div style={{ display: 'flex', alignItems: 'start' }}>
             <img
               src={message?.avatarUrl}
@@ -183,12 +208,19 @@ const messageList = messagesArray.map((message, index) => {
             <p style={{margin: '0px'}}>Message ID: {message?.messageId}</p>
                 <div>{message?.content}</div>
             </div>
+       
              
           
         )}
-        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message?.content}</div>}
+        {!showUserInfo && (
+            <MessageComponent 
+                messageContent={message.content}
+                displayAvatar={false}
+            />
+        )  */}
+  
         
-        
+    
       </div>
     </>
     );
@@ -207,7 +239,7 @@ return(
     <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
-    />
+        username={username}/> 
     <div className="server-container" > 
 
     <div id='channel-list'>

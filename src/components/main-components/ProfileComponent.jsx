@@ -1,4 +1,12 @@
 /*
+    This component is responsible for displaying the user's profile picture, username, and nickname.
+    It also contains a menu that allows the user to navigate to the user settings page, switch their status, and logout.
+
+    Currently, the changes only happen locally and are not persistent.
+*/
+
+
+/*
     Links:
         - https://mui.com/material-ui/react-badge/
         - https://mui.com/material-ui/react-avatar/
@@ -12,26 +20,34 @@ import profileData from "../../data/profile"
 import Badge from '@mui/material/Badge';
 import CircleIcon from '@mui/icons-material/Circle';
 import Avatar from '@mui/material/Avatar';
-
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
-export default function ProfileComponent() {
-    const [profile, setProfile] = useState({});
+import { useNavigate } from 'react-router-dom';
+
+export default function ProfileComponent({ username, nickname, online, pfp }) {
+    const [profile, setProfile] = useState({
+        username: username,
+        nickname: nickname,
+        online: online,
+        pfp: pfp
+    });
     const [anchorEl, setAnchorEl] = React.useState(null);
     
-    useEffect(() => {
-        setProfile(profileData[0]);
-    }, []);
+    const navigate = useNavigate();
+
+
+    //getting rid of this to use props instead of profile.js data.
+    // useEffect(() => {
+    //     setProfile(profileData[0]);
+    // }, []);
 
   const open = Boolean(anchorEl);
   
@@ -42,6 +58,21 @@ export default function ProfileComponent() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  //this changes the status of the user.
+  const handleSwitchStatusClick = () => {
+    handleClose();
+    setProfile({
+        ...profile,
+        online: !profile.online
+    });
+  }
+
+  //this navigates to the user settings page.
+  const handleSettingsClick = () => {
+    handleClose();
+    navigate('/user-settings-page');
+    };
 
     return (
         <div className="profile--component">
@@ -79,16 +110,17 @@ export default function ProfileComponent() {
                                 'aria-labelledby': 'basic-button',
                                 }}
                             >
+                                {/*all menu options after the avatar button is clicked*/}
                                 <MenuItem onClick={handleClose}>
                                     <AccountCircleIcon className="menu--icon" />
                                     Profile
                                     </MenuItem>
                                 <Divider />
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={handleSwitchStatusClick}>
                                     <CircleRoundedIcon className="menu--icon" />
                                     Switch Status
                                     </MenuItem>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={handleSettingsClick}>
                                     <SettingsIcon className="menu--icon" />
                                     Settings
                                     </MenuItem>
@@ -103,17 +135,3 @@ export default function ProfileComponent() {
         </div>
     )
 }
-
-
-{/* <Badge
-overlap="circular"
-anchorOrigin={{vertical: "bottom", horizontal: "left"}}
-size="large"
-badgeContent={profile.online ? <CircleIcon className="online"/> : <CircleIcon className="offline" sx={{width: 12, height: 12}} />}
->
-<Tooltip title="profile settings">
-    <IconButton aria-label="profile picture" size="small">
-        <Avatar src={profile.pfp} />
-    </IconButton>
-</Tooltip>
-</Badge> */}
