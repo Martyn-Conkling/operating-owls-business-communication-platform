@@ -15,7 +15,7 @@ import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
 import { useLocation } from 'react-router-dom';
-
+import Fade from '@mui/material/Fade';
 //displays mock prototype of showing a server's text channel and channels
 
 export default function ServerComponent() {
@@ -93,13 +93,13 @@ useEffect(() => {
 
 const scrollToMessage = (id) => {
     setScrollMessageId(id);
+    
 }
 
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
         specificMessage.scrollIntoView({behavior: "smooth"});
-        setScrollMessageId(null);
     }
 }, [scrollMessageId]);
 
@@ -182,46 +182,39 @@ const messageList = messagesArray.map((message, index) => {
     return (
     <>
         {showDayBreak &&(
-            <Divider className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
+            <Divider id={message.messageId} className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        <div className="message-element" key={index} style={{ marginBottom: '10px' }}
-        >
-            <MessageComponent 
-                displayName={message.username}
-                messageContent={message.content}
-                time={currentTime}
-                displayUserInfo={showUserInfo}
-                messageId={message.messageId}
-                removeMessage={deleteMessageComponent}
-                messageIndex={index}
-                />
-            {/*
-           <div style={{ display: 'flex', alignItems: 'start' }}>
-            <img
-              src={message?.avatarUrl}
-              alt={`${message?.username}'s avatar`}
-              style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }}
-            />
-            <h3 style={{ margin: '0px', marginRight: '5px'}}>{message?.username}</h3>
-            <p style={{margin: '0px'}}>{currentMessageFormattedDate}</p>
-            <p style={{margin: '0px'}}>Message ID: {message?.messageId}</p>
-                <div>{message?.content}</div>
+        {(scrollMessageId==message.messageId) ?  (
+            //fades in the message selected
+            <Fade key={scrollMessageId} in={true} timeout={2000}>
+            <div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            > 
+            
+                <MessageComponent 
+                    displayName={message.username}
+                    messageContent={message.content}
+                    time={currentTime}
+                    displayUserInfo={showUserInfo}
+                    messageId={message.messageId}
+                    removeMessage={deleteMessageComponent}
+                    messageIndex={index}
+                    />
+            
             </div>
-       
-             
-          
-        )}
-        {!showUserInfo && (
-            <MessageComponent 
-                messageContent={message.content}
-                displayAvatar={false}
-            />
-        )  */}
-  
-        
-    
-      </div>
+            </Fade>
+    ): (<div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            >
+                <MessageComponent 
+                    displayName={message.username}
+                    messageContent={message.content}
+                    time={currentTime}
+                    displayUserInfo={showUserInfo}
+                    messageId={message.messageId}
+                    removeMessage={deleteMessageComponent}
+                    messageIndex={index}
+                    />
+            </div>)}
     </>
     );
 })
