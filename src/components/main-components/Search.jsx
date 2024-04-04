@@ -20,6 +20,8 @@ import '../../css/Search.css'
 
 export default function Search(props){
     const[searchValue, setSearchValue] = React.useState('');
+    const [forcePopover, setForcePopover] = React.useState(false);
+    const textFieldRef = React.useRef(null);
     console.log(searchValue);
     const selectedChannelData = flatChannelData.channels.byId[props.selectedChannel];
     const selectedMessages = selectedChannelData?.messageIds.map(id => flatChannelData.messages?.byId[id]);
@@ -43,19 +45,32 @@ export default function Search(props){
 
     const handleSearchOpen = (event) => {
         setAnchorEl(event.currentTarget);
+        //setForcePopover(true);
+        console.log("reopening this popover")
     };
+
+    React.useEffect(() => {
+        if(searchValue){
+            setForcePopover(true);
+        }
+    }, [searchValue, ]);
+
 
     const handleSearchClose = ()=> {
         setAnchorEl(null);
+        console.log("now it should work")
+        
+        setForcePopover(false);
+        console.log("haha still doing it")
+        
     };
 
-    const open = Boolean(anchorEl) && searchValue !== '';
+    const open = (Boolean(anchorEl) && searchValue !== '') && forcePopover;
 
 
     const searchResults = filteredData.map(message => (
         <ListItem key = {message.messageId}>
-            <ListItemButton>
-                
+            <ListItemButton onClick={ () => {handleSearchClose();  props.scrollToMessage(message.messageId); null.focus();}}>     
                 <ListItemText primary={message.username} secondary={message.content} />
             </ListItemButton>
         </ListItem>
@@ -69,21 +84,7 @@ export default function Search(props){
         
     )
 
-    console.log(filteredData)
-
-    React.useEffect(()=> {
-        {/*
-        const selectedChannelID = selectedChannel;
-        const selectedChannelData = dataStore.find(channel => channel.channelID === selectedChannelID);
-        if (selectedChannelData) {
-         setMessagesArray([...selectedChannelData["last50MessagesArray"]]);
-        }
-        //displays no messages if no channels exist
-        if(dataStore.length == 0){
-            setMessagesArray([]);
-        }
-    */}
-    }, [searchValue])
+    console.log("This is the setting of the popover: ", forcePopover)
 
     return(
         <>
@@ -107,10 +108,12 @@ export default function Search(props){
                         <TextField
                             id="standard-search"
                             label="Search field"
+                            inputRef={textFieldRef}
                             type="search"
                             variant="standard"
                             value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
+
+                            onChange={(e) => {setSearchValue(e.target.value); handleSearchValueChange}}
                             sx={{
                                 width:'50%',
                                 'input[type="search"]::-webkit-search-cancel-button': {
@@ -118,13 +121,14 @@ export default function Search(props){
                                 },
                             }}
                             onFocus={handleSearchOpen}
+                            
                             color="info"
                             InputProps={{
                                 endAdornment: searchValue ? (
 
                                     <IconButton
                                         onClick={() => setSearchValue('')}
-                                        edge="end"
+                                        edge="end" 
                                         size="medium"
                                         tabIndex={-1}
                                         >
@@ -135,7 +139,7 @@ export default function Search(props){
                         />
                         {/* Profile Component */}
                         {/* the profile component is setup to work with props */}
-                        <ProfileComponent username="Username" nickname="Nickname" online={true} pfp="https://picsum.photos/200" />
+                        <ProfileComponent username={props.username} nickname={props.username} online={true} pfp="https://picsum.photos/200" />
 
                     </Toolbar>
                 </AppBar>
@@ -151,7 +155,7 @@ export default function Search(props){
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',
-                }}
+                }}Te
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'left',

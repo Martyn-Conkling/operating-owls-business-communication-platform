@@ -116,8 +116,6 @@ export default function Channels(props){
                 setSelectedChannel(prevChannels.channels.allIds[newIndex]);
                 props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
             }
-            
-
             return {
                 channels:{
                     byId: newById,
@@ -125,9 +123,7 @@ export default function Channels(props){
                 },
                 messages: {...prevChannels.messages}
             }
-
-        }
-        );
+        });
     }
     
     //closes modal of adding channel
@@ -145,7 +141,6 @@ export default function Channels(props){
     //processes data to add channel as a react component
     const channelElements = channels.channels.allIds.map(id => {
         const channel = channels.channels.byId[id];
-
         return (
             <IndivChannel 
             key={channel?.id}

@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Inter";  
+    src: local("Inter-Regular"),
+      url("../fonts/Inter-Regular.woff") format("woff");
+  }
+
+@font-face {
+    font-family: "Inter-SemiBold";  
+    src: local("Inter-SemiBold"),
+      url("../fonts/Inter-SemiBold.woff") format("woff");
+  }
+  
+.message-box {
+    background-color: white;
+    max-width: 100%;
+}
+
+.simple-menu {
+    font-family: "Inter";
+}
+

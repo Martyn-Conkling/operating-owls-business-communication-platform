@@ -6,6 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import MessageComponent from "../../components/main-components/Message.jsx";
+import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
 
 import flatData from '../../flatStartingData.json';
@@ -16,10 +18,11 @@ import { useLocation } from 'react-router-dom';
 
 import { useMyContext } from '../../DataContext';
 
+import Fade from '@mui/material/Fade';
 //displays mock prototype of showing a server's text channel and channels
-export default function ServerComponent(){
 
-
+export default function ServerComponent() {
+   
     
 let userSettings = {
     "userId": "u127",
@@ -74,7 +77,7 @@ const {serverData, sendNewMessage, createNewChannel} = useMyContext();
 
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
-
+const [scrollMessageId, setScrollMessageId] = useState(null) //sets an id to scroll to if the search bar is used
 
 const [messagesArray, setMessagesArray] = useState([]);
 
@@ -95,6 +98,18 @@ useEffect(() => {
     }
     console.log(dataStore)
   }, [dataStore, selectedChannel]);
+
+const scrollToMessage = (id) => {
+    setScrollMessageId(id);
+    
+}
+
+useEffect(() => {
+    if(scrollMessageId) {
+        const specificMessage = document.getElementById(scrollMessageId);
+        specificMessage.scrollIntoView({behavior: "smooth"});
+    }
+}, [scrollMessageId]);
 
 
 const [newMessage, setNewMessage] = useState(blankMessage);
@@ -138,16 +153,31 @@ const handleSendMessage = (event) => {
     // Example: sendMessageToAPI(updatedNewMessage);
 };
 
+// functionality for deleting a message from the array
+
+
+const deleteMessageComponent = (index) => {
+    setMessagesArray((messagesArray => {
+        const updatedMessagesArray = [...messagesArray];
+        updatedMessagesArray.splice(index, 1);
+        return updatedMessagesArray;
+    }))
+}
+
+
 const messageList = messagesArray.map((message, index) => {
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
     const currentMessageDate = moment.tz(message.timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
+    // const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
+    const currentTime = moment(currentMessageDate).tz(timeZoneOptions.timeZone).format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
     
     const firstMessage = index === 0;
     let previousMessageDate = null;
+
     if (index > 0){
         const previousMessage = messagesArray[index - 1];
         previousMessageDate = moment.tz(previousMessage?.timestamp, userSettings.timeZoneOptions.timeZone)
@@ -161,32 +191,39 @@ const messageList = messagesArray.map((message, index) => {
     return (
     <>
         {showDayBreak &&(
-            <div className='date-border'> {currentMessageFormattedDate}</div>
+            <Divider id={message.messageId} className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        <div className="message-element" key={index} style={{ marginBottom: '10px' }}>
-        
-        
-        {showUserInfo && (
-           <div style={{ display: 'flex', alignItems: 'start' }}>
-            <img
-              src={message?.avatarUrl}
-              alt={`${message?.username}'s avatar`}
-              style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }}
-            />
-            <h3 style={{ margin: '0px', marginRight: '5px'}}>{message?.username}</h3>
-            <p style={{margin: '0px'}}>{currentMessageFormattedDate}</p>
-            <p style={{margin: '0px'}}>Message ID: {message?.messageId}</p>
-                <div>{message?.content}</div>
+        {(scrollMessageId==message.messageId) ?  (
+            //fades in the message selected
+            <Fade key={scrollMessageId} in={true} timeout={2000}>
+            <div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            > 
+            
+                <MessageComponent 
+                    displayName={message.username}
+                    messageContent={message.content}
+                    time={currentTime}
+                    displayUserInfo={showUserInfo}
+                    messageId={message.messageId}
+                    removeMessage={deleteMessageComponent}
+                    messageIndex={index}
+                    />
+            
             </div>
-             
-          
-        )}
-
-        {!showUserInfo && <div style={{ marginLeft: '45px'}}>{message.content}</div>}
-        
-        
-      </div>
+            </Fade>
+    ): (<div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            >
+                <MessageComponent 
+                    displayName={message.username}
+                    messageContent={message.content}
+                    time={currentTime}
+                    displayUserInfo={showUserInfo}
+                    messageId={message.messageId}
+                    removeMessage={deleteMessageComponent}
+                    messageIndex={index}
+                    />
+            </div>)}
     </>
     );
 })
@@ -202,8 +239,9 @@ return(
     <>
 
     <Search 
-    selectedChannel={selectedChannel}/> 
-
+        selectedChannel={selectedChannel}
+        scrollToMessage={scrollToMessage}
+        username={username}/> 
     <div className="server-container" > 
 
     <div id='channel-list'>
