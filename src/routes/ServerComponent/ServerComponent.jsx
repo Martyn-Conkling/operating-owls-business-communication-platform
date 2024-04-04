@@ -9,7 +9,6 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MessageComponent from "../../components/main-components/Message.jsx";
 import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
-
 import flatData from '../../flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
@@ -77,7 +76,7 @@ const {serverData, sendNewMessage, createNewChannel} = useMyContext();
 
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
-const [scrollMessageId, setScrollMessageId] = useState(null) //sets an id to scroll to if the search bar is used
+const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll to if the search bar is used
 
 const [messagesArray, setMessagesArray] = useState([]);
 
@@ -88,7 +87,7 @@ useEffect(() => {
     if (selectedChannelData) {
         const messageIds = selectedChannelData.messageIds;
         console.log("Message IDs:", messageIds);
-        const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
+        const selectedMessages = messageIds.map(id => dataStore.messages?.[id]);
         console.log("Selected Messages:", selectedMessages.filter(message => message));
         setMessagesArray(selectedMessages.filter(message => message));
     }
@@ -107,7 +106,10 @@ const scrollToMessage = (id) => {
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
-        specificMessage.scrollIntoView({behavior: "smooth"});
+        if (specificMessage){
+            specificMessage.scrollIntoView({behavior: "smooth"});
+        }
+        
     }
 }, [scrollMessageId]);
 
@@ -170,7 +172,7 @@ const messageList = messagesArray.map((message, index) => {
     const currentMessageDate = moment.tz(message.timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
     // const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
-    const currentTime = moment(currentMessageDate).tz(timeZoneOptions.timeZone).format('h:mm A');
+    const currentTime = moment(currentMessageDate).tz(userSettings.timeZoneOptions.timeZone).format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
@@ -237,7 +239,7 @@ useEffect(() => {
 
 return(
     <>
-
+    
     <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
