@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { MyProvider } from "./DataContext.jsx";
 import Root from "./routes/Root.jsx";
 import AlejandroTestPage from "./routes/AlejandroTestPage.jsx";
 import AshtonTestPage from "./routes/AshtonTestPage.jsx";
@@ -88,7 +89,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+    <MyProvider>
       <RouterProvider router={router} />
+
+    </MyProvider>
+     
     </ThemeProvider>
   </React.StrictMode>
 );

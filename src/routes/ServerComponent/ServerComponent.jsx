@@ -7,12 +7,14 @@ import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import './ServerStyles.css';
-import data from './startingData.json';
-import flatData from './flatStartingData.json';
+
+import flatData from '../../flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
 import { useLocation } from 'react-router-dom';
+
+import { useMyContext } from '../../DataContext';
 
 //displays mock prototype of showing a server's text channel and channels
 export default function ServerComponent(){
@@ -27,18 +29,20 @@ let userSettings = {
     "messageFormat": "normal",
     "soundNotifications": false,
 
+    "timeZoneOptions":{
+        "timeZone": "America/New_York",
+        "year": "numeric",
+        "month": "numeric",
+        "day":"numeric",
+        "hour": '2-digit', 
+        "minute": '2-digit', 
+        "second": '2-digit', 
+        "hour12": true
+    }
+
 }
 
-const timeZoneOptions = {
-    "timeZone": "America/New_York",
-    "year": "numeric",
-    "month": "numeric",
-    "day":"numeric",
-    "hour": '2-digit', 
-    "minute": '2-digit', 
-    "second": '2-digit', 
-    "hour12": true
-}
+
 let userPermissions = {};
 
 let serverSettings = {};
@@ -65,6 +69,9 @@ if (location.state.isLoggedIn === true) {
 
 
 const messagesEndRef = useRef(null);
+
+const {serverData, sendNewMessage, createNewChannel} = useMyContext();
+
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
 
@@ -133,7 +140,7 @@ const handleSendMessage = (event) => {
 
 const messageList = messagesArray.map((message, index) => {
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
-    const currentMessageDate = moment.tz(message.timestamp, timeZoneOptions.timeZone);
+    const currentMessageDate = moment.tz(message.timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
 
     let showDayBreak = true;
@@ -143,10 +150,10 @@ const messageList = messagesArray.map((message, index) => {
     let previousMessageDate = null;
     if (index > 0){
         const previousMessage = messagesArray[index - 1];
-        previousMessageDate = moment.tz(previousMessage?.timestamp, timeZoneOptions.timeZone)
+        previousMessageDate = moment.tz(previousMessage?.timestamp, userSettings.timeZoneOptions.timeZone)
 
         showDayBreak = !currentMessageDate.isSame(previousMessageDate, 'day');
-        const fiveMinBeforeCurrentMessage = moment.tz(message?.timestamp, timeZoneOptions.timeZone).subtract(5, 'minutes');
+        const fiveMinBeforeCurrentMessage = moment.tz(message?.timestamp, userSettings.timeZoneOptions.timeZone).subtract(5, 'minutes');
         showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }

@@ -7,7 +7,7 @@ import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 //import channelData from '../../routes/ServerComponent/startingData.json'
-import flatChannelData from '../../routes/ServerComponent/flatStartingData.json'
+import flatChannelData from '../../flatStartingData.json'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
