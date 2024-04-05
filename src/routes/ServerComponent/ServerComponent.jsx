@@ -99,17 +99,23 @@ useEffect(() => {
   }, [dataStore, selectedChannel]);
 
 const scrollToMessage = (id) => {
-    setScrollMessageId(id);
-    
+
+    setScrollMessageId(null)
+    setTimeout(() => {
+        console.log(id)
+        setScrollMessageId(id);
+    }, "10");
 }
 
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
         if (specificMessage){
-            specificMessage.scrollIntoView({behavior: "smooth"});
+            setTimeout(() => {
+                specificMessage.scrollIntoView({ behavior: "smooth"});
+            }, "10");
+           
         }
-        
     }
 }, [scrollMessageId]);
 
@@ -193,13 +199,13 @@ const messageList = messagesArray.map((message, index) => {
     return (
     <>
         {showDayBreak &&(
-            <Divider id={message.messageId} className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
+            <Divider  className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        {(scrollMessageId==message.messageId) ?  (
+        {(scrollMessageId===message.messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            <div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             > 
             
                 <MessageComponent 
@@ -214,7 +220,7 @@ const messageList = messagesArray.map((message, index) => {
             
             </div>
             </Fade>
-    ): (<div className="message-element" key={index} style={{ marginBottom: '10px' }}
+    ): (<div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             >
                 <MessageComponent 
                     displayName={message.username}
