@@ -82,22 +82,25 @@ const [scrollMessageId, setScrollMessageId] = useState(null) //sets an id to scr
 const [messagesArray, setMessagesArray] = useState([]);
 
 //connects the selected channel to its corresponding messages
-useEffect(() => {
-    const selectedChannelID = selectedChannel;
-    const selectedChannelData = dataStore.channels?.byId[selectedChannelID];
-    if (selectedChannelData) {
-        const messageIds = selectedChannelData.messageIds;
-        console.log("Message IDs:", messageIds);
-        const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
-        console.log("Selected Messages:", selectedMessages.filter(message => message));
-        setMessagesArray(selectedMessages.filter(message => message));
-    }
-    //displays no messages if no channels exist
-    else{
-        setMessagesArray([]);   
-    }
-    console.log(dataStore)
-  }, [dataStore, selectedChannel]);
+// useEffect(() => {
+//     const selectedChannelID = selectedChannel;
+//     const selectedChannelData = dataStore.channels?.byId[selectedChannelID];
+//     if (selectedChannelData) {
+//         const messageIds = selectedChannelData.messageIds;
+//         // console.log("Message IDs:", messageIds);
+
+//         const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
+//         console.log("Selected Messages:", selectedMessages.filter(message => message));
+//         setMessagesArray(selectedMessages.filter(message => message));
+//     }
+//     //displays no messages if no channels exist
+//     else{
+//         setMessagesArray([]);   
+//     }
+//     console.log(dataStore)
+//   }, [dataStore, selectedChannel]);
+
+
 
 const scrollToMessage = (id) => {
     setScrollMessageId(id);
@@ -170,7 +173,7 @@ const messageList = messagesArray.map((message, index) => {
     const currentMessageDate = moment.tz(message.timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
     // const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
-    const currentTime = moment(currentMessageDate).tz(timeZoneOptions.timeZone).format('h:mm A');
+    const currentTime = moment(currentMessageDate).tz(userSettings.timeZoneOptions.timeZone).format('h:mm A');
 
     let showDayBreak = true;
     let showUserInfo = true;
@@ -238,10 +241,10 @@ useEffect(() => {
 return(
     <>
 
-    <Search 
+    {/* <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
-        username={username}/> 
+        username={username}/>  */}
     <div className="server-container" > 
 
     <div id='channel-list'>

@@ -8,7 +8,8 @@ export const useMyContext = () => useContext(DataContext);
 export const MyProvider = ({ children }) => {
 
     const [serverData, setServerData] = useState(startingData)
-
+    const [loginData, setLoginData] = useState(null)
+    const [userSettings, setUserSettings] = useState (null)
 //   const [channelData, setChannelData] = useState(startingData.channels);
 //   const [messagesData, setMessagesData] = useState(startingData.messages);
 
