@@ -24,7 +24,7 @@ export default function Search(props){
     const textFieldRef = React.useRef(null);
     console.log(searchValue);
     const selectedChannelData = flatChannelData.channels.byId[props.selectedChannel];
-    const selectedMessages = selectedChannelData?.messageIds.map(id => flatChannelData.messages?.byId[id]);
+    const selectedMessages = selectedChannelData?.messageIds.map(id => flatChannelData.messages?.[id]);
     
     const filteredDataContent = selectedChannelData?.messageIds ? selectedMessages.filter(item =>
         item.content.toLowerCase().includes(searchValue.toLowerCase())
@@ -113,7 +113,7 @@ export default function Search(props){
                             variant="standard"
                             value={searchValue}
 
-                            onChange={(e) => {setSearchValue(e.target.value); handleSearchValueChange}}
+                            onChange={(e) => {setSearchValue(e.target.value); }}
                             sx={{
                                 width:'50%',
                                 'input[type="search"]::-webkit-search-cancel-button': {

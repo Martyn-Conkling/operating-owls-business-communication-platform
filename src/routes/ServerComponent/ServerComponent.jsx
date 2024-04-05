@@ -9,7 +9,6 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MessageComponent from "../../components/main-components/Message.jsx";
 import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
-
 import flatData from '../../flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
@@ -77,7 +76,7 @@ const {serverData, sendNewMessage, createNewChannel} = useMyContext();
 
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
-const [scrollMessageId, setScrollMessageId] = useState(null) //sets an id to scroll to if the search bar is used
+const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll to if the search bar is used
 
 const [messagesArray, setMessagesArray] = useState([]);
 
@@ -103,14 +102,19 @@ const [messagesArray, setMessagesArray] = useState([]);
 
 
 const scrollToMessage = (id) => {
-    setScrollMessageId(id);
-    
+
+    setScrollMessageId(null)
+    setTimeout(() => {
+        setScrollMessageId(id);
+    }, "10");
 }
 
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
-        specificMessage.scrollIntoView({behavior: "smooth"});
+        if (specificMessage){
+           specificMessage.scrollIntoView({ behavior: "smooth"});
+        }
     }
 }, [scrollMessageId]);
 
@@ -194,13 +198,13 @@ const messageList = messagesArray.map((message, index) => {
     return (
     <>
         {showDayBreak &&(
-            <Divider id={message.messageId} className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
+            <Divider  className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        {(scrollMessageId==message.messageId) ?  (
+        {(scrollMessageId===message.messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div className="message-element" key={index} style={{ marginBottom: '10px' }}
+            <div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             > 
             
                 <MessageComponent 
@@ -215,7 +219,7 @@ const messageList = messagesArray.map((message, index) => {
             
             </div>
             </Fade>
-    ): (<div className="message-element" key={index} style={{ marginBottom: '10px' }}
+    ): (<div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             >
                 <MessageComponent 
                     displayName={message.username}
