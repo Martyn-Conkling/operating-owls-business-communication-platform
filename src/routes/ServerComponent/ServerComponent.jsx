@@ -73,12 +73,23 @@ if (location.state.isLoggedIn === true) {
 const messagesEndRef = useRef(null);
 
 const {serverData, sendNewMessage, createNewChannel} = useMyContext();
+// Martyn To Dos
+//  When the page loads, the first channel in the channel list should be selected from the shared context - done
+
+
 
 const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
-const [selectedChannel, setSelectedChannel] = useState("channelId0"); //defaults selected channel to the first
+const [selectedChannel, setSelectedChannel] = useState(serverData.channels.allIds[0]);
 const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll to if the search bar is used
 
+
 const [messagesArray, setMessagesArray] = useState([]);
+
+//useEffect(() =>{
+    // rename this?
+    // const selectedChannelID = selectedChannel;
+
+//})
 
 //connects the selected channel to its corresponding messages
 // useEffect(() => {
@@ -128,7 +139,10 @@ const handleChannelSelect = (channelId) => {
     setSelectedChannel(channelId);
 }
 
-const handleSendMessage = (event) => {
+
+// const {serverData, sendNewMessage, createNewChannel} = useMyContext();
+
+const handleSendMessage = () => {
    
     if (!newMessage.content.trim()){
         setError('Cannot send empty message!');
@@ -138,21 +152,35 @@ const handleSendMessage = (event) => {
 
     // console.log(newMessage);
     // This assumes that the last message in the messagesArray will have the latest ID value
-
-    const lastMessageId =  messagesArray.length > 0 ? messagesArray[messagesArray.length - 1].messageId : 0;
+    const messageArrayLength = serverData.channels.byId[selectedChannel].messageIds.length
+    const lastMessageId =  messageArrayLength > 0 ? serverData.channels.byId[selectedChannel].messageIds[messageArrayLength - 1] : 0;
+    // We probably need a better implementation for creating unique message Ids
     const newMessageId = String(Number(lastMessageId) + 1);
     const currentDate = new Date().toISOString();
 
-    
+    /* Example of message data structure
+        {
+        "channelId": "channelId0",
+        "messageId": "u1231001",
+        "userId": "u123",
+        "username": "ArtLover99",
+        "timestamp": "2024-02-22T10:00:00Z",
+        "content": "Hey everyone, just wanted to share my latest attempt at a Bob Ross painting. It's not perfect, but I'm getting better!"
+        },
+
+    */
+
     const updatedNewMessage = {
         ...newMessage,
+        channelId: selectedChannel,
         messageId: newMessageId,
         timestamp: currentDate,
     };
 
     // console.log(updatedNewMessage)
     //functional update of messages, ensures most up to date usage of messages
-    setMessagesArray(messagesArray => [...messagesArray, updatedNewMessage]);
+    sendNewMessage(updatedNewMessage)
+    // setMessagesArray(messagesArray => [...messagesArray, updatedNewMessage]);
     setNewMessage(blankMessage); // Clear the input after sending
 
 
@@ -172,9 +200,11 @@ const deleteMessageComponent = (index) => {
 }
 
 
-const messageList = messagesArray.map((message, index) => {
+
+
+const messageList = serverData.channels.byId[selectedChannel].messageIds.map((messageId, index) => {
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
-    const currentMessageDate = moment.tz(message.timestamp, userSettings.timeZoneOptions.timeZone);
+    const currentMessageDate = moment.tz(serverData.messages[messageId].timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
     // const currentMessageFormattedDate = currentMessageDate.format('MMMM Do, YYYY');
     const currentTime = moment(currentMessageDate).tz(userSettings.timeZoneOptions.timeZone).format('h:mm A');
@@ -186,12 +216,14 @@ const messageList = messagesArray.map((message, index) => {
     let previousMessageDate = null;
 
     if (index > 0){
-        const previousMessage = messagesArray[index - 1];
+        const previousMessageId = serverData.channels.byId[selectedChannel].messageIds[index -1]
+        const previousMessage = serverData.messages[previousMessageId]
+        // const previousMessage = messagesArray[index - 1];
         previousMessageDate = moment.tz(previousMessage?.timestamp, userSettings.timeZoneOptions.timeZone)
 
         showDayBreak = !currentMessageDate.isSame(previousMessageDate, 'day');
-        const fiveMinBeforeCurrentMessage = moment.tz(message?.timestamp, userSettings.timeZoneOptions.timeZone).subtract(5, 'minutes');
-        showUserInfo = message?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
+        const fiveMinBeforeCurrentMessage = moment.tz(serverData.messages[messageId]?.timestamp, userSettings.timeZoneOptions.timeZone).subtract(5, 'minutes');
+        showUserInfo = serverData.messages[messageId]?.userId !== previousMessage?.userId || previousMessageDate.isBefore(fiveMinBeforeCurrentMessage);
         
     }
 
@@ -201,32 +233,32 @@ const messageList = messagesArray.map((message, index) => {
             <Divider  className='date-border' sx={{color: "#808080", fontFamily: "Inter", fontSize: "0.75rem"}}> {currentMessageFormattedDate}</Divider>
         )}
 
-        {(scrollMessageId===message.messageId) ?  (
+        {(scrollMessageId===serverData.messages[messageId].messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
+            <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             > 
             
                 <MessageComponent 
-                    displayName={message.username}
-                    messageContent={message.content}
+                    displayName={serverData.messages[messageId].username}
+                    messageContent={serverData.messages[messageId].content}
                     time={currentTime}
                     displayUserInfo={showUserInfo}
-                    messageId={message.messageId}
+                    messageId={serverData.messages[messageId].messageId}
                     removeMessage={deleteMessageComponent}
                     messageIndex={index}
                     />
             
             </div>
             </Fade>
-    ): (<div id={message.messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
+    ): (<div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
             >
                 <MessageComponent 
-                    displayName={message.username}
-                    messageContent={message.content}
+                    displayName={serverData.messages[messageId].username}
+                    messageContent={serverData.messages[messageId].content}
                     time={currentTime}
                     displayUserInfo={showUserInfo}
-                    messageId={message.messageId}
+                    messageId={serverData.messages[messageId].messageId}
                     removeMessage={deleteMessageComponent}
                     messageIndex={index}
                     />
@@ -236,7 +268,9 @@ const messageList = messagesArray.map((message, index) => {
 })
 
 // this is just to cause the message list to scroll to the bottom when the page refreshes or the messages update
-// probably need to change this quite a bit later
+
+
+// Need to figure out how to refactor this according to the new shared data context
 useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesArray]);
