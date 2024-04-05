@@ -102,7 +102,6 @@ const scrollToMessage = (id) => {
 
     setScrollMessageId(null)
     setTimeout(() => {
-        console.log(id)
         setScrollMessageId(id);
     }, "10");
 }
@@ -111,10 +110,7 @@ useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
         if (specificMessage){
-            setTimeout(() => {
-                specificMessage.scrollIntoView({ behavior: "smooth"});
-            }, "10");
-           
+           specificMessage.scrollIntoView({ behavior: "smooth"});
         }
     }
 }, [scrollMessageId]);
