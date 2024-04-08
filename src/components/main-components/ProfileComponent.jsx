@@ -1,10 +1,10 @@
 /*
-    This component is responsible for displaying the user's profile picture, username, and nickname.
+    This component is responsible for displaying the user's profile picture, username, and email.
     It also contains a menu that allows the user to navigate to the user settings page, switch their status, and logout.
+    The profile component is setup to work with props to display information to the user.
 
     Currently, the changes only happen locally and are not persistent.
 */
-
 
 /*
     Links:
@@ -32,17 +32,16 @@ import Logout from '@mui/icons-material/Logout';
 
 import { useNavigate } from 'react-router-dom';
 
-export default function ProfileComponent({ username, nickname, online, pfp }) {
+export default function ProfileComponent({ username, email, online, pfp }) {
     const [profile, setProfile] = useState({
         username: username,
-        nickname: nickname,
+        email: email,
         online: online,
         pfp: pfp
     });
     const [anchorEl, setAnchorEl] = React.useState(null);
     
     const navigate = useNavigate();
-
 
     //getting rid of this to use props instead of profile.js data.
     // useEffect(() => {
@@ -80,7 +79,7 @@ export default function ProfileComponent({ username, nickname, online, pfp }) {
                 <>
                     <section className="name--section">
                         <h1 className="username">{profile.username}</h1>
-                        <h2 className="nickname">{profile.nickname}</h2>
+                        <h2 className="email">{profile.email}</h2>
                     </section>
                     <section className="icon--section">
                         <Tooltip title="profile settings">

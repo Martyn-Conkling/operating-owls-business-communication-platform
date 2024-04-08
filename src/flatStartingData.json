@@ -1,150 +1,151 @@
 {
-"channels": {
-    "byId": {
-        "channelId0": {
-            "id": "channelId0",
-            "name": "Bob Ross Fans",
-            "messageIds": ["u1231001", "u1241002", "u1251003", "u1261004", "u1271005", "u1281006", "u1231007", "u1241008", "u1251009", "u1261010", "u1271011", "u1281012"  ]
-            },
-        "channelId1": {
-            "id": "channelId1",
-            "name": "Pokemon TCG",
-            "messageIds": ["u2012001", "u2032003"]
-            }
+    "userProfile": {
+            "username": "Example Username",
+            "name": "Example Name",
+            "email": "example@example.com",
+            "online": true,
+            "pfp": "https://picsum.photos/200"
+        },
+    "channels": {
+            "byId": {
+                "channelId0": {
+                    "id": "channelId0",
+                    "name": "Bob Ross Fans",
+                    "messageIds": ["u1231001", "u1241002", "u1251003", "u1261004", "u1271005", "u1281006", "u1231007", "u1241008", "u1251009", "u1261010", "u1271011", "u1281012"  ]
+                    },
+                "channelId1": {
+                    "id": "channelId1",
+                    "name": "Pokemon TCG",
+                    "messageIds": ["u2012001", "u2032003"]
+                    }
+                },
+
+            "allIds": ["channelId0", "channelId1"],
+            "allNames": ["Bob Ross Fans", "Pokemon TCG"]
         },
 
-    "allIds": ["channelId0", "channelId1"],
-    "allNames": ["Bob Ross Fans", "Pokemon TCG"]
+"messages": {
+    "u1231001":{
+        "channelId": "channelId0",
+        "messageId": "u1231001",
+        "userId": "u123",
+        "username": "ArtLover99",
+        "timestamp": "2024-02-22T10:00:00Z",
+        "content": "Hey everyone, just wanted to share my latest attempt at a Bob Ross painting. It's not perfect, but I'm getting better!"
+        },
+
+    "u1241002":{
+        "channelId": "channelId0",
+        "messageId": "u1241002",
+        "userId": "u124",
+        "username": "PeacefulPainter",
+        "timestamp": "2024-02-22T10:05:00Z",
+        "content": "That's awesome, ArtLover99! Bob Ross has always been an inspiration to me. His calm and positive approach to painting is something I try to incorporate into my own work."
+        },
+
+    "u1251003":{
+        "channelId": "channelId0",
+        "messageId": "u1251003",
+        "userId": "u125",
+        "timestamp": "2024-02-22T10:10:00Z",
+        "username": "NatureFanatic",
+        "content": "I love how Bob Ross could create such amazing landscapes in just one episode. His 'happy little trees' are iconic!"
+        },
+
+    "u1261004":{
+        "messageId": "u1261004",
+        "userId": "u126",
+        "timestamp": "2024-02-22T10:15:00Z",
+        "username": "BrushStrokes",
+        "content": "Does anyone have tips on creating the 'misty' effect he often used for mountains? I find it challenging."
+        },
+    
+    "u1271005":{
+        "messageId": "u1271005",
+        "userId": "u127",
+        "timestamp": "2024-02-22T10:20:00Z",
+        "username": "PaletteKnife",
+        "content": "BrushStrokes, try using a dry brush with very little paint and lightly graze it over the canvas. It takes some practice, but you'll get it!"
+        },
+    
+    "u1281006":{
+        "messageId": "u1281006",
+        "userId": "u128",
+        "timestamp": "2024-02-22T10:25:00Z",
+        "username": "CanvasDreamer",
+        "content": "Just finished watching 'The Joy of Painting' marathon. Bob Ross's positivity is contagious. Makes me want to paint all day!"
+        },
+    
+    "u1231007":{
+        "messageId": "u1231007",
+        "userId": "u123",
+        "timestamp": "2024-02-22T10:30:00Z",
+        "username": "ArtLover99",
+        "content": "Thanks for the encouragement, everyone! Has anyone tried painting along with an episode recently? I find it both challenging and soothing."
+        },
+
+    "u1241008":{
+        "messageId": "u1241008",
+        "userId": "u124",
+        "timestamp": "2024-02-22T10:35:00Z",
+        "username": "PeacefulPainter",
+        "content": "I do paint along quite often, ArtLover99! It's a great way to learn. Sometimes I have to pause the episode to keep up, though."
+        },
+    
+    "u1251009":{
+        "messageId": "u1251009",
+        "userId": "u125",
+        "timestamp": "2024-02-22T10:40:00Z",
+        "username": "NatureFanatic",
+        "content": "The 'happy little accidents' philosophy has really helped me overcome my fear of making mistakes. Every error is a learning opportunity."
+        },
+
+    "u1261010":{
+        "messageId": "u1261010",
+        "userId": "u126",
+        "timestamp": "2024-02-22T10:45:00Z",
+        "username": "BrushStrokes",
+        "content": "@PaletteKnife Thanks for the tip on the misty effect! I'll practice that technique this weekend."
+        },
+    
+    "u1271011": {
+        "messageId": "u1271011",
+        "userId": "u127",
+        "timestamp": "2024-02-22T10:50:00Z",
+        "username": "PaletteKnife",
+        "content": "Glad to help, BrushStrokes! Don't hesitate to share your progress. We're all here to support each other."
     },
 
-"messages":{
+    "u1281012":{
+        "messageId": "u1281012",
+        "userId": "u128",
+        "timestamp": "2024-02-22T10:55:00Z",
+        "username": "CanvasDreamer",
+        "content": "Anyone interested in starting a weekly Bob Ross paint-along group? It could be a fun way to connect and share tips."
+        },
     
-        "u1231001":{
-            "channelId": "channelId0",
-            "messageId": "u1231001",
-            "userId": "u123",
-            "username": "ArtLover99",
-            "timestamp": "2024-02-22T10:00:00Z",
-            "content": "Hey everyone, just wanted to share my latest attempt at a Bob Ross painting. It's not perfect, but I'm getting better!"
-            },
+    "u2012001": {
+        "messageId": "u2012001",
+        "userId": "u201",
+        "timestamp": "2024-02-22T12:00:00Z",
+        "username": "PokeFan88",
+        "content": "Just got a holographic Charizard from a booster pack! Couldn't believe my luck!"
+        },
+    
+    "u2022002":{
+        "messageId": "u2022002",
+        "userId": "u202",
+        "timestamp": "2024-02-22T12:05:00Z",
+        "username": "CollectorJay",
+        "content": "That's amazing, PokeFan88! The holographic Charizard is a classic. Do you have any tips for preserving the card's condition?"
+        },
 
-        "u1241002":{
-            "channelId": "channelId0",
-            "messageId": "u1241002",
-            "userId": "u124",
-            "username": "PeacefulPainter",
-            "timestamp": "2024-02-22T10:05:00Z",
-            "content": "That's awesome, ArtLover99! Bob Ross has always been an inspiration to me. His calm and positive approach to painting is something I try to incorporate into my own work."
-            },
-
-        "u1251003":{
-            "channelId": "channelId0",
-            "messageId": "u1251003",
-            "userId": "u125",
-            "timestamp": "2024-02-22T10:10:00Z",
-            "username": "NatureFanatic",
-            "content": "I love how Bob Ross could create such amazing landscapes in just one episode. His 'happy little trees' are iconic!"
-            },
-
-        "u1261004":{
-            "messageId": "u1261004",
-            "userId": "u126",
-            "timestamp": "2024-02-22T10:15:00Z",
-            "username": "BrushStrokes",
-            "content": "Does anyone have tips on creating the 'misty' effect he often used for mountains? I find it challenging."
-            },
-        
-        "u1271005":{
-            "messageId": "u1271005",
-            "userId": "u127",
-            "timestamp": "2024-02-22T10:20:00Z",
-            "username": "PaletteKnife",
-            "content": "BrushStrokes, try using a dry brush with very little paint and lightly graze it over the canvas. It takes some practice, but you'll get it!"
-            },
-        
-        "u1281006":{
-            "messageId": "u1281006",
-            "userId": "u128",
-            "timestamp": "2024-02-22T10:25:00Z",
-            "username": "CanvasDreamer",
-            "content": "Just finished watching 'The Joy of Painting' marathon. Bob Ross's positivity is contagious. Makes me want to paint all day!"
-            },
-        
-        "u1231007":{
-            "messageId": "u1231007",
-            "userId": "u123",
-            "timestamp": "2024-02-22T10:30:00Z",
-            "username": "ArtLover99",
-            "content": "Thanks for the encouragement, everyone! Has anyone tried painting along with an episode recently? I find it both challenging and soothing."
-            },
-
-        "u1241008":{
-            "messageId": "u1241008",
-            "userId": "u124",
-            "timestamp": "2024-02-22T10:35:00Z",
-            "username": "PeacefulPainter",
-            "content": "I do paint along quite often, ArtLover99! It's a great way to learn. Sometimes I have to pause the episode to keep up, though."
-            },
-        
-        "u1251009":{
-            "messageId": "u1251009",
-            "userId": "u125",
-            "timestamp": "2024-02-22T10:40:00Z",
-            "username": "NatureFanatic",
-            "content": "The 'happy little accidents' philosophy has really helped me overcome my fear of making mistakes. Every error is a learning opportunity."
-            },
-
-        "u1261010":{
-            "messageId": "u1261010",
-            "userId": "u126",
-            "timestamp": "2024-02-22T10:45:00Z",
-            "username": "BrushStrokes",
-            "content": "@PaletteKnife Thanks for the tip on the misty effect! I'll practice that technique this weekend."
-            },
-        
-        "u1271011": {
-            "messageId": "u1271011",
-            "userId": "u127",
-            "timestamp": "2024-02-22T10:50:00Z",
-            "username": "PaletteKnife",
-            "content": "Glad to help, BrushStrokes! Don't hesitate to share your progress. We're all here to support each other."
-          },
-
-        "u1281012":{
-            "messageId": "u1281012",
-            "userId": "u128",
-            "timestamp": "2024-02-22T10:55:00Z",
-            "username": "CanvasDreamer",
-            "content": "Anyone interested in starting a weekly Bob Ross paint-along group? It could be a fun way to connect and share tips."
-            },
-        
-        "u2012001": {
-            "messageId": "u2012001",
-            "userId": "u201",
-            "timestamp": "2024-02-22T12:00:00Z",
-            "username": "PokeFan88",
-            "content": "Just got a holographic Charizard from a booster pack! Couldn't believe my luck!"
-            },
-        
-        "u2022002":{
-            "messageId": "u2022002",
-            "userId": "u202",
-            "timestamp": "2024-02-22T12:05:00Z",
-            "username": "CollectorJay",
-            "content": "That's amazing, PokeFan88! The holographic Charizard is a classic. Do you have any tips for preserving the card's condition?"
-            },
-        "u2032003":{
-            "messageId": "u2032003",
-            "userId": "u203",
-            "timestamp": "2024-02-22T12:10:00Z",
-            "username": "ShinyHunter",
-            "content": "Anyone here into trading? I'm looking for the Shiny Gyarados card. I have duplicates of Venusaur and Blastoise."
-            }
-
-        
-      }
-
+    "u2032003":{
+        "messageId": "u2032003",
+        "userId": "u203",
+        "timestamp": "2024-02-22T12:10:00Z",
+        "username": "ShinyHunter",
+        "content": "Anyone here into trading? I'm looking for the Shiny Gyarados card. I have duplicates of Venusaur and Blastoise."
+        }
+    }
 }
-
-
-
