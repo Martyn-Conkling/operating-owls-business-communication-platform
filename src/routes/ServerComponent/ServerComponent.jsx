@@ -227,6 +227,21 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         
     }
 
+
+    const messageComponentDisplay = (
+        <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}>
+            <MessageComponent 
+            displayName={serverData.messages[messageId].username}
+            messageContent={serverData.messages[messageId].content}
+            time={currentTime}
+            displayUserInfo={showUserInfo}
+            messageId={serverData.messages[messageId].messageId}
+            removeMessage={deleteMessageComponent}
+            messageIndex={index}
+            />
+        </div>
+        
+    );
     return (
     <>
         {showDayBreak &&(
@@ -236,33 +251,9 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         {(scrollMessageId===serverData.messages[messageId].messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
-            > 
-            
-                <MessageComponent 
-                    displayName={serverData.messages[messageId].username}
-                    messageContent={serverData.messages[messageId].content}
-                    time={currentTime}
-                    displayUserInfo={showUserInfo}
-                    messageId={serverData.messages[messageId].messageId}
-                    removeMessage={deleteMessageComponent}
-                    messageIndex={index}
-                    />
-            
-            </div>
+                messageComponentDisplay
             </Fade>
-    ): (<div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
-            >
-                <MessageComponent 
-                    displayName={serverData.messages[messageId].username}
-                    messageContent={serverData.messages[messageId].content}
-                    time={currentTime}
-                    displayUserInfo={showUserInfo}
-                    messageId={serverData.messages[messageId].messageId}
-                    removeMessage={deleteMessageComponent}
-                    messageIndex={index}
-                    />
-            </div>)}
+    ): messageComponentDisplay}
     </>
     );
 })
