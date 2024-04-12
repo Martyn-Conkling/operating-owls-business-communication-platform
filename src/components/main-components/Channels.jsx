@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 //import IndivChannel from '../IndivChannel';
 import AddIcon from '@mui/icons-material/Add';
 //import channelData from '../../data/channelData'
-import channelData from '../../routes/ServerComponent/startingData.json'
-import flatChannelData from '../../flatStartingData.json'
+//import channelData from '../../routes/ServerComponent/startingData.json'
+//import flatChannelData from '../../flatStartingData.json'
 import ModalInput from '../ModalInput';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
@@ -18,14 +18,20 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import TagIcon from '@mui/icons-material/Tag';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useMyContext } from '../../DataContext';
+
 //Channel Component displays selection of channels for viewing selection
 
 
 export default function Channels(props){
+
+    const {serverData, createNewChannel, deleteChannel} = useMyContext();
     const [open, setOpen] = React.useState(true); //for the collapsible list
-    const [channels, setChannels] = React.useState(flatChannelData); //to ensure channels update whenever we edit
+    const channels = serverData; //no longer need react state 
+    //const [channels, setChannels] = React.useState(serverData); //to ensure channels update whenever we edit
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
     const [selectedChannel, setSelectedChannel] = React.useState(props.defaultChannel); //for the selected list item visual
+
 
     //moved from componentized indivChannel to returning it within this component
     const IndivChannel = (props) => {
@@ -61,12 +67,7 @@ export default function Channels(props){
             );
     };
 
-    //ensures channels update with ServerComponent
-    React.useEffect(()=> {
-        props.setDataStore(channels);
-    }, [channels])
    
-
     //console.log('Selected Index ' + selectedIndex);
     //handles the collapsible menu
     const handleCollapseClick = () => {
@@ -86,44 +87,22 @@ export default function Channels(props){
             "name": nameInput,
             "messageIds":[]
         };
-
-        setChannels( (prevChannels) => ({
-            "channels": {
-                "byId" :{
-                    ...prevChannels.channels.byId,
-                    [newChannel.id]: newChannel
-                },
-                "allIds" : [...prevChannels.channels.allIds, newChannel.id]
-            },
-            "messages" : {...prevChannels.messages}
-           
-        }));
+        //updates the data context and thus should update everything else
+        createNewChannel(newChannel)
         setShowModal(false);
-        
-       // console.log(channels);
     }
     
     //deletes channel by filtering and selecting the channel to delete
     const deleteItem = (itemId) => {
-        setChannels((prevChannels) => {
-            //creates new edited channel list
-            const newById = {...prevChannels.channels.byId}
-            delete newById[itemId]
-            const newAllIds = prevChannels.channels.allIds.filter(id => id !==itemId)
-            //procedure to go to the channel directly above the deleted channel
-            if(itemId === selectedChannel){
-                const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
-                setSelectedChannel(prevChannels.channels.allIds[newIndex]);
-                props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
-            }
-            return {
-                channels:{
-                    byId: newById,
-                    allIds: newAllIds
-                },
-                messages: {...prevChannels.messages}
-            }
-        });
+        const prevChannels = serverData;
+
+        //procedure to go to the channel directly above the deleted channel
+        if(itemId === selectedChannel){
+            const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
+            setSelectedChannel(prevChannels.channels.allIds[newIndex]);
+            props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
+        }
+        deleteChannel(itemId);
     }
     
     //closes modal of adding channel
