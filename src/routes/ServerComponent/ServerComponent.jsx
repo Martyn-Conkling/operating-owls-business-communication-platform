@@ -223,7 +223,7 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         {(scrollMessageId===serverData.messages[messageId].messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-                messageComponentDisplay
+                {messageComponentDisplay}
             </Fade>
     ): messageComponentDisplay}
     </>
@@ -242,10 +242,10 @@ useEffect(() => {
 return(
     <>
 
-    {/* <Search 
+     <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
-        username={username}/>  */}
+        username={username}/>  
     <div className="server-container" > 
 
     <div id='channel-list'>
