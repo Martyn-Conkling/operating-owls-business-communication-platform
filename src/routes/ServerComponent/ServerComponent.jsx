@@ -92,6 +92,11 @@ const scrollToMessage = (id) => {
     }, "10");
 }
 
+//quick fix to stop fade if there is a channel switch
+useEffect( () => {
+    setScrollMessageId(null)
+}, [selectedChannel])
+
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
@@ -100,6 +105,7 @@ useEffect(() => {
         }
     }
 }, [scrollMessageId]);
+
 
 
 const [newMessage, setNewMessage] = useState(blankMessage);
@@ -175,6 +181,7 @@ const deleteMessageComponent = (index) => {
 
 
 const messageList = serverData.channels.byId[selectedChannel].messageIds.map((messageId, index) => {
+    console.log(messageId)
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
     const currentMessageDate = moment.tz(serverData.messages[messageId].timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
@@ -201,7 +208,7 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
 
 
     const messageComponentDisplay = (
-        <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}>
+        <div id={serverData.messages[messageId].messageId} className="message-element" key={serverData.messages[messageId].messageId} style={{ marginBottom: '10px' }}>
             <MessageComponent 
             displayName={serverData.messages[messageId].username}
             messageContent={serverData.messages[messageId].content}
