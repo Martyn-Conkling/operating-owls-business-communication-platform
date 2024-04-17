@@ -13,6 +13,7 @@ import './ServerStyles.css';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
+import Navigation from "../../components/main-components/Navigation"
 import { useLocation } from 'react-router-dom';
 
 import { useMyContext } from '../../DataContext';
@@ -248,20 +249,21 @@ useEffect(() => {
 
 return(
     <>
+    
 
      <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
         username={username}/>  
     <div className="server-container" > 
-
-    <div id='channel-list'>
-    {/* pass the channel selection, default channel, and update channels as props */}
-    <Channels 
-        onSelectChannel={handleChannelSelect}
-        defaultChannel={selectedChannel}
-    />
-</div>
+        <Navigation />
+        <div id='channel-list'>
+        {/* pass the channel selection, default channel, and update channels as props */}
+            <Channels 
+                onSelectChannel={handleChannelSelect}
+                defaultChannel={selectedChannel}
+            />
+        </div>
 
 <div id='chat-section'>
 
