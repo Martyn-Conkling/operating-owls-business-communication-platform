@@ -26,13 +26,14 @@ import { Link } from 'react-router-dom';
 export default function Navigation() {
   return (
     <AppBar
-      position="fixed"
+      position="static"
       sx={{
         width: "10vw",
         height: "10vh", // Adjusted height,
         left: 0,  
         top: "9%",   
-        bottom: 0, 
+        bottom: 0,
+        right: 0, 
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
