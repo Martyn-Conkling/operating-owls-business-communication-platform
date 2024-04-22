@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';    
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import BusinessIcon from './BusinessIcon';
@@ -131,62 +131,62 @@ return (
         ml: 18,
         }}
     >
-        <Grid container spacing={-25} sx={{mt:10}}>
-        <Grid item xs={8} sx={{borderRadius: '13%', overflow: "hidden", height: "75vh", width: "85vw", background: "#2a2c30", boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(5px)", border: "1px solid rgba( 255, 255, 255, 0.18)"}}>
-            <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47%", mb: "2%", mt: "5%" }}>
-            <BusinessIcon />
-            </Avatar>
-            <Typography variant="h5" sx={{ml: "37%", mv: 1.5, color: "#e8e8e8"}}>
-                Welcome Back 
-            </Typography>
-            <Box component="form" noValidate autoComplete="off" color= 'primary' sx={{mt: 1}}>
-                <TextField
-                    variant='standard'
-                    sx={{borderRadius: '12%', width: "60%", ml: "22%", mr: "5%",}}
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    margin='normal'
-                    required
-                    id='email'
-                    label='Email Address'
-                    name='email'
-                    autoComplete='email'
-                    autoFocus
-                    error={emailNoValue}
-                    helperText={emailNoValueMessage}
-                />
-                <TextField
-                variant='standard'
-                sx={{width: "60%", ml: "22%", mr: "5%"}}
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                margin='normal'
-                required
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-                error={passwordHasValue}
-                helperText={passwordValueMessage}
-                />
-                <Button
-                onClick={LogInButtonClicked}
-                type='button'
-                fullWidth
-                color='secondary'
-                variant='contained'
-                sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml: "22%"}}
-                >
-                Log In
-                </Button>
-                <br/>
-                <Typography variant="h7" sx={{ml: "29%", color: "white"}}>Don't have an account?
-                <Link color={'secondary'} href={`carl-test-page`}>
-                    Sign Up
-                </Link>
-                </Typography>
-            </Box>
+        <Avatar sx={{ m: 2, bgcolor: 'light gray' }}>
+        <BusinessIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+        Welcome Back
+        </Typography>
+        <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
+        <TextField
+            onChange={e => setEmail(e.target.value)}
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            error={emailNoValue || invalidLogIn}
+            helperText={emailNoValueMessage || invalidLogInMessage}
+        />
+        <TextField
+            onChange={e => setPassword(e.target.value)}
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            error={passwordHasValue || invalidLogIn}
+            helperText={passwordValueMessage || invalidLogInMessage}
+        />
+        <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+        />
+        <Button
+            onClick={LogInButtonClicked}
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+        >
+            Login
+        </Button>
+        <Grid container>
+            <Grid item xs>
+            <Link href="#" variant="body2">
+                Forgot password?
+            </Link>
+            </Grid>
+            <Grid item>             
+            <Link variant="body2" to='/carl-test-page'>
+                {"Need an account? Register"}
+            </Link>
             </Grid>
         </Grid>
 
