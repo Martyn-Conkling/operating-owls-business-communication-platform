@@ -1,7 +1,14 @@
 {
+  "userProfile": [
+    {
+        "username": "Example Username",
+        "name": "Example Name",
+        "email": "example@example.com",
+        "online": true,
+        "pfp": "https://picsum.photos/200"
+    }
+],
   "channelArray": [
-
- 
   {
     "channelID": 0,   
     "channelName": "Bob Ross Fans",
@@ -92,8 +99,6 @@
               }
         ]
   },
-
-
   {
     "channelID": 1,    
     "channelName": "Pokemon TCG",
@@ -141,8 +146,6 @@
             "content": "Does anyone have advice on building a competitive deck for tournaments? I'm new to the scene and could use some tips."
           }
         ]
-    }
-    
-  ]  
+  }
+  ]
 }
-

@@ -29,11 +29,19 @@ export default function Navigation() {
       position="static"
       sx={{
         width: "10vw",
+        height: "10vh", // Adjusted height,
+        left: 0,  
+        top: "9%",   
+        bottom: 0,
+        right: 0, 
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         bgcolor: "primary.main",
-        position: "relative",
         boxShadow: 0,
         borderRight: 1,
         borderColor: "primary.light",
+        
       }}
     >
       <Container disableGutters>
@@ -43,7 +51,7 @@ export default function Navigation() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            height: "96.50vh",
+            height: "80vh",
             my: 2,
           }}
         >

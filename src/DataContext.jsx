@@ -8,63 +8,73 @@ export const useMyContext = () => useContext(DataContext);
 export const MyProvider = ({ children }) => {
 
     const [serverData, setServerData] = useState(startingData)
-    const [loginData, setLoginData] = useState(null)
+    const [loginData, setLoginData] = useState(startingData.userProfile)
     const [userSettings, setUserSettings] = useState (null)
-//   const [channelData, setChannelData] = useState(startingData.channels);
-//   const [messagesData, setMessagesData] = useState(startingData.messages);
 
-  const store = {
-    serverData,
-    sendNewMessage: (newMessage) => setServerData(
-        prevData => ({
-            channels:{
-                ...prevData.channels,
-                byId: {
-                    ...prevData.channels.byId,
-                    [newMessage.channelId]:{
-                        ...prevData.channels.byId[newMessage.channelId],
-                        messageIds:[...prevData.channels.byId[newMessage.channelId].messageIds, newMessage.messageId]
-                    }
+    // const [channelData, setChannelData] = useState(startingData.channels);
+    // const [messagesData, setMessagesData] = useState(startingData.messages);
+
+    const store = {
+        serverData,
+        loginData,
+        sendNewMessage: (newMessage) => setServerData(
+            prevData => ({
+                channels:{
+                    ...prevData.channels,
+                    byId: {
+                        ...prevData.channels.byId,
+                        [newMessage.channelId]:{
+                            ...prevData.channels.byId[newMessage.channelId],
+                            messageIds:[...prevData.channels.byId[newMessage.channelId].messageIds, newMessage.messageId]
+                        }
+                    },
                 },
-                
-            },
+                messages:{
+                    ...prevData.messages,
+                    [newMessage.messageId]: newMessage,
+                }
+            })
+        ),
+        createNewChannel: (newChannelData) => setServerData(
+            prevData => ({
+                channels: {
+                    byId:{
+                        ...prevData.channels.byId,
+                        [newChannelData.id]: {
+                            ...newChannelData
+                        }
+                    },
 
-            messages:{
-                ...prevData.messages,
-                [newMessage.messageId]: newMessage,
-            }
-
-        })
-    ),
-
-    createNewChannel: (newChannelData) => setServerData(
-        prevData => ({
-            
-            channels: {
-                byId:{
-                    ...prevData.channels.byId,
-                    [newChannelData.id]: {
-                        ...newChannelData
-                    }
+                    allIds:[...prevData.channels.allIds, newChannelData.id],
+                    allNames:[...prevData.channels.allNames, newChannelData.name]
                 },
+                messages: {
+                    ...prevData.messages
+                }
+            })
+        ),
+        updateChannelName: (channelData) => setServerData(    
+        ),
+        deleteChannel: (itemId) => setServerData(
+            prevData => { 
+            //creates new edited channel list
+            const channelToDelete = prevData.channels.byId[itemId]
 
-                allIds:[...prevData.channels.allIds, newChannelData.id],
-                allNames:[...prevData.channels.allNames, newChannelData.name]
-            },
-
-            messages: {
-                ...prevData.messages
+            const newById = {...prevData.channels.byId}
+            delete newById[itemId]
+            const newAllIds = prevData.channels.allIds.filter(id => id !==itemId)
+            const newAllNames = prevData.channels.allNames.filter(name => name !== channelToDelete.name)
+            //procedure to go to the channel directly above the deleted channel
+            return {
+                channels:{
+                    byId: newById,
+                    allIds: newAllIds,
+                    allNames: newAllNames,
+                },
+                messages: {...prevData.messages}
             }
-
-        })
-    ),
-
-    updateChannelName: (channelData) => setServerData(
-        
-    )
-
-
-  };
-
-  return <DataContext.Provider value={store}>{children}</DataContext.Provider>;
+            }
+        )
+    };
+    return <DataContext.Provider value={store}>{children}</DataContext.Provider>;
 };

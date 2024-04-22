@@ -9,10 +9,11 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MessageComponent from "../../components/main-components/Message.jsx";
 import Divider from "@mui/material/Divider";
 import './ServerStyles.css';
-import flatData from '../../flatStartingData.json';
+//import flatData from '../../flatStartingData.json';
 import Channels from "../../components/main-components/Channels"
 import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
+import Navigation from "../../components/main-components/Navigation"
 import { useLocation } from 'react-router-dom';
 
 import { useMyContext } from '../../DataContext';
@@ -77,39 +78,11 @@ const {serverData, sendNewMessage, createNewChannel} = useMyContext();
 //  When the page loads, the first channel in the channel list should be selected from the shared context - done
 
 
-
-const [dataStore, setDataStore] = useState(flatData); //holds the state of the channels to update when changed
+const dataStore = serverData;
+//const [dataStore, setDataStore] = useState(serverData); //holds the state of the channels to update when changed
 const [selectedChannel, setSelectedChannel] = useState(serverData.channels.allIds[0]);
 const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll to if the search bar is used
-
-
 const [messagesArray, setMessagesArray] = useState([]);
-
-//useEffect(() =>{
-    // rename this?
-    // const selectedChannelID = selectedChannel;
-
-//})
-
-//connects the selected channel to its corresponding messages
-// useEffect(() => {
-//     const selectedChannelID = selectedChannel;
-//     const selectedChannelData = dataStore.channels?.byId[selectedChannelID];
-//     if (selectedChannelData) {
-//         const messageIds = selectedChannelData.messageIds;
-//         // console.log("Message IDs:", messageIds);
-
-//         const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
-//         console.log("Selected Messages:", selectedMessages.filter(message => message));
-//         setMessagesArray(selectedMessages.filter(message => message));
-//     }
-//     //displays no messages if no channels exist
-//     else{
-//         setMessagesArray([]);   
-//     }
-//     console.log(dataStore)
-//   }, [dataStore, selectedChannel]);
-
 
 
 const scrollToMessage = (id) => {
@@ -120,6 +93,11 @@ const scrollToMessage = (id) => {
     }, "10");
 }
 
+//quick fix to stop fade if there is a channel switch
+useEffect( () => {
+    setScrollMessageId(null)
+}, [selectedChannel])
+
 useEffect(() => {
     if(scrollMessageId) {
         const specificMessage = document.getElementById(scrollMessageId);
@@ -128,6 +106,7 @@ useEffect(() => {
         }
     }
 }, [scrollMessageId]);
+
 
 
 const [newMessage, setNewMessage] = useState(blankMessage);
@@ -203,6 +182,7 @@ const deleteMessageComponent = (index) => {
 
 
 const messageList = serverData.channels.byId[selectedChannel].messageIds.map((messageId, index) => {
+    console.log(messageId)
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
     const currentMessageDate = moment.tz(serverData.messages[messageId].timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');
@@ -227,6 +207,21 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         
     }
 
+
+    const messageComponentDisplay = (
+        <div id={serverData.messages[messageId].messageId} className="message-element" key={serverData.messages[messageId].messageId} style={{ marginBottom: '10px' }}>
+            <MessageComponent 
+            displayName={serverData.messages[messageId].username}
+            messageContent={serverData.messages[messageId].content}
+            time={currentTime}
+            displayUserInfo={showUserInfo}
+            messageId={serverData.messages[messageId].messageId}
+            removeMessage={deleteMessageComponent}
+            messageIndex={index}
+            />
+        </div>
+        
+    );
     return (
     <>
         {showDayBreak &&(
@@ -236,33 +231,9 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         {(scrollMessageId===serverData.messages[messageId].messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
-            > 
-            
-                <MessageComponent 
-                    displayName={serverData.messages[messageId].username}
-                    messageContent={serverData.messages[messageId].content}
-                    time={currentTime}
-                    displayUserInfo={showUserInfo}
-                    messageId={serverData.messages[messageId].messageId}
-                    removeMessage={deleteMessageComponent}
-                    messageIndex={index}
-                    />
-            
-            </div>
+                {messageComponentDisplay}
             </Fade>
-    ): (<div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
-            >
-                <MessageComponent 
-                    displayName={serverData.messages[messageId].username}
-                    messageContent={serverData.messages[messageId].content}
-                    time={currentTime}
-                    displayUserInfo={showUserInfo}
-                    messageId={serverData.messages[messageId].messageId}
-                    removeMessage={deleteMessageComponent}
-                    messageIndex={index}
-                    />
-            </div>)}
+    ): messageComponentDisplay}
     </>
     );
 })
@@ -278,21 +249,21 @@ useEffect(() => {
 
 return(
     <>
+    
 
-    {/* <Search 
+     <Search 
         selectedChannel={selectedChannel}
         scrollToMessage={scrollToMessage}
-        username={username}/>  */}
+        username={username}/>  
     <div className="server-container" > 
-
-    <div id='channel-list'>
-    {/* pass the channel selection, default channel, and update channels as props */}
-    <Channels 
-        onSelectChannel={handleChannelSelect}
-        defaultChannel={selectedChannel}
-        setDataStore={setDataStore}
-    />
-</div>
+        <Navigation />
+        <div id='channel-list'>
+        {/* pass the channel selection, default channel, and update channels as props */}
+            <Channels 
+                onSelectChannel={handleChannelSelect}
+                defaultChannel={selectedChannel}
+            />
+        </div>
 
 <div id='chat-section'>
 
