@@ -18,9 +18,45 @@ import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDoc, doc, snapshotEqual } from 'firebase/firestore';
 import { db } from '../test/firebaseConfig';
 import { user } from '@nextui-org/react';
+import styled from '@emotion/styled';
 
 export default function ChristianTestPage() {
-const theme = createTheme();
+const cssTextField = styled(TextField) ({
+    '& label.Mui-focused': {
+        color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'white',
+        },
+        '&:hover fieldset': {
+            borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'white',
+        },
+    },
+});
+const theme = createTheme({
+    palette: {
+    primary: {
+        main: '#D9D9D9',
+        light: '#D9D9D9',
+    },
+    secondary: {
+        main: '#270157',
+    },
+    },
+    typography: {
+    fontFamily: [
+        'Arial',
+        'sans-serif',
+    ].join(','),
+    },
+});
 
 const [email, setEmail] = useState();
 const [password, setPassword] = useState();
@@ -84,76 +120,77 @@ async function LogInButtonClicked() {
 
 return (
 <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="s">
+    <Container component="main" sx={{}}>
     <CssBaseline />
     <Box
         sx={{
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        mr: -20,
+        ml: 18,
         }}
     >
-        <Avatar sx={{ m: 2, bgcolor: 'light gray' }}>
-        <BusinessIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-        Welcome Back
-        </Typography>
-        <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
-        <TextField
-            onChange={e => setEmail(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            error={emailNoValue || invalidLogIn}
-            helperText={emailNoValueMessage || invalidLogInMessage}
-        />
-        <TextField
-            onChange={e => setPassword(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            error={passwordHasValue || invalidLogIn}
-            helperText={passwordValueMessage || invalidLogInMessage}
-        />
-        <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-        />
-        <Button
-            onClick={LogInButtonClicked}
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-        >
-            Login
-        </Button>
-        <Grid container>
-            <Grid item xs>
-            <Link href="#" variant="body2">
-                Forgot password?
-            </Link>
-            </Grid>
-            <Grid item>
-            <Link href="#" variant="body2">
-                {"Need an account? Register"}
-            </Link>
+        <Grid container spacing={-25} sx={{mt:10}}>
+        <Grid item xs={8} sx={{borderRadius: '13%', overflow: "hidden", height: "75vh", width: "85vw", background: "#2a2c30", boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(5px)", border: "1px solid rgba( 255, 255, 255, 0.18)"}}>
+            <Avatar sx={{ m: "3%", bgcolor: 'black', ml: "47%", mb: "2%", mt: "5%" }}>
+            <BusinessIcon />
+            </Avatar>
+            <Typography variant="h5" sx={{ml: "37%", mv: 1.5, color: "#e8e8e8"}}>
+                Welcome Back 
+            </Typography>
+            <Box component="form" noValidate autoComplete="off" color= 'primary' sx={{mt: 1}}>
+                <TextField
+                    variant='standard'
+                    sx={{borderRadius: '12%', width: "60%", ml: "22%", mr: "5%",}}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    margin='normal'
+                    required
+                    id='email'
+                    label='Email Address'
+                    name='email'
+                    autoComplete='email'
+                    autoFocus
+                    error={emailNoValue}
+                    helperText={emailNoValueMessage}
+                />
+                <TextField
+                variant='standard'
+                sx={{width: "60%", ml: "22%", mr: "5%"}}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                margin='normal'
+                required
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+                error={passwordHasValue}
+                helperText={passwordValueMessage}
+                />
+                <Button
+                onClick={LogInButtonClicked}
+                type='button'
+                fullWidth
+                color='secondary'
+                variant='contained'
+                sx={{ mt: 3, mb: 3, borderRadius: 3, width: "60%", ml: "22%"}}
+                >
+                Log In
+                </Button>
+                <br/>
+                <Typography variant="h7" sx={{ml: "29%", color: "white"}}>Don't have an account?
+                <Link color={'secondary'} href={`carl-test-page`}>
+                    Sign Up
+                </Link>
+                </Typography>
+            </Box>
             </Grid>
         </Grid>
+
         </Box>
-    </Box>
     </Container>
 </ThemeProvider>
 );
