@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';    
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import BusinessIcon from './BusinessIcon';
@@ -146,8 +146,8 @@ return (
                 Forgot password?
             </Link>
             </Grid>
-            <Grid item>
-            <Link href="#" variant="body2">
+            <Grid item>             
+            <Link variant="body2" to='/carl-test-page'>
                 {"Need an account? Register"}
             </Link>
             </Grid>
