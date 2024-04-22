@@ -11,7 +11,7 @@
         - https://mui.com/material-ui/react-badge/
         - https://mui.com/material-ui/react-avatar/
 */
-
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import '../../css/ProfileComponent.css'
@@ -123,10 +123,13 @@ export default function ProfileComponent({ username, email, online, pfp }) {
                                     <SettingsIcon className="menu--icon" />
                                     Settings
                                     </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Logout className="menu--icon" />
-                                    Logout
+                                <Link className="remove-underline" to={`/christian-test-page`} >
+                                    <MenuItem onClick={handleClose}>
+                                        
+                                        <Logout className="menu--icon" />
+                                        Logout
                                     </MenuItem>
+                                </Link>
                             </Menu>
                     </section>
                 </>
