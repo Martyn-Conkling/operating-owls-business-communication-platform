@@ -1,13 +1,18 @@
-import React from "react";
-import Badges from "../components/main-components/Badges";
-import UserList from "../components/main-components/UserList";
+import React from 'react';
+import MessageInput from '../components/EmojiComponent/MessageInput';
+const ChatPage = () => {
+  const sendMessage = (message) => {
+  console.log('Sending message:', message); //For testing purposes for "sending~ doesn't go anywhere~ integrate with server comp??"//
+  };
 
+return (
+    <div>
+      <h1>Chat</h1>
+      <MessageInput onSendMessage={sendMessage} />
 
-export default function ElizabethTestPage() {
-    return(
-        <>
-        <Badges />
-        <UserList/>
-        </>
-    );
-}
+    </div>
+  );
+
+};
+
+export default ChatPage;

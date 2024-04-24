@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';    
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import BusinessIcon from './BusinessIcon';
@@ -18,9 +18,45 @@ import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDoc, doc, snapshotEqual } from 'firebase/firestore';
 import { db } from '../test/firebaseConfig';
 import { user } from '@nextui-org/react';
+import styled from '@emotion/styled';
 
 export default function ChristianTestPage() {
-const theme = createTheme();
+const cssTextField = styled(TextField) ({
+    '& label.Mui-focused': {
+        color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'white',
+        },
+        '&:hover fieldset': {
+            borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'white',
+        },
+    },
+});
+const theme = createTheme({
+    palette: {
+    primary: {
+        main: '#D9D9D9',
+        light: '#D9D9D9',
+    },
+    secondary: {
+        main: '#270157',
+    },
+    },
+    typography: {
+    fontFamily: [
+        'Arial',
+        'sans-serif',
+    ].join(','),
+    },
+});
 
 const [email, setEmail] = useState();
 const [password, setPassword] = useState();
@@ -84,14 +120,15 @@ async function LogInButtonClicked() {
 
 return (
 <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="s">
+    <Container component="main" sx={{}}>
     <CssBaseline />
     <Box
         sx={{
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        mr: -20,
+        ml: 18,
         }}
     >
         <Avatar sx={{ m: 2, bgcolor: 'light gray' }}>
@@ -146,14 +183,14 @@ return (
                 Forgot password?
             </Link>
             </Grid>
-            <Grid item>
-            <Link href="#" variant="body2">
+            <Grid item>             
+            <Link variant="body2" to='/carl-test-page'>
                 {"Need an account? Register"}
             </Link>
             </Grid>
         </Grid>
+
         </Box>
-    </Box>
     </Container>
 </ThemeProvider>
 );

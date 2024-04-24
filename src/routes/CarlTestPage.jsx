@@ -1,4 +1,4 @@
-import SignUpPage from "../components/main-components/SignUpPage";
+ import SignUpPage from "../components/main-components/SignUpPage";
 
 let Background = 'SignUpBackground.jpg'
 

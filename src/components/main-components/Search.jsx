@@ -7,7 +7,7 @@ import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 //import channelData from '../../routes/ServerComponent/startingData.json'
-import flatChannelData from '../../flatStartingData.json'
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -17,14 +17,18 @@ import Popover from '@mui/material/Popover';
 import ClearIcon from '@mui/icons-material/Clear';
 import ProfileComponent from './ProfileComponent';
 import '../../css/Search.css'
+import { useMyContext } from '../../DataContext';
 
 export default function Search(props){
+    const {serverData} = useMyContext();
     const[searchValue, setSearchValue] = React.useState('');
     const [forcePopover, setForcePopover] = React.useState(false);
     const textFieldRef = React.useRef(null);
     console.log(searchValue);
-    const selectedChannelData = flatChannelData.channels.byId[props.selectedChannel];
-    const selectedMessages = selectedChannelData?.messageIds.map(id => flatChannelData.messages?.[id]);
+    const selectedChannelData = serverData.channels.byId[props.selectedChannel];
+
+
+    const selectedMessages = selectedChannelData?.messageIds.map(id => serverData.messages?.[id]);
     
     const filteredDataContent = selectedChannelData?.messageIds ? selectedMessages.filter(item =>
         item.content.toLowerCase().includes(searchValue.toLowerCase())
@@ -58,10 +62,9 @@ export default function Search(props){
 
     const handleSearchClose = ()=> {
         setAnchorEl(null);
-        console.log("now it should work")
         
         setForcePopover(false);
-        console.log("haha still doing it")
+        
         
     };
 
