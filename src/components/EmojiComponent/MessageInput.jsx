@@ -10,7 +10,11 @@ const [message, setMessage] = useState('');
 const emojiPicker = useRef(null);
 
   const handleToggleEmojiPicker = () => {
-     emojiPicker.current.togglePicker();
+    // This is just grabbing the button element with the id of "anchor" directly from the DOM, 
+    // I suspect this is not how I should do this
+    // look up if there is a correct react way to do this
+    let anchor = document.querySelector('#anchor')
+     emojiPicker.current.togglePicker(anchor);
   };
 
 
@@ -45,9 +49,10 @@ const emojiPicker = useRef(null);
         InputProps={{
           endAdornment: (
             <>
-                           <IconButton onClick={handleToggleEmojiPicker} size="large">
+              <IconButton id="anchor" onClick={handleToggleEmojiPicker} size="large">
                 😊
               </IconButton>
+
               <IconButton onClick={handleSendMessage} size="large">
                 <SendIcon />
               </IconButton>
