@@ -20,8 +20,7 @@
                     }
                 },
 
-            "allIds": ["channelId0", "channelId1"],
-            "allNames": ["Bob Ross Fans", "Pokemon TCG"]
+            "allIds": ["channelId0", "channelId1"]
         },
 
 "messages": {

@@ -240,8 +240,6 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
 })
 
 // this is just to cause the message list to scroll to the bottom when the page refreshes or the messages update
-
-
 // Need to figure out how to refactor this according to the new shared data context
 useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

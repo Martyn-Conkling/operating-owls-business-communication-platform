@@ -35,6 +35,7 @@ export const MyProvider = ({ children }) => {
                 }
             })
         ),
+
         createNewChannel: (newChannelData) => setServerData(
             prevData => ({
                 channels: {
@@ -46,15 +47,19 @@ export const MyProvider = ({ children }) => {
                     },
 
                     allIds:[...prevData.channels.allIds, newChannelData.id],
-                    allNames:[...prevData.channels.allNames, newChannelData.name]
+                   
                 },
                 messages: {
                     ...prevData.messages
                 }
             })
         ),
-        updateChannelName: (channelData) => setServerData(    
+
+        updateChannelName: (channelData) => setServerData(
+            
         ),
+
+
         deleteChannel: (itemId) => setServerData(
             prevData => { 
             //creates new edited channel list
@@ -62,19 +67,20 @@ export const MyProvider = ({ children }) => {
 
             const newById = {...prevData.channels.byId}
             delete newById[itemId]
+
             const newAllIds = prevData.channels.allIds.filter(id => id !==itemId)
-            const newAllNames = prevData.channels.allNames.filter(name => name !== channelToDelete.name)
-            //procedure to go to the channel directly above the deleted channel
+        
             return {
                 channels:{
                     byId: newById,
                     allIds: newAllIds,
-                    allNames: newAllNames,
                 },
                 messages: {...prevData.messages}
             }
             }
         )
     };
+
+
     return <DataContext.Provider value={store}>{children}</DataContext.Provider>;
 };
