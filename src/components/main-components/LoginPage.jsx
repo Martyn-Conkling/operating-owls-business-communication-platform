@@ -138,59 +138,59 @@ return (
         Welcome Back
         </Typography>
         <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
-        <TextField
-            onChange={e => setEmail(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            error={emailNoValue || invalidLogIn}
-            helperText={emailNoValueMessage || invalidLogInMessage}
-        />
-        <TextField
-            onChange={e => setPassword(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            error={passwordHasValue || invalidLogIn}
-            helperText={passwordValueMessage || invalidLogInMessage}
-        />
-        <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-        />
-        <Button
-            onClick={LogInButtonClicked}
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-        >
-            Login
-        </Button>
-        <Grid container>
-            <Grid item xs>
-            <Link href="#" variant="body2">
-                Forgot password?
-            </Link>
+            <TextField
+                onChange={e => setEmail(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error={emailNoValue || invalidLogIn}
+                helperText={emailNoValueMessage || invalidLogInMessage}
+            />
+            <TextField
+                onChange={e => setPassword(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={passwordHasValue || invalidLogIn}
+                helperText={passwordValueMessage || invalidLogInMessage}
+            />
+            <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+            />
+            <Button
+                onClick={LogInButtonClicked}
+                type="button"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+            >
+                Login
+            </Button>
+            <Grid container>
+                <Grid item xs>
+                    <Link href="#" variant="body2">
+                        Forgot password?
+                    </Link>
+                </Grid>
+                <Grid item>             
+                    <Link variant="body2" to='/carl-test-page'>
+                        {"Need an account? Register"}
+                    </Link>
+                </Grid>
             </Grid>
-            <Grid item>             
-            <Link variant="body2" to='/carl-test-page'>
-                {"Need an account? Register"}
-            </Link>
-            </Grid>
-        </Grid>
-
         </Box>
+    </Box>
     </Container>
 </ThemeProvider>
 );
