@@ -85,31 +85,6 @@ const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll 
 
 const [messagesArray, setMessagesArray] = useState([]);
 
-//useEffect(() =>{
-    // rename this?
-    // const selectedChannelID = selectedChannel;
-
-//})
-
-//connects the selected channel to its corresponding messages
-// useEffect(() => {
-//     const selectedChannelID = selectedChannel;
-//     const selectedChannelData = dataStore.channels?.byId[selectedChannelID];
-//     if (selectedChannelData) {
-//         const messageIds = selectedChannelData.messageIds;
-//         // console.log("Message IDs:", messageIds);
-
-//         const selectedMessages = messageIds.map(id => dataStore.messages?.byId[id]);
-//         console.log("Selected Messages:", selectedMessages.filter(message => message));
-//         setMessagesArray(selectedMessages.filter(message => message));
-//     }
-//     //displays no messages if no channels exist
-//     else{
-//         setMessagesArray([]);   
-//     }
-//     console.log(dataStore)
-//   }, [dataStore, selectedChannel]);
-
 
 
 const scrollToMessage = (id) => {
@@ -236,7 +211,7 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
         {(scrollMessageId===serverData.messages[messageId].messageId) ?  (
             //fades in the message selected
             <Fade key={scrollMessageId} in={true} timeout={2000}>
-            <div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
+            <div id={serverData.messages[messageId].messageId} className="message-element" key={serverData.messages[messageId].messageId} style={{ marginBottom: '10px' }}
             > 
             
                 <MessageComponent 
@@ -251,7 +226,7 @@ const messageList = serverData.channels.byId[selectedChannel].messageIds.map((me
             
             </div>
             </Fade>
-    ): (<div id={serverData.messages[messageId].messageId} className="message-element" key={index} style={{ marginBottom: '10px' }}
+    ): (<div id={serverData.messages[messageId].messageId} className="message-element" key={serverData.messages[messageId].messageId} style={{ marginBottom: '10px' }}
             >
                 <MessageComponent 
                     displayName={serverData.messages[messageId].username}
