@@ -85,6 +85,7 @@ const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll 
 const [messagesArray, setMessagesArray] = useState([]);
 
 
+
 const scrollToMessage = (id) => {
 
     setScrollMessageId(null)
