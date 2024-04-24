@@ -11,7 +11,7 @@ export default function Root() {
         <Link to={`martyns-test-page`}><h1>Martyn's Test Page - Server Prototype</h1></Link>
         <Link to={`miles-test-page`}><h1>Miles' Test Page - Sidebar</h1></Link>
         <Link to={`christian-test-page`}><h1>Christian's Test Page - Login Page</h1></Link>
-        <Link to={'elizabeth-test-page'}><h1>Elizabeth's Test Page - User & Channel List</h1></Link>
+        <Link to={'elizabeth-test-page'}><h1>Elizabeth's Test Page - Emoji + Message Send</h1></Link>
         <Link to={'carl-test-page'}><h1>Carl's Test Page - Register Page</h1></Link>
         <Link to={`emily-test-page`}><h1>Emily's Test Page - Messages</h1></Link>
         <Link to={`ServerComponent`}><h1>Server Component</h1></Link>
