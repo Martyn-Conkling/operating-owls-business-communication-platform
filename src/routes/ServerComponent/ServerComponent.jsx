@@ -182,8 +182,7 @@ const deleteMessageComponent = (index) => {
 
 
 
-const messageList = serverData.channels.byId[selectedChannel].messageIds.map((messageId, index) => {
-    console.log(messageId)
+const messageList = serverData.channels.byId[selectedChannel]?.messageIds.map((messageId, index) => {
     // I am using the moment-timezone library to filter how the timestamps are displayed to be based on the user's timezone and time/date display options
     const currentMessageDate = moment.tz(serverData.messages[messageId].timestamp, userSettings.timeZoneOptions.timeZone);
     const currentMessageFormattedDate = currentMessageDate.format('MM-DD-YYYY');

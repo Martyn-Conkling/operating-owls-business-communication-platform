@@ -27,6 +27,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import IndivChannel from '../IndivChannel';
+import { select } from '@nextui-org/react';
 //Channel Component displays selection of channels for viewing selection
 
 
@@ -43,9 +44,12 @@ export default function Channels(props){
     //const [channels, setChannels] = React.useState(serverData); //to ensure channels update whenever we edit
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
     const [selectedChannel, setSelectedChannel] = React.useState(serverData.channels.allIds[0]); //for the selected list item visual
-
-    const handleClickOpen = () => {
+    const [channelToDelete, setChannelToDelete] = React.useState(null);
+    
+    const handleClickOpen = (id) => {
+        setChannelToDelete(id)
         setOpenAlert(true);
+        
       };
     
       const handleClose = () => {
@@ -110,6 +114,7 @@ export default function Channels(props){
             "name": nameInput,
             "messageIds":[]
         };
+        
         //updates the data context and thus should update everything else
         createNewChannel(newChannel)
         setShowModal(false);
@@ -119,8 +124,9 @@ export default function Channels(props){
     const deleteItem = (itemId) => {
         const prevChannels = serverData;
         //procedure to go to the channel directly above the deleted channel
-        if(itemId === selectedChannel){
-            const newIndex = prevChannels.channels.allIds.indexOf(itemId) > 0 ? prevChannels.channels.allIds.indexOf(itemId) - 1 : 0;
+        if (itemId === selectedChannel) {
+            const currentIndex = prevChannels.channels.allIds.indexOf(itemId);
+            const newIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex + 1;
             setSelectedChannel(prevChannels.channels.allIds[newIndex]);
             props.onSelectChannel(prevChannels.channels.allIds[newIndex]);
         }
@@ -148,7 +154,7 @@ export default function Channels(props){
             name={channel?.name}
             onClick={(event)=> handleListItemClick(event, channel?.id)}
             selected={selectedChannel === channel?.id}
-            deleteChannel={handleClickOpen}
+            deleteChannel={() => handleClickOpen(channel?.id)}
         />
         )
     })
@@ -171,7 +177,7 @@ export default function Channels(props){
                 </DialogContent>
                 <DialogActions>
                     <Button color="error" onClick={handleClose}>Cancel</Button>
-                    <Button color="success" onClick={() => {handleClose(); deleteItem(selectedChannel);}}>Yes</Button>
+                    <Button color="success" onClick={() => {handleClose(); deleteItem(channelToDelete);}}>Yes</Button>
                 </DialogActions>
             </Dialog>
 
@@ -200,7 +206,6 @@ export default function Channels(props){
                                 {channelElements}
                             </List>
                         </Collapse>
-                       
                     </List>
                 </nav>
             </Box>
