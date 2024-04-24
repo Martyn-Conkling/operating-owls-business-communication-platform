@@ -121,38 +121,40 @@ async function LogInButtonClicked() {
 return (
 <ThemeProvider theme={theme}>
     <Container component="main" sx={{}}>
-    <CssBaseline />
-    <Box
-        sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        mr: -20,
-        ml: 18,
-        }}
-    >
+<CssBaseline />
+
+    <Box  sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mr: -20,
+            ml: 18,
+            }}>
+    
+        
+   
+
         <Avatar sx={{ m: 2, bgcolor: 'light gray' }}>
         <BusinessIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-        Welcome Back
-        </Typography>
+        <Typography component="h1" variant="h5">Welcome Back</Typography>
+
         <Box component="form" noValidate autoComplete="off" sx={{ mt: 1 }}>
-        <TextField
-            onChange={e => setEmail(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            error={emailNoValue || invalidLogIn}
-            helperText={emailNoValueMessage || invalidLogInMessage}
-        />
-        <TextField
-            onChange={e => setPassword(e.target.value)}
+            <TextField
+                onChange={e => setEmail(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error={emailNoValue || invalidLogIn}
+                helperText={emailNoValueMessage || invalidLogInMessage}
+            />
+            <TextField
+                onChange={e => setPassword(e.target.value)}
             margin="normal"
             required
             fullWidth
@@ -162,13 +164,13 @@ return (
             id="password"
             autoComplete="current-password"
             error={passwordHasValue || invalidLogIn}
-            helperText={passwordValueMessage || invalidLogInMessage}
-        />
-        <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+                helperText={passwordValueMessage || invalidLogInMessage}
+            />
+            <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-        />
-        <Button
+            />
+            <Button
             onClick={LogInButtonClicked}
             type="button"
             fullWidth
@@ -176,8 +178,8 @@ return (
             sx={{ mt: 3, mb: 2 }}
         >
             Login
-        </Button>
-        <Grid container>
+            </Button>
+            <Grid container>
             <Grid item xs>
             <Link href="#" variant="body2">
                 Forgot password?
@@ -188,9 +190,11 @@ return (
                 {"Need an account? Register"}
             </Link>
             </Grid>
-        </Grid>
+            </Grid>
 
+        
         </Box>
+    </Box>
     </Container>
 </ThemeProvider>
 );
