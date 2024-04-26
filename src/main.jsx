@@ -16,6 +16,7 @@ import ChristianTestPage from "./routes/ChristianTestPage.jsx";
 import ElizabethTestPage from "./routes/ElizabethTestPage.jsx";
 import CarlTestPage from "./routes/CarlTestPage.jsx";
 import EmilyTestPage from "./routes/EmilyTestPage.jsx";
+import DavidTestPage from "./routes/david-test-files/DavidTestPage.jsx";
 import ServerComponent from "./routes/ServerComponent/ServerComponent.jsx";
 // Settings
 import SettingsPage from "./routes/SettingsPage.jsx";
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
   {
     path: "emily-test-page",
     element: <EmilyTestPage></EmilyTestPage>,
+  },
+  {
+    path: "david-test-page",
+    element: <DavidTestPage></DavidTestPage>,
   },
   {
     path: "ServerComponent",
