@@ -9,16 +9,15 @@ import {
   Input,
   TextField,
 } from "@mui/material";
-import { TextareaAutosize } from "@mui/base";
 import { grey } from "@mui/material/colors";
 
 export default function AccountSettings() {
   // State variables to store user information
-  const [username, setUsername] = useState("JohnDoe");
-  const [displayName, setDisplayName] = useState("John Doe");
-  const [profilePicture, setProfilePicture] = useState("profile.jpg");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [phone, setPhone] = useState("123-456-7890");
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [bio, setBio] = useState(
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   );
@@ -46,8 +45,8 @@ export default function AccountSettings() {
       >
         <Typography variant="h4">My Account</Typography>
         <hr></hr>
-        <FormControl sx={{width: "100%"}} className="user-account-page">
-        <img src={profilePicture} alt="Profile" />
+        <FormControl sx={{ display: "flex", width: "90%", margin: "auto auto" }} className="user-account-page">
+          <img src={profilePicture} alt="Profile" />
           <Box
             sx={{
               display: "flex",
@@ -135,12 +134,15 @@ export default function AccountSettings() {
             }}
           >
             <InputLabel sx={{ position: "relative" }}>Bio:</InputLabel>
-            <TextareaAutosize
+            <TextField
+              multiline
+              rows={2}
+              maxRows={4}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             />
           </Box>
-          <button onClick={handleUpdateUser}>Update</button>
+          <Button sx={{width: "fit-content"}} variant="contained" onClick={handleUpdateUser}>Update</Button>
         </FormControl>
         <Typography variant="h6">Password and Authentication</Typography>
         <Box>

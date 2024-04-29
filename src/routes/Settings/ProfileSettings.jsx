@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
-import { db } from "../../components/test/firebaseConfig"
-import { collection, query, where, addDoc, setDoc, doc } from "firebase/firestore";
+import { db } from "../../components/test/firebaseConfig";
+import {
+  collection,
+  query,
+  where,
+  addDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import {
   Box,
   Typography,
@@ -20,29 +27,33 @@ import {
 import { grey } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import { DoNotDisturbOn, DarkMode, Circle } from "@mui/icons-material";
-import AccountSettings from "./AccountSettings";
 
-export default function ProfileSettings(props) {
-  // check if user is logged in
-  // const getUserData = async() => {
-  //   try {
-  //     await doc(db, "users", props.email)
-  //   }
-  //   catch (err){
-  //     console.error(err);
-  //   }
+export default function ProfileSettings() {
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  );
+  
+  async function getUsername() {
+    const userRef = doc(db, "users", email);
+    const userSnap = await getDoc(userRef);
+    let userInfo = userSnap.data();
+    console.log(userInfo);
+    // setUsername(userInfo.username)
+    console.log(userInfo.username)
+    return userInfo.username;
+  }
 
-  //   try {getUserData() } catch (err) {console.error(err)}
-  // }
 
   const [editProfile, setProfile] = useState({
     displayName: "Display Name",
-    pfp: "",
     email: "email@email.com",
-    phone: "867425224",
-    bio: "HELLO THIS IS A BIO.",
+    username: "some name"
   });
-  
 
   const editUserProfile = (event) => {
     alert("editing profile");
@@ -54,7 +65,6 @@ export default function ProfileSettings(props) {
   const statusChange = (event) => {
     setStatus(event.target.value);
   };
-
 
   return (
     <Box
@@ -93,7 +103,7 @@ export default function ProfileSettings(props) {
                 <Button
                   variant="outlined"
                   sx={{ border: "1px solid gray", color: "black" }}
-                  href="/account-settings" 
+                  href="/account-settings"
                 >
                   Edit Profile
                   <EditIcon sx={{ width: "1rem", color: grey[900] }} />

@@ -1,0 +1,152 @@
+{
+    "userProfile": [
+      {
+          "username": "Example Username",
+          "name": "Example Name",
+          "email": "example@example.com",
+          "online": true,
+          "pfp": "https://picsum.photos/200"
+      }
+  ],
+    "channelArray": [
+    {
+      "channelID": 0,   
+      "channelName": "Bob Ross Fans",
+      "last50MessagesArray":[
+              {
+                  "messageId": "1001",
+                  "userId": "u123",
+                  "timestamp": "2024-02-22T10:00:00Z",
+                  "username": "ArtLover99",
+                  "content": "Hey everyone, just wanted to share my latest attempt at a Bob Ross painting. It's not perfect, but I'm getting better!"
+                },
+                {
+                  "messageId": "1002",
+                  "userId": "u124",
+                  "timestamp": "2024-02-22T10:05:00Z",
+                  "username": "PeacefulPainter",
+                  "content": "That's awesome, ArtLover99! Bob Ross has always been an inspiration to me. His calm and positive approach to painting is something I try to incorporate into my own work."
+                },
+                {
+                  "messageId": "1003",
+                  "userId": "u125",
+                  "timestamp": "2024-02-22T10:10:00Z",
+                  "username": "NatureFanatic",
+                  "content": "I love how Bob Ross could create such amazing landscapes in just one episode. His 'happy little trees' are iconic!"
+                },
+                {
+                  "messageId": "1004",
+                  "userId": "u126",
+                  "timestamp": "2024-02-22T10:15:00Z",
+                  "username": "BrushStrokes",
+                  "content": "Does anyone have tips on creating the 'misty' effect he often used for mountains? I find it challenging."
+                },
+                {
+                  "messageId": "1005",
+                  "userId": "u127",
+                  "timestamp": "2024-02-22T10:20:00Z",
+                  "username": "PaletteKnife",
+                  "content": "BrushStrokes, try using a dry brush with very little paint and lightly graze it over the canvas. It takes some practice, but you'll get it!"
+                },
+                {
+                  "messageId": "1006",
+                  "userId": "u128",
+                  "timestamp": "2024-02-22T10:25:00Z",
+                  "username": "CanvasDreamer",
+                  "content": "Just finished watching 'The Joy of Painting' marathon. Bob Ross's positivity is contagious. Makes me want to paint all day!"
+                },
+                {
+                  "messageId": "1007",
+                  "userId": "u123",
+                  "timestamp": "2024-02-22T10:30:00Z",
+                  "username": "ArtLover99",
+                  "content": "Thanks for the encouragement, everyone! Has anyone tried painting along with an episode recently? I find it both challenging and soothing."
+                },
+                {
+                  "messageId": "1008",
+                  "userId": "u124",
+                  "timestamp": "2024-02-22T10:35:00Z",
+                  "username": "PeacefulPainter",
+                  "content": "I do paint along quite often, ArtLover99! It's a great way to learn. Sometimes I have to pause the episode to keep up, though."
+                },
+                {
+                  "messageId": "1009",
+                  "userId": "u125",
+                  "timestamp": "2024-02-22T10:40:00Z",
+                  "username": "NatureFanatic",
+                  "content": "The 'happy little accidents' philosophy has really helped me overcome my fear of making mistakes. Every error is a learning opportunity."
+                },
+                {
+                  "messageId": "1010",
+                  "userId": "u126",
+                  "timestamp": "2024-02-22T10:45:00Z",
+                  "username": "BrushStrokes",
+                  "content": "@PaletteKnife Thanks for the tip on the misty effect! I'll practice that technique this weekend."
+                },
+                {
+                  "messageId": "1011",
+                  "userId": "u127",
+                  "timestamp": "2024-02-22T10:50:00Z",
+                  "username": "PaletteKnife",
+                  "content": "Glad to help, BrushStrokes! Don't hesitate to share your progress. We're all here to support each other."
+                },
+                {
+                  "messageId": "1012",
+                  "userId": "u128",
+                  "timestamp": "2024-02-22T10:55:00Z",
+                  "username": "CanvasDreamer",
+                  "content": "Anyone interested in starting a weekly Bob Ross paint-along group? It could be a fun way to connect and share tips."
+                }
+          ]
+    },
+    {
+      "channelID": 1,    
+      "channelName": "Pokemon TCG",
+      "last50MessagesArray":[
+          {
+              "messageId": "2001",
+              "userId": "u201",
+              "timestamp": "2024-02-22T12:00:00Z",
+              "username": "PokeFan88",
+              "content": "Just got a holographic Charizard from a booster pack! Couldn't believe my luck!"
+            },
+            {
+              "messageId": "2002",
+              "userId": "u202",
+              "timestamp": "2024-02-22T12:05:00Z",
+              "username": "CollectorJay",
+              "content": "That's amazing, PokeFan88! The holographic Charizard is a classic. Do you have any tips for preserving the card's condition?"
+            },
+            {
+              "messageId": "2003",
+              "userId": "u203",
+              "timestamp": "2024-02-22T12:10:00Z",
+              "username": "ShinyHunter",
+              "content": "Anyone here into trading? I'm looking for the Shiny Gyarados card. I have duplicates of Venusaur and Blastoise."
+            },
+            {
+              "messageId": "2004",
+              "userId": "u204",
+              "timestamp": "2024-02-22T12:15:00Z",
+              "username": "EeveeLover",
+              "content": "CollectorJay, for preserving cards, I recommend using card sleeves and a binder. Also, keep them away from direct sunlight to prevent fading."
+            },
+            {
+              "messageId": "2005",
+              "userId": "u205",
+              "timestamp": "2024-02-22T12:20:00Z",
+              "username": "RareFinds",
+              "content": "Just came back from a card convention and the variety of Pokémon cards was incredible. It's fascinating to see how the community cherishes these collectibles."
+            },
+            {
+              "messageId": "2006",
+              "userId": "u206",
+              "timestamp": "2024-02-22T12:25:00Z",
+              "username": "DeckBuilder",
+              "content": "Does anyone have advice on building a competitive deck for tournaments? I'm new to the scene and could use some tips."
+            }
+          ]
+    }
+    ]
+  }
+  
