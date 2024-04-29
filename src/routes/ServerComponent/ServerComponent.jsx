@@ -15,15 +15,11 @@ import moment from 'moment-timezone';
 import Search from "../../components/main-components/Search"
 import Navigation from "../../components/main-components/Navigation"
 import { useLocation } from 'react-router-dom';
-
 import { useMyContext } from '../../DataContext';
-
 import Fade from '@mui/material/Fade';
 //displays mock prototype of showing a server's text channel and channels
 
 export default function ServerComponent() {
-   
-    
 let userSettings = {
     "userId": "u127",
     "username": "PaletteKnife",
@@ -83,10 +79,10 @@ const dataStore = serverData;
 const [selectedChannel, setSelectedChannel] = useState(serverData.channels.allIds[0]);
 const [scrollMessageId, setScrollMessageId] = useState() //sets an id to scroll to if the search bar is used
 const [messagesArray, setMessagesArray] = useState([]);
+const [serverRole, setServerRole] = useState(serverData.userProfile.role);
 
 
-
-const scrollToMessage = (id) => {
+const scrollToMessage = (id) => {   
 
     setScrollMessageId(null)
     setTimeout(() => {
@@ -244,37 +240,7 @@ useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesArray]);
 
-
-return(
-    <>
-    
-
-     <Search 
-        selectedChannel={selectedChannel}
-        scrollToMessage={scrollToMessage}
-        username={username}/>  
-    <div className="server-container" > 
-        <Navigation />
-        <div id='channel-list'>
-        {/* pass the channel selection, default channel, and update channels as props */}
-            <Channels 
-                onSelectChannel={handleChannelSelect}
-                defaultChannel={selectedChannel}
-            />
-        </div>
-
-<div id='chat-section'>
-
-    {/* connects channels selected channel name to display */}
-    <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
-
-    <div id='message-list'>
-        {messageList}
-        <div ref={messagesEndRef} />
-    </div>
-
-    <div>
-
+const sendMessageComponent = (
     <Box component="section">
             <form noValidate autoComplete="off">
                 <TextField
@@ -312,6 +278,40 @@ return(
                 />
             </form>
     </Box>
+);
+
+return(
+    <>
+    
+
+     <Search 
+        selectedChannel={selectedChannel}
+        scrollToMessage={scrollToMessage}
+        username={username}/>  
+    <div className="server-container" > 
+        <Navigation />
+        <div id='channel-list'>
+        {/* pass the channel selection, default channel, and update channels as props */}
+            <Channels 
+                onSelectChannel={handleChannelSelect}
+                defaultChannel={selectedChannel}
+            />
+        </div>
+
+<div id='chat-section'>
+
+    {/* connects channels selected channel name to display */}
+    <h2>Text Channel: {dataStore.channels?.byId[selectedChannel]?.name}</h2>
+
+    <div id='message-list'>
+        {messageList}
+        <div ref={messagesEndRef} />
+    </div>
+
+    <div>
+        {!(serverRole === "read-only") && sendMessageComponent}
+    
+    
 
 
     </div>

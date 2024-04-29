@@ -30,7 +30,6 @@ import IndivChannel from '../IndivChannel';
 import { select } from '@nextui-org/react';
 //Channel Component displays selection of channels for viewing selection
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
