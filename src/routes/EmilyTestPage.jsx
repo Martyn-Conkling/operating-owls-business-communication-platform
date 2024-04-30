@@ -13,7 +13,6 @@ export default function EmilyTestPage() {
             time="12:00AM"
             displayUserInfo={true} 
         />
-        
         <MessageComponent
             displayName="FirstName LastName"
             messageContent="In amet, eget tincidunt dui sollicitudin. eget odio vitae turpis eget Nam tincidunt
