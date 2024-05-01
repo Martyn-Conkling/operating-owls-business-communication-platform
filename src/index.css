@@ -85,3 +85,10 @@ button:focus-visible {
 .link {
   color: #D9D9D9
 }
+
+.css-6wlyi9-MuiContainer-root {
+  margin-left: 0vw !important;
+  margin-left: auto;
+  width: 100%;
+}
+
