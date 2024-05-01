@@ -4,7 +4,8 @@
             "name": "Example Name",
             "email": "example@example.com",
             "online": true,
-            "pfp": "https://picsum.photos/200"
+            "pfp": "https://picsum.photos/200",
+            "role": "admin"
         },
     "channels": {
             "byId": {

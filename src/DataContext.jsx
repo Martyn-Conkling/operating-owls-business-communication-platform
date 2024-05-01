@@ -19,6 +19,7 @@ export const MyProvider = ({ children }) => {
         loginData,
         sendNewMessage: (newMessage) => setServerData(
             prevData => ({
+                ...prevData,
                 channels:{
                     ...prevData.channels,
                     byId: {
@@ -38,6 +39,7 @@ export const MyProvider = ({ children }) => {
 
         createNewChannel: (newChannelData) => setServerData(
             prevData => ({
+                ...prevData,
                 channels: {
                     byId:{
                         ...prevData.channels.byId,
@@ -66,8 +68,9 @@ export const MyProvider = ({ children }) => {
             const newById = {...prevData.channels.byId}
             delete newById[itemId]
             const newAllIds = prevData.channels.allIds.filter(id => id !==itemId)
-        
+            
             return {
+                ...prevData,
                 channels:{
                     byId: newById,
                     allIds: newAllIds,

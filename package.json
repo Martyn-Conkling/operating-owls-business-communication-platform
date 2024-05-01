@@ -19,6 +19,7 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.11",
     "@nextui-org/react": "^2.2.9",
+    "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
     "emoji-mart": "^5.5.2",
     "firebase": "^10.8.1",

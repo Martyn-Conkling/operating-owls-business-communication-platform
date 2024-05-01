@@ -3,7 +3,7 @@ import { TextField, IconButton } from '@mui/material';
 
 import SendIcon from '@mui/icons-material/Send';
 
-import { EmojiButton } from '@joeattardi/emoji-button';
+// import { EmojiButton } from '@joeattardi/emoji-button';
 
 const MessageInput = ({ onSendMessage }) => {
 const [message, setMessage] = useState('');
@@ -17,17 +17,12 @@ const emojiPicker = useRef(null);
      emojiPicker.current.togglePicker(anchor);
   };
 
-
-
-
   const handleSendMessage = () => {
     if (message.trim() !== '') {
     onSendMessage(message);
        setMessage('');
     }
   };
-
-
 
   useEffect(() => {
     emojiPicker.current = new EmojiButton();

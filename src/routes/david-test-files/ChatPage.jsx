@@ -2,29 +2,16 @@ import { useState, useEffect, useRef } from 'react';
 import rawChatData from './testingData.json';
 
 export default function ChatPage() {
-    class Channel {
-        constructor(channelID, channelName, channelMessageArray) {
-            this.channelID = channelID;
-            this.channelName = channelName;
-            this.channelMessageArray= channelMessageArray;
-        }
-    }
 
     const [chatData, setChatData] = useState(rawChatData);
-    const channelArray = [];
-    chatData['channelArray'].forEach(channel => {
-        const newChannel = new Channel(channel.channelID, channel.channelName, channel.last50MessagesArray);
-        channelArray.push(newChannel);
-    });
-
     let newChannelCount = 0;
     const endMessageReference = useRef(null);
     const [selectedChannel, setSelectedChannel] = useState(0);
+    const [channel, setChannel] = useState([...chatData['channelArray']]);
 
-    const [messagesData, setMessagesData] = useState(channelArray[selectedChannel].channelMessageArray);
-    
+    const [messagesData, setMessagesData] = useState([...chatData['channelArray'][selectedChannel]['last50MessagesArray']]);
 
-    let lastMessageId = String(messagesData[messagesData.length - 1].messageId);
+    let lastMessageId = messagesData[messagesData.length - 1].messageId;
     let timestamp = new Date().toISOString();
     
     let userMessage = {
@@ -44,7 +31,6 @@ export default function ChatPage() {
     
         // console.log(newMessage);
         // This assumes that the last message in the messagesArray will have the latest ID value
-    
         const newMessageId = String(Number(lastMessageId) + 1);
         const newTimestamp = new Date().toISOString();
     
@@ -53,17 +39,19 @@ export default function ChatPage() {
             messageId: newMessageId,
             timestamp: newTimestamp,
         };
-    
+
+
+        chatData['channelArray'][selectedChannel]['last50MessagesArray'].push(updatedNewMessage);
         setMessagesData(messagesData => [...messagesData, updatedNewMessage]);
         setNewUserMessage(userMessage); // Clear the input after sending
     
     };
 
     const handleSetChannel = (e) => {
-        channelArray.forEach(channel => {
+        channel.forEach(channel => {
             if(channel.channelName == e.target.innerText) {
                 setSelectedChannel(channel.channelID);
-                setMessagesData(channel.channelMessageArray)
+                setMessagesData(channel.last50MessagesArray)
             }
         })
         
@@ -72,14 +60,21 @@ export default function ChatPage() {
     const handleNewChannel = (e) => {
         newChannelCount++;
         const insertChannel = {
-            channelID: channelArray.length,
+            channelID: channel.length - 1,
             channelName: `Channel ${newChannelCount}`,
-            channelMessageArray: []
+            last50MessagesArray: [{
+                "messageId": "",
+                "userId": "",
+                "timestamp": "",
+                "username": "",
+                "content":""
+            }]
         }
 
-        const newChannel = new Channel(insertChannel.channelID, insertChannel.channelName, insertChannel.channelMessageArray);
-        channelArray.push(newChannel);
-        console.log(channelArray);
+        chatData['channelArray'].push(insertChannel)
+        console.log(chatData)
+        setSelectedChannel(insertChannel.channelID);
+        setChannel(channel => [...channel, insertChannel]);
     }
 
     useEffect(() => {
@@ -91,13 +86,15 @@ export default function ChatPage() {
             <div className="sidebar">
                 <div className="channel--container">
                     <div className='channel--header'>    
-                        <h1>{channelArray[selectedChannel].channelName}</h1>
+                        <h1 onChange={(e) => handleSetChannel(e)}>{channel[selectedChannel].channelName}</h1>
                         <i className="fa-solid fa-plus channel--plus" onClick={(e) => handleNewChannel(e)}></i>
                     </div >
                     <div onChange={(e) => handleNewChannel(e)}>
-                        {channelArray.map((channel, index) => (
+                        {channel.map((channel, index) => (
                             <div key={index}>
-                                <button className="sidebar--channel" onClick={(e) => handleSetChannel(e)}>{channel.channelName}</button>
+                                <div >
+                                    <button className="sidebar--channel" onClick={(e) => handleSetChannel(e)}>{channel.channelName}</button>
+                                </div>
                             </div>
                         ))}
                     </div>
