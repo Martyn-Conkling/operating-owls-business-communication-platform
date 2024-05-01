@@ -44,7 +44,7 @@ export default function Channels(props){
     const [showModal, setShowModal] = React.useState(false); //for modal reveal and hide
     const [selectedChannel, setSelectedChannel] = React.useState(serverData.channels.allIds[0]); //for the selected list item visual
     const [channelToDelete, setChannelToDelete] = React.useState(null);
-    
+    const [serverRole, setServerRole] = React.useState(serverData.userProfile.role);
     const handleClickOpen = (id) => {
         setChannelToDelete(id)
         setOpenAlert(true);
@@ -158,6 +158,12 @@ export default function Channels(props){
         )
     })
 
+    const addFunction = ((serverRole === "admin") ? (
+    
+        <IconButton edge="end" aria-label="addChannel"  onClick= {handleAddItem}>
+            <AddIcon />
+        </IconButton>) : null);
+    
     return (
         <>
             {/* Houses the list of channels */}
@@ -187,9 +193,7 @@ export default function Channels(props){
                         
                         <ListItem
                             secondaryAction={
-                                <IconButton edge="end" aria-label="addChannel"  onClick= {handleAddItem}>
-                                    <AddIcon />
-                                </IconButton>
+                                addFunction
                             }
                             disablePadding
                         >

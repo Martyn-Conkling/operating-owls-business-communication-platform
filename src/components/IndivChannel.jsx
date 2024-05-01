@@ -18,9 +18,11 @@ IndivChannel.propTypes = {
 
 //component for each individual channel
 export default function IndivChannel(props){
+    
     const {serverData} = useMyContext();
+    const [serverRole, setServerRole] = React.useState(serverData.userProfile.role);
     console.log('Selected:', props.selected);
-    const deleteFunction = ((serverData.userProfile.role !== "read-only") ? (
+    const deleteFunction = ((serverRole === "admin") ? (
     
     <IconButton
     edge="end"

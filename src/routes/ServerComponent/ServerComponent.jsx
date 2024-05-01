@@ -209,6 +209,7 @@ const messageList = serverData.channels.byId[selectedChannel]?.messageIds.map((m
             displayName={serverData.messages[messageId].username}
             messageContent={serverData.messages[messageId].content}
             time={currentTime}
+            userId={serverData.messages[messageId].userId}
             displayUserInfo={showUserInfo}
             messageId={serverData.messages[messageId].messageId}
             removeMessage={deleteMessageComponent}
@@ -309,10 +310,6 @@ return(
 
     <div>
         {!(serverRole === "read-only") && sendMessageComponent}
-    
-    
-
-
     </div>
         
           

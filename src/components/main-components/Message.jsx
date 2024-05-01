@@ -15,13 +15,13 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import MessageThread from "./MessageThread";
-
+import { useMyContext } from '../../DataContext';
 export default function MessageComponent(props) {
-
+  const {serverData} = useMyContext();
   // logic for Editing Message
   const [isEditing, setIsEditing] = React.useState(false);
   const [value, setValue] = React.useState(props.messageContent)
-
+  const [user, setUser] = React.useState(serverData.userProfile)
   const toggleIsEditing = () => setIsEditing((b) => !b);
 
   const finishEditing = () => {
@@ -54,6 +54,59 @@ export default function MessageComponent(props) {
   function handleClose() {
     setAnchorEl(null);
   }
+
+  const messageMenu = (<IconButton 
+    edge="end" 
+    aria-owns={anchorEl ? "simple-menu" : undefined}
+    aria-haspopup="true" 
+    onClick={handleClick} 
+    onMouseLeave={handleClose}>
+      <MoreVertIcon />
+        <Menu 
+          sx={{ width: 250, maxWidth: '100%'}} 
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          MenuListProps={{ onMouseLeave: handleClose }}>
+            
+              {((user.role =="admin") || (user.username === props.userId)) ? (
+                <>
+              <MenuItem>
+              <ListItemIcon>
+                <EditNoteIcon fontSize="medium"/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography 
+                  style={{fontFamily: "Inter", color: "#1E1E1E"}}
+                  onClick={toggleIsEditing}>Edit Message
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+            <MenuItem >
+              <ListItemIcon>  
+                <DeleteIcon fontSize="medium"/> 
+              </ListItemIcon>
+              <ListItemText>
+                <Typography 
+                  style={{fontFamily: "Inter"}}
+                  onClick={() => props.removeMessage(props.messageIndex)}> Delete Message
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+            </>) : null }
+            <MenuItem>
+              <ListItemIcon>
+                <ReplyIcon fontSize="medium" />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography 
+                  style={{fontFamily: "Inter"}}
+                  onClick={toggleIsReplying}> Reply
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+        </Menu>
+  </IconButton> )
 
   return (
       <Grid 
@@ -133,54 +186,7 @@ export default function MessageComponent(props) {
         </Grid>
       </Grid>
       <Grid item>
-        <IconButton 
-          edge="end" 
-          aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup="true" 
-          onClick={handleClick} 
-          onMouseLeave={handleClose}>
-            <MoreVertIcon />
-              <Menu 
-                sx={{ width: 250, maxWidth: '100%'}} 
-                id="simple-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                MenuListProps={{ onMouseLeave: handleClose }}>
-                  <MenuItem>
-                    <ListItemIcon>
-                      <EditNoteIcon fontSize="medium"/>
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography 
-                        style={{fontFamily: "Inter", color: "#1E1E1E"}}
-                        onClick={toggleIsEditing}>Edit Message
-                      </Typography>
-                    </ListItemText>
-                  </MenuItem>
-                  <MenuItem >
-                    <ListItemIcon>  
-                      <DeleteIcon fontSize="medium"/> 
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography 
-                        style={{fontFamily: "Inter"}}
-                        onClick={() => props.removeMessage(props.messageIndex)}> Delete Message
-                      </Typography>
-                    </ListItemText>
-                  </MenuItem>
-                  <MenuItem>
-                    <ListItemIcon>
-                      <ReplyIcon fontSize="medium" />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography 
-                        style={{fontFamily: "Inter"}}
-                        onClick={toggleIsReplying}> Reply
-                      </Typography>
-                    </ListItemText>
-                  </MenuItem>
-              </Menu>
-        </IconButton> 
+        {(user.role !== "read-only") ? messageMenu : null}
       </Grid>
     </Grid>
   </Grid>
