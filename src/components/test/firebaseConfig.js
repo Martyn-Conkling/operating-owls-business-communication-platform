@@ -26,9 +26,17 @@ const firebaseConfig = {
     appId: appId
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+let db, auth;
+try {
+    const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-const db = getFirestore(app);
+    auth = getAuth(app);
+
+    db = getFirestore(app);
+
+} catch (e) {
+    console.log("Error: ", e);
+}
 
 export { auth, db };
