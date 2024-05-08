@@ -19,6 +19,7 @@ export const MyProvider = ({ children }) => {
         loginData,
         sendNewMessage: (newMessage) => setServerData(
             prevData => ({
+                ...prevData,
                 channels:{
                     ...prevData.channels,
                     byId: {
@@ -38,6 +39,7 @@ export const MyProvider = ({ children }) => {
 
         createNewChannel: (newChannelData) => setServerData(
             prevData => ({
+                ...prevData,
                 channels: {
                     byId:{
                         ...prevData.channels.byId,
@@ -63,14 +65,12 @@ export const MyProvider = ({ children }) => {
         deleteChannel: (itemId) => setServerData(
             prevData => { 
             //creates new edited channel list
-            const channelToDelete = prevData.channels.byId[itemId]
-
             const newById = {...prevData.channels.byId}
             delete newById[itemId]
-
             const newAllIds = prevData.channels.allIds.filter(id => id !==itemId)
-        
+            
             return {
+                ...prevData,
                 channels:{
                     byId: newById,
                     allIds: newAllIds,

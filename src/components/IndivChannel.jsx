@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useMyContext } from '../DataContext';
 IndivChannel.propTypes = {
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
@@ -18,6 +19,20 @@ IndivChannel.propTypes = {
 //component for each individual channel
 export default function IndivChannel(props){
     
+    const {serverData} = useMyContext();
+    const [serverRole, setServerRole] = React.useState(serverData.userProfile.role);
+    console.log('Selected:', props.selected);
+    const deleteFunction = ((serverRole === "admin") ? (
+    
+    <IconButton
+    edge="end"
+    aria-label="deleteChannel"
+    className="hover-visible"
+    onClick={() => props.deleteChannel(props.id)}>
+        <DeleteIcon />
+    </IconButton>) : null);
+
+
     return (
         <>
         {/* Shows delete button based on hover*/}
@@ -31,11 +46,9 @@ export default function IndivChannel(props){
                     display: 'none',
                 },
             }}
-
-            secondaryAction={
-                <IconButton edge="end" aria-label="deleteChannel" className="hover-visible" onClick={props.deleteChannel} >
-                    <DeleteIcon />
-                </IconButton>
+            
+            secondaryAction = {
+                deleteFunction
             }
             disablePadding
         > 
@@ -50,6 +63,7 @@ export default function IndivChannel(props){
                 </ListItemIcon>
                 <ListItemText primary={`${props.name}`} />
             </ListItemButton>
+           
         </ListItem>
             
 

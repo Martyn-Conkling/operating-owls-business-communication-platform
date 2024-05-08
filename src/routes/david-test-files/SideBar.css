@@ -1,0 +1,49 @@
+.sidebar {
+    width: 20vw;
+    height: 99.6vh;
+    border: 1px solid;
+    display: flex;
+    flex-direction: row;
+}
+
+.channel--container {
+    width: 25vw;
+    height: 99.5vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.channel--header {
+    font-family: Inter;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.channel--plus {
+    font-size: 36px;
+}
+
+.channel--plus:hover {
+    cursor: pointer;
+}
+
+.sidebar--channel {
+    height: 7vh;
+    width: 18vw;
+    margin: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    background-color: #2f3f4a;
+}
+
+
+.sidebar--channel:hover {
+    scale: calc(1.05);
+    cursor: pointer;
+}

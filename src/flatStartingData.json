@@ -1,10 +1,11 @@
 {
     "userProfile": {
-            "username": "Example Username",
-            "name": "Example Name",
+            "username": "u127",
+            "name": "PaletteKnife",
             "email": "example@example.com",
             "online": true,
-            "pfp": "https://picsum.photos/200"
+            "pfp": "https://picsum.photos/200",
+            "role": "admin"
         },
 
     "channels": {

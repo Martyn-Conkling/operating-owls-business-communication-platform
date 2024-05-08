@@ -1,0 +1,56 @@
+.main--container {
+    font-family: Inter;
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 100vh;
+}
+
+.chat--messages {
+    width: 78.5vw;
+    height: 91.5vh;
+    overflow: scroll;
+    background-color: #2f3f4a;
+}
+
+.chat--style {
+    padding: 0 20px;
+    border: 1px solid;
+}
+
+.chat--input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat--input {
+    font-size: 20px;
+    width: 71vw;
+    height: 3vh;
+    margin: 10px 10px;
+    padding-left: 30px;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-color: #2f3f4a;
+    color: white;
+}
+
+.chat--input:focus {
+    outline: 1px solid #ccc;
+}
+.chat--send {
+    width: 5vw;
+    height: 3vh;
+    border: none;
+    border-radius: 10px;
+    background-color: #2f3f4a;
+    color: white;
+}
+
+.chat--send:hover {
+    cursor: pointer;
+    background-color:#2f3f4adb;
+}

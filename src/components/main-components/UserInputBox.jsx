@@ -25,7 +25,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 //          return label;
 // }
 
-export default function UserInputBox() {
+export default function UserInputBox(props) {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [file, setFile] = useState();
@@ -52,7 +52,7 @@ export default function UserInputBox() {
         <Box component="section">
             <form noValidate autoComplete="off">
                 <TextField
-                    label="Message"
+                    label={"Reply to " + props.replytoUser + " . . ."}
                     color="secondary"
                     multiline
                     fullWidth
@@ -75,7 +75,7 @@ export default function UserInputBox() {
                                         />
                                     </Button>
                                     <Button
-                                        onClick={handleSend}
+                                        onClick={props.reply}
                                         startIcon={<SendIcon htmlColor="black" />}
                                     >
                                     </Button>
