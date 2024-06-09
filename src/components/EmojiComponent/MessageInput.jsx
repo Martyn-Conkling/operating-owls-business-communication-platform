@@ -1,32 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TextField, IconButton } from '@mui/material';
-
 import SendIcon from '@mui/icons-material/Send';
-
-// import { EmojiButton } from '@joeattardi/emoji-button';
+import { EmojiButton } from '@joeattardi/emoji-button';
 
 const MessageInput = ({ onSendMessage }) => {
-const [message, setMessage] = useState('');
-const emojiPicker = useRef(null);
+  const [message, setMessage] = useState('');
+  const emojiPicker = useRef(null);
+  const anchorRef = useRef(null);
 
   const handleToggleEmojiPicker = () => {
-    // This is just grabbing the button element with the id of "anchor" directly from the DOM, 
-    // I suspect this is not how I should do this
-    // look up if there is a correct react way to do this
-    let anchor = document.querySelector('#anchor')
-     emojiPicker.current.togglePicker(anchor);
+    emojiPicker.current.togglePicker(anchorRef.current);
   };
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-    onSendMessage(message);
-       setMessage('');
+      onSendMessage(message);
+      setMessage('');
     }
   };
 
   useEffect(() => {
     emojiPicker.current = new EmojiButton();
-
     emojiPicker.current.on('emoji', (selection) => {
       setMessage((prevMessage) => prevMessage + selection.emoji);
     });
@@ -35,28 +29,26 @@ const emojiPicker = useRef(null);
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
       <TextField
-
         label="Type a message..."
-         variant="outlined"
+        variant="outlined"
         fullWidth
-     value={message}
+        value={message}
         onChange={(e) => setMessage(e.target.value)}
         InputProps={{
           endAdornment: (
             <>
-              <IconButton id="anchor" onClick={handleToggleEmojiPicker} size="large">
-                😊
-              </IconButton>
-
+              <IconButton ref={anchorRef} onClick={handleToggleEmojiPicker} size="large">
+                😊           </IconButton>
               <IconButton onClick={handleSendMessage} size="large">
                 <SendIcon />
               </IconButton>
-            </>
-          ),
+            </>       ),
         }}
       />
     </div>
   );
 };
+
 export default MessageInput;
+
 

@@ -1,4 +1,4 @@
-import LoginPage from "../components/main-components/LoginPage";
+/* import LoginPage from "../components/main-components/LoginPage";
 
 let background = 'SignUpBackground.jpg'
 
@@ -10,4 +10,4 @@ export default function ChristianTestPage() {
         </div>
     </>
     );
-}
+} */
